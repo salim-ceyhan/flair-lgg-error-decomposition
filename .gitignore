@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Datasets and derived arrays are never committed.
+*.npy
+*.nii
+*.nii.gz
+data/
+results/
+outputs/
+
+.env
+.DS_Store
