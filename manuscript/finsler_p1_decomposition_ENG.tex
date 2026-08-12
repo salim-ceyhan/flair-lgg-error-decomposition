@@ -1477,7 +1477,9 @@ shows agreement between the available oracle boundary and the delivered mask.
 \begin{figure}[!tbp]\centering
 \includegraphics[width=0.96\linewidth,trim=0 25bp 0 0,clip]{fig_lbs_representative_cases.png}
 \caption{\textbf{Representative cases from the localization--boundary--selection
-decomposition.} Rows show localization failure (L), boundary-representation
+decomposition.} This is a retrospective diagnostic audit, not the inference
+workflow: the pool-oracle column uses the reference mask only to identify the
+best available candidate. Rows show localization failure (L), boundary-representation
 failure (B), selection failure (S), and a near-ceiling/successful case (C).
 Columns show the FLAIR slice with the reference contour, the union of generated
 candidates and seed locations, the retrospective pool-oracle boundary, and the
@@ -1487,6 +1489,29 @@ locations. Reference information and oracle selection are displayed only for
 retrospective interpretation.}
 \label{fig:lbs-representative-cases}
 \end{figure}
+
+To balance the failure-oriented audit with the method's typical successful
+behaviour, Figure~\ref{fig:representative-successes} shows four cases from the
+near-ceiling/successful class. The cases were selected reproducibly by dividing
+that class into quartiles of reference-tumour area and, within each quartile,
+choosing the case closest to the class median selected Dice ($0.932$). This rule
+avoids selecting visually favourable extremes while spanning a fourfold range of
+lesion area. Only the genuinely label-free selected boundary is shown against the
+reference; no pool-oracle mask enters the displayed method output.
+
+\begin{figure}[!tbp]\centering
+\includegraphics[width=0.94\linewidth]{fig_representative_successful_segmentations.pdf}
+\caption{\textbf{Representative successful label-free segmentations across
+lesion-size strata.} Columns show one TCGA-LGG case from each quartile of
+reference-tumour area within the near-ceiling/successful class. The top row shows
+FLAIR with the reference boundary; the bottom row overlays the boundary selected
+without reference labels. Cases 1--4 are TCGA\_FG\_7643\_20021104\_26,
+TCGA\_HT\_7686\_19950629\_13, TCGA\_FG\_8189\_20030516\_25, and
+TCGA\_CS\_5396\_20010302\_15, respectively. Yellow denotes the retrospective
+reference and cyan the label-free selected boundary.}
+\label{fig:representative-successes}
+\end{figure}
+
 \subsection{Candidate-Channel Contribution and Practical Saturation}\label{sec:saturation-results}
 
 The matched channel analysis confirmed this separation (Table~\ref{tab:channel-ablation}).
