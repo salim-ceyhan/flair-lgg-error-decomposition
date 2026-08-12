@@ -323,9 +323,10 @@ throughout the method, evaluation and results.
 Lower-grade (WHO~II--III) gliomas, described using the contemporaneous cohort
 terminology~\cite{louis2021}, with low-to-moderate contrast and comparatively
 regular boundaries. The local analysis copy was derived from the public
-$256\times256$ three-channel TCGA-LGG derivative by extracting channel~1, which
-is FLAIR in every case; the pre-contrast and post-contrast channels were not
-combined with or supplied to the method. All tumour-bearing 2D axial slices
+$256\times256$ three-channel TCGA-LGG derivative by extracting channel~1, the
+FLAIR channel. This extraction was verified against all source TIFF files; the
+pre-contrast and post-contrast channels were neither combined with nor supplied
+to the method. All tumour-bearing 2D axial slices
 were extracted (\emph{$1360$ slices in total}); as required by the
 evaluation protocol, exactly \textbf{one} slice per patient --- the one with the
 largest ground-truth tumour area --- was retained, yielding an experimental set
@@ -566,12 +567,15 @@ paired bootstrap $95\%$ confidence intervals for both final budget increments to
 be smaller than the prespecified margin $\varepsilon=0.005$ Dice.
 
 Computational cost was measured over all 110 TCGA slices on an Intel Core
-Ultra~7 265K CPU (20 physical cores). The full canonical timing included
+Ultra~7 265K CPU (20 physical cores, 31.6~GiB RAM, Windows~11). The full canonical timing included
 NewMetric preprocessing, candidate generation and label-free selection. The
 expanded-budget timing was recorded separately and measures preprocessing plus
 the additional candidates through 30 seeds per window and 39 nested $\alpha$
 levels; it loads the frozen canonical pool and is therefore not a second
-end-to-end inference time.
+end-to-end inference time. The worker count used by the historical canonical
+batch run was not stored in its provenance, whereas the expanded-budget audit
+was run serially; the reported values are therefore descriptive computational
+costs rather than standardized serial-latency benchmarks.
 
 \subsection{Error Decomposition and Evaluation Measures}\label{sec:eval}
 
@@ -1608,7 +1612,9 @@ $1.688$~s; IQR $1.508$--$1.821$~s). The separately timed expanded-budget
 workload required a mean of $3.984$~s per slice (median $4.059$~s; IQR
 $3.339$--$4.474$~s). The latter is an additional research-analysis cost with a
 different scope and should not be added to or compared directly with the
-end-to-end canonical time.
+end-to-end canonical time. Because concurrency was not preserved in the
+historical canonical provenance, neither value is presented as a deployment
+latency benchmark.
 
 \begin{table}[htbp]\centering
 \caption{Nested candidate-capacity analysis on TCGA-LGG.}\label{tab:saturation}
