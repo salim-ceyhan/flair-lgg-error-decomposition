@@ -27,6 +27,7 @@
 \usepackage{tabularx}
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 \usepackage{authblk}
 \usepackage[most]{tcolorbox}
 \usepackage{fontawesome5}
@@ -1473,7 +1474,7 @@ tumour boundary is generated; alternatively, an adequate pool-oracle boundary
 may be present but rejected by the label-free selector. The near-ceiling example
 shows agreement between the available oracle boundary and the delivered mask.
 
-\begin{figure}[htbp]\centering
+\begin{figure}[!tbp]\centering
 \includegraphics[width=0.96\linewidth,trim=0 25bp 0 0,clip]{fig_lbs_representative_cases.png}
 \caption{\textbf{Representative cases from the localization--boundary--selection
 decomposition.} Rows show localization failure (L), boundary-representation
@@ -1486,19 +1487,18 @@ locations. Reference information and oracle selection are displayed only for
 retrospective interpretation.}
 \label{fig:lbs-representative-cases}
 \end{figure}
-\clearpage
-
 \subsection{Candidate-Channel Contribution and Practical Saturation}\label{sec:saturation-results}
 
 The matched channel analysis confirmed this separation (Table~\ref{tab:channel-ablation}).
 The seeded superlevel-set family alone delivered $0.7893$ Dice and had an oracle
 ceiling of $0.8722$. The fuzzy $\alpha$-cut family alone was weaker in delivered
-performance ($0.6473$) and oracle capacity ($0.8010$). Their union increased the
-oracle ceiling to $0.8997$, eliminated cases with zero oracle overlap, and raised
-Dice-$\ge0.70$ candidate coverage from $103/110$ to $107/110$; nevertheless, the
-label-free delivered Dice remained $0.7893$. The additional candidates therefore
-expanded boundary availability without producing a measurable gain under the
-existing selector.
+performance ($0.6473$) and oracle capacity ($0.8010$). Adding it to the seeded
+family increased the oracle ceiling by $0.0275$, from $0.8722$ to $0.8997$,
+eliminated cases with zero oracle overlap, and raised Dice-$\geq0.70$ candidate
+coverage from $103/110$ to $107/110$. In contrast, label-free delivered Dice
+changed by $0.0000$ and remained $0.7893$. Thus, the $\alpha$-cut channel produced
+a demonstrable gain in candidate availability, but the existing selector did not
+recover that added capacity as improved delivered segmentation.
 
 \begin{table}[htbp]\centering
 \caption{Matched candidate-channel analysis on TCGA-LGG. Oracle values require
@@ -1509,7 +1509,7 @@ Candidate family & Median count & Delivered Dice & Oracle Dice & Oracle zero \\
 \midrule
 Seeded superlevel sets & $489.5$ & $0.7893$ & $0.8722$ & $3$ \\
 Fuzzy $\alpha$-cuts & $159.0$ & $0.6473$ & $0.8010$ & $0$ \\
-Union & $648.5$ & $0.7893$ & $0.8997$ & $0$ \\
+Union & $648.5$ & $0.7893$ ($+0.0000$) & $0.8997$ ($+0.0275$) & $0$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2504,8 +2504,7 @@ specification are archived with the accompanying research materials.
 \section*{Code Availability}
 The fixed method, data-preparation procedures, evaluation routines,
 hyperparameters, and manuscript sources are archived in a private GitHub
-repository at
-\begin{center}\url{https://github.com/salim-ceyhan/flair-lgg-error-decomposition/tree/manuscript-release}\end{center}
+repository at \url{https://github.com/salim-ceyhan/flair-lgg-error-decomposition/tree/manuscript-release}
 Repository access can be provided confidentially to editors and reviewers on
 request. The repository will be made publicly accessible upon acceptance of the
 article; source imaging data are not included.
