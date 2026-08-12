@@ -69,8 +69,8 @@
 \section*{Highlights}
 \begin{itemize}[leftmargin=1.5em,itemsep=0.35em,topsep=0.25em]
   \item Error decomposition separates localization, boundary representation, and selection.
-  \item Candidate generation reached a $0.906$ ceiling; label-free Dice remained $0.789$.
-  \item Dice$\geq0.70$ candidates existed in $103/110$ cases; $16$ retained a selection gap.
+  \item Expanded candidates raised oracle Dice from $0.872$ to $0.906$, not delivered Dice.
+  \item The canonical pool covered $103/110$ cases; $16$ adequate candidates were not selected.
   \item Weak tumour boundaries correlated with lower candidate ceilings across three cohorts.
   \item Frozen single-FLAIR inference achieved $0.712$ Dice on external UCSF-PDGM.
 \end{itemize}
@@ -97,7 +97,8 @@ The tumour was localized in $106/110$ cases, a candidate with Dice$\geq0.70$
 was available in $103/110$, and $16/103$ representable cases retained a
 selection gap of at least $0.10$. Expanding the candidate family under nested
 seed and $\alpha$-cut budgets increased the ceiling to $0.906$, with the final
-marginal gains satisfying a prespecified $0.005$ practical-equivalence margin.
+marginal gains satisfying a prespecified $0.005$ practical-equivalence margin;
+however, delivered Dice remained $0.789$ under the existing label-free selector.
 The weak-boundary fraction was negatively associated with the pool ceiling in
 TCGA-LGG ($\rho=-0.537$), UCSF-PDGM ($\rho=-0.438$), and BraTS~2023
 ($\rho=-0.467$), with the direction preserved after covariate adjustment. The
@@ -2283,7 +2284,11 @@ and spatial resolution may also affect overlap and boundary measures. Surface
 distances reported in pixels are not interchangeable with physical millimetres
 unless image spacing is harmonized.
 
-Finally, the error decomposition and boundary analyses are retrospective. The
+Finally, the error decomposition, boundary analyses and qualitative case panels
+are retrospective. The successful examples were selected using reference-tumour
+area strata and retrospective Dice proximity to the class median; they illustrate
+typical within-class behaviour rather than prospective case selection or an
+independent performance estimate. The
 thresholds defining localization, boundary representation and selection failure
 are operational research definitions rather than clinical acceptance criteria.
 The negative weak-boundary association replicated in direction across all three
