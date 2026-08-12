@@ -1,0 +1,458 @@
+{
+  "study": "Corrected pure-FLAIR P1 consolidated audit",
+  "dataset_root": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\tcga_lgg_dataset",
+  "case_count": 110,
+  "persistence_beta_1_vs_beta_0": {
+    "mean_a": 0.7649532153040299,
+    "mean_b": 0.7892658976023633,
+    "mean_difference_b_minus_a": 0.024312682298333145,
+    "bootstrap_ci95": [
+      -0.0059421160094129,
+      0.05838462595871805
+    ],
+    "sign_flip_p_two_sided": 0.14639268036598171,
+    "improved": 45,
+    "worsened": 31,
+    "unchanged": 34
+  },
+  "roi_gated_vs_core": {
+    "mean_a": 0.7892658976023633,
+    "mean_b": 0.8180439807430702,
+    "mean_difference_b_minus_a": 0.028778083140706935,
+    "bootstrap_ci95": [
+      0.001299198574687404,
+      0.06312570719116167
+    ],
+    "sign_flip_p_two_sided": 0.13144342782860857,
+    "improved": 4,
+    "worsened": 1,
+    "unchanged": 105
+  },
+  "core": {
+    "mean_dice": 0.7892658976023633,
+    "median_dice": 0.9134051310987167,
+    "zero_dice": 6
+  },
+  "final": {
+    "dataset": "TCGA-LGG",
+    "case_count": 110,
+    "gate_opened": 5,
+    "zero_dice": 2,
+    "dice_above_0_5": 97,
+    "dice_above_0_7": 91,
+    "dice_above_0_9": 60,
+    "metrics": {
+      "dice": {
+        "n": 110,
+        "mean": 0.8180439807430702,
+        "median": 0.9169001166526012,
+        "standard_deviation": 0.2265032864918882,
+        "q1": 0.8226218461867727,
+        "q3": 0.9507065236185075
+      },
+      "jaccard": {
+        "n": 110,
+        "mean": 0.7386977257329609,
+        "median": 0.8465635084425538,
+        "standard_deviation": 0.24832912623005643,
+        "q1": 0.6987157037363165,
+        "q3": 0.906044444618927
+      },
+      "sensitivity": {
+        "n": 110,
+        "mean": 0.9002566206918695,
+        "median": 0.955047647042226,
+        "standard_deviation": 0.17810523482890037,
+        "q1": 0.9076256591065744,
+        "q3": 0.9797178232668639
+      },
+      "precision": {
+        "n": 110,
+        "mean": 0.8064572969341999,
+        "median": 0.9207547541278173,
+        "standard_deviation": 0.25752141560597647,
+        "q1": 0.809018196386738,
+        "q3": 0.9582802947090093
+      },
+      "specificity": {
+        "n": 110,
+        "mean": 0.9861978847639036,
+        "median": 0.9957409334189443,
+        "standard_deviation": 0.022891696860925407,
+        "q1": 0.9892919208724,
+        "q3": 0.998484938021577
+      },
+      "boundary_f1_at_2_px": {
+        "n": 108,
+        "mean": 0.6904367006011367,
+        "median": 0.7538345138400638,
+        "standard_deviation": 0.24158571742465154,
+        "q1": 0.5706965773173589,
+        "q3": 0.8780363128127605
+      },
+      "assd_px": {
+        "n": 108,
+        "mean": 4.858265236564977,
+        "median": 1.7140361400524031,
+        "standard_deviation": 7.6965596408237005,
+        "q1": 1.0603948886110992,
+        "q3": 3.6951083006627976
+      },
+      "hd95_px": {
+        "n": 108,
+        "mean": 16.877620406317217,
+        "median": 8.136978291231857,
+        "standard_deviation": 22.35638889079307,
+        "q1": 4.123105625617661,
+        "q3": 16.822290960680157
+      },
+      "lesion_recall_at_iou_0_10": {
+        "n": 110,
+        "mean": 0.9,
+        "median": 1.0,
+        "standard_deviation": 0.23913708274232093,
+        "q1": 1.0,
+        "q3": 1.0
+      },
+      "lesion_precision_at_iou_0_10": {
+        "n": 110,
+        "mean": 0.9727272727272728,
+        "median": 1.0,
+        "standard_deviation": 0.16362246257329335,
+        "q1": 1.0,
+        "q3": 1.0
+      },
+      "lesion_f1_at_iou_0_10": {
+        "n": 110,
+        "mean": 0.9227272727272727,
+        "median": 1.0,
+        "standard_deviation": 0.20151980237149256,
+        "q1": 1.0,
+        "q3": 1.0
+      }
+    },
+    "surface_metric_scope": "Cases with non-zero Dice only.",
+    "lesion_metric_scope": "All cases containing at least one reference lesion."
+  },
+  "candidate_pool": {
+    "case_count": 110,
+    "candidate_count": 53002,
+    "canonical_mean_dice": 0.7892658976023633,
+    "canonical_median_dice": 0.9134051310987167,
+    "canonical_zero_dice": 6,
+    "pool_oracle_mean_dice": 0.8722055352837654,
+    "mean_selection_gap": 0.08293963768140215
+  },
+  "lbs": {
+    "class_counts": {
+      "C": 87,
+      "S": 16,
+      "L": 4,
+      "B": 3
+    },
+    "aggregate": {
+      "selected_mean_dice": 0.7892658976023633,
+      "oracle_mean_dice": 0.8722055352837654,
+      "mean_selection_regret": 0.08293963768140215,
+      "seed_hit_rate": 0.9636363636363636,
+      "localization_success_rate": 0.9636363636363636,
+      "boundary_representable_rate": 0.9363636363636364,
+      "selection_failure_rate_among_representable": 0.1553398058252427
+    }
+  },
+  "candidate_saturation": {
+    "canonical_mean": 0.8722055352837654,
+    "maximum_budget_mean": 0.9055262127735026,
+    "maximum_budget_gain": 0.033320677489737216,
+    "maximum_budget_gain_ci95": [
+      0.008001350069045858,
+      0.06606158829569496
+    ],
+    "coverage_ge_0_7": 108,
+    "practical_saturation_supported": true
+  },
+  "cross_cohort_boundary": {
+    "cohort_summaries": {
+      "TCGA-LGG": {
+        "n": 110,
+        "selected_mean_dice": 0.7892658976023633,
+        "oracle_mean_dice": 0.8722055352837654,
+        "weak_boundary_median": 0.10332106636382586,
+        "weak_boundary_iqr": [
+          0.04419909458678482,
+          0.18588840658866818
+        ]
+      },
+      "UCSF-PDGM G2-3": {
+        "n": 99,
+        "selected_mean_dice": 0.7124392349835468,
+        "oracle_mean_dice": 0.8286806072720128,
+        "weak_boundary_median": 0.08376963350785341,
+        "weak_boundary_iqr": [
+          0.03757148617933866,
+          0.1715918895599655
+        ]
+      },
+      "BraTS 2023 GLI": {
+        "n": 150,
+        "selected_mean_dice": 0.8227410742656524,
+        "oracle_mean_dice": 0.8819986105695556,
+        "weak_boundary_median": 0.08696249988541886,
+        "weak_boundary_iqr": [
+          0.048275389339767494,
+          0.13189390985078142
+        ]
+      }
+    },
+    "primary_correlations": {
+      "TCGA-LGG": {
+        "rho": -0.5372342344021559,
+        "ci95_low": -0.6678321623265677,
+        "ci95_high": -0.3792494355946198
+      },
+      "UCSF-PDGM G2-3": {
+        "rho": -0.4376588599889506,
+        "ci95_low": -0.5860632989135658,
+        "ci95_high": -0.2594888172237089
+      },
+      "BraTS 2023 GLI": {
+        "rho": -0.4670740336449599,
+        "ci95_low": -0.592889796374044,
+        "ci95_high": -0.32148579306488684
+      }
+    },
+    "adjusted_correlations": {
+      "TCGA-LGG": {
+        "partial_rho": -0.3247448806429954,
+        "ci95_low": -0.5053952894155367,
+        "ci95_high": -0.10925633688435178
+      },
+      "UCSF-PDGM G2-3": {
+        "partial_rho": -0.3207542871972621,
+        "ci95_low": -0.49299226104305405,
+        "ci95_high": -0.1201767048422704
+      },
+      "BraTS 2023 GLI": {
+        "partial_rho": -0.3185343172489,
+        "ci95_low": -0.45583886943809443,
+        "ci95_high": -0.16441858916104657
+      }
+    },
+    "heterogeneity": {
+      "TCGA-LGG minus UCSF-PDGM G2-3": {
+        "observed_difference": -0.0995753744132053,
+        "ci95_low": -0.3176527884444629,
+        "ci95_high": 0.11460094218164787
+      },
+      "TCGA-LGG minus BraTS 2023 GLI": {
+        "observed_difference": -0.07016020075719598,
+        "ci95_low": -0.26740056975959686,
+        "ci95_high": 0.1334008415710543
+      },
+      "UCSF-PDGM G2-3 minus BraTS 2023 GLI": {
+        "observed_difference": 0.02941517365600932,
+        "ci95_low": -0.17975982461573095,
+        "ci95_high": 0.24838622241070463
+      }
+    },
+    "decision": {
+      "all_primary_negative": true,
+      "tcga_and_ucsf_ci_below_zero": true,
+      "no_pairwise_heterogeneity_ci_excludes_zero": true,
+      "all_adjusted_directions_negative": true,
+      "replication_rule_passed": true
+    }
+  },
+  "external_validation": {
+    "ucsf_pdgm_grade_2_3": {
+      "cohort": "UCSF-PDGM WHO grade 2--3",
+      "scientific_role": "Frozen-parameter external lower-grade validation",
+      "protocol": "GT-selected maximum-tumor-area axial slice per examination",
+      "input_modality": "FLAIR only",
+      "input_is_skull_stripped": true,
+      "frozen_parameters": {
+        "newmetric_beta": 5.0,
+        "newmetric_dt": 0.15,
+        "newmetric_iterations": 3,
+        "persistence_beta": 1.0,
+        "roi_gate_fraction": 0.65,
+        "boundary_tolerance_px": 2.0,
+        "lesion_iou_threshold": 0.1
+      },
+      "subgroups": {
+        "all_grade_2_3": {
+          "n": 99,
+          "zero_dice": 11,
+          "surface_metrics_condition": "Dice > 0",
+          "surface_metrics_n": 88,
+          "dice_median": 0.8662220478619066,
+          "dice_mean_ci_95": [
+            0.6491325577347908,
+            0.7724386513439949
+          ],
+          "dice": 0.7124392349835468,
+          "jaccard": 0.6253199741349622,
+          "sensitivity": 0.7016675142176128,
+          "specificity": 0.9952821689691067,
+          "precision": 0.7874148435698168,
+          "boundary_f1_at_2px": 0.6777003362248716,
+          "assd_px": 3.977029353690833,
+          "hd95_px": 13.606532440778494,
+          "lesion_recall": 0.7922558922558923,
+          "lesion_precision": 0.8686868686868687,
+          "lesion_f1": 0.8135161135161135
+        },
+        "grade_2": {
+          "n": 56,
+          "zero_dice": 9,
+          "surface_metrics_condition": "Dice > 0",
+          "surface_metrics_n": 47,
+          "dice_median": 0.7962866256914662,
+          "dice_mean_ci_95": [
+            0.5520636898508922,
+            0.7305414635180418
+          ],
+          "dice": 0.6433104925913177,
+          "jaccard": 0.5553514342506151,
+          "sensitivity": 0.650632863859693,
+          "specificity": 0.9937116382674532,
+          "precision": 0.7167058359240419,
+          "boundary_f1_at_2px": 0.6276456107393584,
+          "assd_px": 4.947804699819533,
+          "hd95_px": 15.847853728387351,
+          "lesion_recall": 0.7482142857142857,
+          "lesion_precision": 0.8214285714285714,
+          "lesion_f1": 0.7685374149659864
+        },
+        "grade_3": {
+          "n": 43,
+          "zero_dice": 2,
+          "surface_metrics_condition": "Dice > 0",
+          "surface_metrics_n": 41,
+          "dice_median": 0.8880962995987517,
+          "dice_mean_ci_95": [
+            0.7262038941244445,
+            0.8661400028758574
+          ],
+          "dice": 0.8024673646106354,
+          "jaccard": 0.7164417935192283,
+          "sensitivity": 0.7681312449162987,
+          "specificity": 0.9973275112782365,
+          "precision": 0.8795009930619888,
+          "boundary_f1_at_2px": 0.7350801434887527,
+          "assd_px": 2.8641893227628112,
+          "hd95_px": 11.03721291595859,
+          "lesion_recall": 0.8496124031007751,
+          "lesion_precision": 0.9302325581395349,
+          "lesion_f1": 0.872093023255814
+        }
+      },
+      "roi_gate_opened": 0
+    },
+    "brats2023": {
+      "dataset": "BraTS-2023 GLI",
+      "scientific_role": "Frozen-parameter cross-grade stress test",
+      "case_count": 150,
+      "gate_opened": 0,
+      "zero_dice": 1,
+      "dice_above_0_5": 140,
+      "dice_above_0_7": 124,
+      "dice_above_0_9": 67,
+      "metrics": {
+        "dice": {
+          "n": 150,
+          "mean": 0.8227410742656524,
+          "median": 0.8927040353830621,
+          "standard_deviation": 0.1878976799421431,
+          "q1": 0.8032059050005846,
+          "q3": 0.9301851716074934
+        },
+        "jaccard": {
+          "n": 150,
+          "mean": 0.7312645830434059,
+          "median": 0.8062021000620506,
+          "standard_deviation": 0.2082979565882307,
+          "q1": 0.6711910844877624,
+          "q3": 0.8694825819036953
+        },
+        "sensitivity": {
+          "n": 150,
+          "mean": 0.7648874503639916,
+          "median": 0.838507256614818,
+          "standard_deviation": 0.21583912459940474,
+          "q1": 0.6922257392226191,
+          "q3": 0.9153074698143417
+        },
+        "precision": {
+          "n": 150,
+          "mean": 0.9245033509792203,
+          "median": 0.9734717034871498,
+          "standard_deviation": 0.16207540880797103,
+          "q1": 0.929708883894607,
+          "q3": 0.9906730742975726
+        },
+        "specificity": {
+          "n": 150,
+          "mean": 0.9950574728680476,
+          "median": 0.9981759108365562,
+          "standard_deviation": 0.009912299208510632,
+          "q1": 0.9947759014234726,
+          "q3": 0.9994251531994209
+        },
+        "boundary_f1_at_2_px": {
+          "n": 149,
+          "mean": 0.6142860165778357,
+          "median": 0.6589832213676046,
+          "standard_deviation": 0.2209179978435971,
+          "q1": 0.463900166513873,
+          "q3": 0.777948569726908
+        },
+        "assd_px": {
+          "n": 149,
+          "mean": 4.864743145042385,
+          "median": 2.5378822020423595,
+          "standard_deviation": 6.058275343907473,
+          "q1": 1.7668947485139597,
+          "q3": 5.105114220191301
+        },
+        "hd95_px": {
+          "n": 149,
+          "mean": 18.154255893022906,
+          "median": 12.0,
+          "standard_deviation": 17.83044964732779,
+          "q1": 6.363839778884804,
+          "q3": 19.406159846635635
+        },
+        "lesion_recall_at_iou_0_10": {
+          "n": 150,
+          "mean": 0.6703043068043067,
+          "median": 0.75,
+          "standard_deviation": 0.35235232113023984,
+          "q1": 0.3333333333333333,
+          "q3": 1.0
+        },
+        "lesion_precision_at_iou_0_10": {
+          "n": 150,
+          "mean": 0.9733333333333334,
+          "median": 1.0,
+          "standard_deviation": 0.16164700403963206,
+          "q1": 1.0,
+          "q3": 1.0
+        },
+        "lesion_f1_at_iou_0_10": {
+          "n": 150,
+          "mean": 0.7407329522329523,
+          "median": 0.8333333333333333,
+          "standard_deviation": 0.29990531945917703,
+          "q1": 0.5,
+          "q3": 1.0
+        }
+      },
+      "surface_metric_scope": "Cases with non-zero Dice only.",
+      "lesion_metric_scope": "All cases containing at least one reference lesion."
+    }
+  },
+  "random_seed": 20260808,
+  "bootstrap_replicates": 20000,
+  "sign_flip_replicates": 20000
+}

@@ -1,0 +1,50 @@
+{
+  "study": "Matched pure-FLAIR P1 candidate-channel ablation",
+  "case_count": 110,
+  "arms": {
+    "traversal": {
+      "median_candidates": 489.5,
+      "selected_mean_dice": 0.7892658976023633,
+      "selected_zero": 6,
+      "oracle_mean_dice": 0.8722055352837654,
+      "oracle_zero": 3,
+      "coverage_oracle_ge_0_70": 103,
+      "selected_difference_vs_combined": 0.0,
+      "selected_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "oracle_difference_vs_combined": -0.027508574089467754,
+      "oracle_difference_ci95": [
+        -0.05542224502781238,
+        -0.0051427249350572074
+      ]
+    },
+    "alpha": {
+      "median_candidates": 159.0,
+      "selected_mean_dice": 0.6473263900227071,
+      "selected_zero": 10,
+      "oracle_mean_dice": 0.800988818239216,
+      "oracle_zero": 0,
+      "coverage_oracle_ge_0_70": 86,
+      "selected_difference_vs_combined": -0.1419395075796561,
+      "selected_difference_ci95": [
+        -0.2038383323744726,
+        -0.08119899275323905
+      ],
+      "oracle_difference_vs_combined": -0.09872529113401707,
+      "oracle_difference_ci95": [
+        -0.1261802710684434,
+        -0.0737592907528944
+      ]
+    },
+    "combined": {
+      "median_candidates": 648.5,
+      "selected_mean_dice": 0.7892658976023633,
+      "selected_zero": 6,
+      "oracle_mean_dice": 0.8997141093732332,
+      "oracle_zero": 0,
+      "coverage_oracle_ge_0_70": 107
+    }
+  }
+}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fac-filters"
+version = "0.1.0"
+description = "Research-oriented Beltrami and Finsler image filtering tools."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [
+  { name = "Research Workspace" }
+]
+dependencies = [
+  "numpy>=1.25",
+  "pillow>=10.0",
+  "matplotlib>=3.8",
+]
+keywords = ["beltrami", "finsler", "randers", "image-filtering", "mri"]
+
+[project.scripts]
+fac-run = "fac_filters.run_metric:main"
+fac-ui = "fac_filters.metric_ui:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

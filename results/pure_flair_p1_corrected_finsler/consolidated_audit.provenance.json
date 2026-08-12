@@ -1,0 +1,15 @@
+{
+  "script_sha256": "a0154ae2c3356b2fdc880eb6793005c92c5fd86dfdb54fc25ec11d034c4d20bc",
+  "inputs": [
+    "persistence_tcga_pairs.csv",
+    "roi_full_metrics/tcga_lgg_per_case_metrics.csv",
+    "candidate_pool/summary.json",
+    "lbs_error_decomposition/summary.json",
+    "candidate_ceiling_saturation/summary.json",
+    "cross_cohort_boundary_ceiling/summary.json",
+    "ucsf_lower_grade/ucsf_lower_grade_summary.json",
+    "ucsf_lower_grade/provenance.json",
+    "brats2023_stress_test/brats2023_summary.json",
+    "brats2023_stress_test/provenance.json"
+  ]
+}

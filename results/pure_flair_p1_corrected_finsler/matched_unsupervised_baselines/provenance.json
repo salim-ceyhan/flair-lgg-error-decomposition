@@ -1,0 +1,12 @@
+{
+  "script_sha256": "1e00c28839e462686e053563b6e47d078ec63a459af5214fd127c182fab0575a",
+  "python": "3.13.13",
+  "numpy": "2.5.0",
+  "scipy": "1.18.0",
+  "skimage": "0.26.0",
+  "bootstrap_replicates": 20000,
+  "bootstrap_seed": 20260811,
+  "aucseg_reference": "Zhao et al., Front Oncol 11:679952 (2021)",
+  "aucseg_scope": "whole-tumour module reimplementation",
+  "weighted_em": "algebraically equivalent unique-value weighted EM"
+}

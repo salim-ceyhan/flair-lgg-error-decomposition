@@ -1,0 +1,11 @@
+{
+  "case_id": "TCGA_FG_7634_20000128_23",
+  "traversal_candidates": 567,
+  "alpha_candidates": 272,
+  "traversal_selected": 0.9518404410572402,
+  "alpha_selected": 0.8877266387726639,
+  "combined_selected": 0.9518404410572402,
+  "traversal_oracle": 0.9518872509314757,
+  "alpha_oracle": 0.8877266387726639,
+  "combined_oracle": 0.9518872509314757
+}

@@ -1,0 +1,85 @@
+{
+  "cohort": "UCSF-PDGM WHO grade 2--3",
+  "scientific_role": "Frozen-parameter external lower-grade validation",
+  "protocol": "GT-selected maximum-tumor-area axial slice per examination",
+  "input_modality": "FLAIR only",
+  "input_is_skull_stripped": true,
+  "frozen_parameters": {
+    "newmetric_beta": 5.0,
+    "newmetric_dt": 0.15,
+    "newmetric_iterations": 3,
+    "persistence_beta": 1.0,
+    "roi_gate_fraction": 0.65,
+    "boundary_tolerance_px": 2.0,
+    "lesion_iou_threshold": 0.1
+  },
+  "subgroups": {
+    "all_grade_2_3": {
+      "n": 99,
+      "zero_dice": 11,
+      "surface_metrics_condition": "Dice > 0",
+      "surface_metrics_n": 88,
+      "dice_median": 0.8662220478619066,
+      "dice_mean_ci_95": [
+        0.6491325577347908,
+        0.7724386513439949
+      ],
+      "dice": 0.7124392349835468,
+      "jaccard": 0.6253199741349622,
+      "sensitivity": 0.7016675142176128,
+      "specificity": 0.9952821689691067,
+      "precision": 0.7874148435698168,
+      "boundary_f1_at_2px": 0.6777003362248716,
+      "assd_px": 3.977029353690833,
+      "hd95_px": 13.606532440778494,
+      "lesion_recall": 0.7922558922558923,
+      "lesion_precision": 0.8686868686868687,
+      "lesion_f1": 0.8135161135161135
+    },
+    "grade_2": {
+      "n": 56,
+      "zero_dice": 9,
+      "surface_metrics_condition": "Dice > 0",
+      "surface_metrics_n": 47,
+      "dice_median": 0.7962866256914662,
+      "dice_mean_ci_95": [
+        0.5520636898508922,
+        0.7305414635180418
+      ],
+      "dice": 0.6433104925913177,
+      "jaccard": 0.5553514342506151,
+      "sensitivity": 0.650632863859693,
+      "specificity": 0.9937116382674532,
+      "precision": 0.7167058359240419,
+      "boundary_f1_at_2px": 0.6276456107393584,
+      "assd_px": 4.947804699819533,
+      "hd95_px": 15.847853728387351,
+      "lesion_recall": 0.7482142857142857,
+      "lesion_precision": 0.8214285714285714,
+      "lesion_f1": 0.7685374149659864
+    },
+    "grade_3": {
+      "n": 43,
+      "zero_dice": 2,
+      "surface_metrics_condition": "Dice > 0",
+      "surface_metrics_n": 41,
+      "dice_median": 0.8880962995987517,
+      "dice_mean_ci_95": [
+        0.7262038941244445,
+        0.8661400028758574
+      ],
+      "dice": 0.8024673646106354,
+      "jaccard": 0.7164417935192283,
+      "sensitivity": 0.7681312449162987,
+      "specificity": 0.9973275112782365,
+      "precision": 0.8795009930619888,
+      "boundary_f1_at_2px": 0.7350801434887527,
+      "assd_px": 2.8641893227628112,
+      "hd95_px": 11.03721291595859,
+      "lesion_recall": 0.8496124031007751,
+      "lesion_precision": 0.9302325581395349,
+      "lesion_f1": 0.872093023255814
+    }
+  },
+  "roi_gate_opened": 0
+}

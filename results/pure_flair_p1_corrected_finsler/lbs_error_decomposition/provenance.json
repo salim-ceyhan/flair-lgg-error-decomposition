@@ -1,0 +1,7 @@
+{
+  "data_root": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\tcga_lgg_dataset",
+  "pool": "C:\\Users\\USER\\brain_tumor_finsler_project\\finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\candidate_pool",
+  "seed": 20260722,
+  "script_sha256": "64361774c4b7f0aa60bfd44358bf82c308c846c36e1ce7d5b423251b840f78d5",
+  "paper_figures_modified": false
+}

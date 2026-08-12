@@ -1,0 +1,891 @@
+{
+  "case_count": 110,
+  "candidate_count": 53002,
+  "canonical_mean_dice": 0.7892658976023633,
+  "canonical_median_dice": 0.9134051310987167,
+  "canonical_zero_dice": 6,
+  "pool_oracle_mean_dice": 0.8722055352837654,
+  "mean_selection_gap": 0.08293963768140215,
+  "per_case": [
+    {
+      "case_id": "TCGA_CS_4941_19960909_14",
+      "candidate_count": 682,
+      "canonical_dice": 0.86960933536276,
+      "oracle_dice": 0.881123557933456,
+      "canonical_candidate_index": 224,
+      "oracle_candidate_index": 457
+    },
+    {
+      "case_id": "TCGA_CS_4942_19970222_11",
+      "candidate_count": 552,
+      "canonical_dice": 0.9567514031033344,
+      "oracle_dice": 0.9582389122693429,
+      "canonical_candidate_index": 22,
+      "oracle_candidate_index": 90
+    },
+    {
+      "case_id": "TCGA_CS_4943_20000902_17",
+      "candidate_count": 568,
+      "canonical_dice": 0.9506578947368421,
+      "oracle_dice": 0.9519504436631508,
+      "canonical_candidate_index": 359,
+      "oracle_candidate_index": 325
+    },
+    {
+      "case_id": "TCGA_CS_4944_20010208_10",
+      "candidate_count": 471,
+      "canonical_dice": 0.9516636318490316,
+      "oracle_dice": 0.9574947673482531,
+      "canonical_candidate_index": 187,
+      "oracle_candidate_index": 116
+    },
+    {
+      "case_id": "TCGA_CS_5393_19990606_9",
+      "candidate_count": 494,
+      "canonical_dice": 0.9648292188028407,
+      "oracle_dice": 0.9676586960261483,
+      "canonical_candidate_index": 173,
+      "oracle_candidate_index": 95
+    },
+    {
+      "case_id": "TCGA_CS_5395_19981004_13",
+      "candidate_count": 566,
+      "canonical_dice": 0.9074837949322333,
+      "oracle_dice": 0.9085510688836105,
+      "canonical_candidate_index": 257,
+      "oracle_candidate_index": 1
+    },
+    {
+      "case_id": "TCGA_CS_5396_20010302_15",
+      "candidate_count": 502,
+      "canonical_dice": 0.9345556866660616,
+      "oracle_dice": 0.9345794392523364,
+      "canonical_candidate_index": 220,
+      "oracle_candidate_index": 87
+    },
+    {
+      "case_id": "TCGA_CS_5397_20010315_10",
+      "candidate_count": 441,
+      "canonical_dice": 0.38123935543036813,
+      "oracle_dice": 0.9044193216855088,
+      "canonical_candidate_index": 164,
+      "oracle_candidate_index": 128
+    },
+    {
+      "case_id": "TCGA_CS_6186_20000601_16",
+      "candidate_count": 489,
+      "canonical_dice": 0.9355728252694911,
+      "oracle_dice": 0.9358302122347066,
+      "canonical_candidate_index": 99,
+      "oracle_candidate_index": 42
+    },
+    {
+      "case_id": "TCGA_CS_6188_20010812_15",
+      "candidate_count": 422,
+      "canonical_dice": 0.9244712990936556,
+      "oracle_dice": 0.926391382405745,
+      "canonical_candidate_index": 36,
+      "oracle_candidate_index": 37
+    },
+    {
+      "case_id": "TCGA_CS_6290_20000917_8",
+      "candidate_count": 490,
+      "canonical_dice": 0.9634691195795007,
+      "oracle_dice": 0.9645576266736676,
+      "canonical_candidate_index": 220,
+      "oracle_candidate_index": 43
+    },
+    {
+      "case_id": "TCGA_CS_6665_20010817_18",
+      "candidate_count": 520,
+      "canonical_dice": 0.4630859375,
+      "oracle_dice": 0.7081682701377099,
+      "canonical_candidate_index": 235,
+      "oracle_candidate_index": 274
+    },
+    {
+      "case_id": "TCGA_CS_6666_20011109_17",
+      "candidate_count": 594,
+      "canonical_dice": 0.9276211950394588,
+      "oracle_dice": 0.9493494423791822,
+      "canonical_candidate_index": 122,
+      "oracle_candidate_index": 342
+    },
+    {
+      "case_id": "TCGA_CS_6667_20011105_13",
+      "candidate_count": 543,
+      "canonical_dice": 0.9387875220718069,
+      "oracle_dice": 0.9404553415061296,
+      "canonical_candidate_index": 302,
+      "oracle_candidate_index": 371
+    },
+    {
+      "case_id": "TCGA_CS_6668_20011025_17",
+      "candidate_count": 429,
+      "canonical_dice": 0.9411035337879727,
+      "oracle_dice": 0.9417924237757931,
+      "canonical_candidate_index": 23,
+      "oracle_candidate_index": 9
+    },
+    {
+      "case_id": "TCGA_CS_6669_20020102_16",
+      "candidate_count": 414,
+      "canonical_dice": 0.8974218321448162,
+      "oracle_dice": 0.9043746494671902,
+      "canonical_candidate_index": 139,
+      "oracle_candidate_index": 138
+    },
+    {
+      "case_id": "TCGA_DU_5849_19950405_24",
+      "candidate_count": 350,
+      "canonical_dice": 0.9507227332457293,
+      "oracle_dice": 0.9584450402144772,
+      "canonical_candidate_index": 14,
+      "oracle_candidate_index": 345
+    },
+    {
+      "case_id": "TCGA_DU_5851_19950428_19",
+      "candidate_count": 463,
+      "canonical_dice": 0.8695838695838696,
+      "oracle_dice": 0.9556148435605142,
+      "canonical_candidate_index": 8,
+      "oracle_candidate_index": 4
+    },
+    {
+      "case_id": "TCGA_DU_5852_19950709_13",
+      "candidate_count": 521,
+      "canonical_dice": 0.27094002973732034,
+      "oracle_dice": 0.7552721922511035,
+      "canonical_candidate_index": 265,
+      "oracle_candidate_index": 136
+    },
+    {
+      "case_id": "TCGA_DU_5853_19950823_29",
+      "candidate_count": 591,
+      "canonical_dice": 0.34466588511137164,
+      "oracle_dice": 0.7690782953419227,
+      "canonical_candidate_index": 190,
+      "oracle_candidate_index": 525
+    },
+    {
+      "case_id": "TCGA_DU_5854_19951104_27",
+      "candidate_count": 458,
+      "canonical_dice": 0.8921815889029003,
+      "oracle_dice": 0.8957708957708957,
+      "canonical_candidate_index": 57,
+      "oracle_candidate_index": 55
+    },
+    {
+      "case_id": "TCGA_DU_5855_19951217_17",
+      "candidate_count": 497,
+      "canonical_dice": 0.956397426733381,
+      "oracle_dice": 0.9579551382368284,
+      "canonical_candidate_index": 266,
+      "oracle_candidate_index": 338
+    },
+    {
+      "case_id": "TCGA_DU_5871_19941206_23",
+      "candidate_count": 432,
+      "canonical_dice": 0.9611564775987641,
+      "oracle_dice": 0.9622093023255814,
+      "canonical_candidate_index": 159,
+      "oracle_candidate_index": 132
+    },
+    {
+      "case_id": "TCGA_DU_5872_19950223_39",
+      "candidate_count": 399,
+      "canonical_dice": 0.8199620972836387,
+      "oracle_dice": 0.8199620972836387,
+      "canonical_candidate_index": 139,
+      "oracle_candidate_index": 139
+    },
+    {
+      "case_id": "TCGA_DU_5874_19950510_24",
+      "candidate_count": 483,
+      "canonical_dice": 0.8932617769827073,
+      "oracle_dice": 0.8932617769827073,
+      "canonical_candidate_index": 22,
+      "oracle_candidate_index": 22
+    },
+    {
+      "case_id": "TCGA_DU_6399_19830416_23",
+      "candidate_count": 464,
+      "canonical_dice": 0.9605295415543025,
+      "oracle_dice": 0.9697885196374623,
+      "canonical_candidate_index": 122,
+      "oracle_candidate_index": 227
+    },
+    {
+      "case_id": "TCGA_DU_6400_19830518_22",
+      "candidate_count": 554,
+      "canonical_dice": 0.9540050062578223,
+      "oracle_dice": 0.9621828626136908,
+      "canonical_candidate_index": 267,
+      "oracle_candidate_index": 223
+    },
+    {
+      "case_id": "TCGA_DU_6401_19831001_30",
+      "candidate_count": 540,
+      "canonical_dice": 0.9534623655913979,
+      "oracle_dice": 0.9787886993410958,
+      "canonical_candidate_index": 255,
+      "oracle_candidate_index": 534
+    },
+    {
+      "case_id": "TCGA_DU_6404_19850629_35",
+      "candidate_count": 500,
+      "canonical_dice": 0.9474229474229474,
+      "oracle_dice": 0.9526813880126183,
+      "canonical_candidate_index": 36,
+      "oracle_candidate_index": 58
+    },
+    {
+      "case_id": "TCGA_DU_6405_19851005_46",
+      "candidate_count": 572,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.0,
+      "canonical_candidate_index": 177,
+      "oracle_candidate_index": 0
+    },
+    {
+      "case_id": "TCGA_DU_6407_19860514_27",
+      "candidate_count": 554,
+      "canonical_dice": 0.9678225554514215,
+      "oracle_dice": 0.9768944902245921,
+      "canonical_candidate_index": 114,
+      "oracle_candidate_index": 179
+    },
+    {
+      "case_id": "TCGA_DU_6408_19860521_31",
+      "candidate_count": 537,
+      "canonical_dice": 0.9440883190883191,
+      "oracle_dice": 0.9509275335831124,
+      "canonical_candidate_index": 533,
+      "oracle_candidate_index": 365
+    },
+    {
+      "case_id": "TCGA_DU_7008_19830723_26",
+      "candidate_count": 456,
+      "canonical_dice": 0.8900138971610085,
+      "oracle_dice": 0.8904565941602979,
+      "canonical_candidate_index": 145,
+      "oracle_candidate_index": 78
+    },
+    {
+      "case_id": "TCGA_DU_7010_19860307_38",
+      "candidate_count": 445,
+      "canonical_dice": 0.8502293577981651,
+      "oracle_dice": 0.8665256872745366,
+      "canonical_candidate_index": 172,
+      "oracle_candidate_index": 198
+    },
+    {
+      "case_id": "TCGA_DU_7013_19860523_17",
+      "candidate_count": 536,
+      "canonical_dice": 0.3934816224574759,
+      "oracle_dice": 0.3973941368078176,
+      "canonical_candidate_index": 187,
+      "oracle_candidate_index": 186
+    },
+    {
+      "case_id": "TCGA_DU_7014_19860618_36",
+      "candidate_count": 530,
+      "canonical_dice": 0.9252700746185544,
+      "oracle_dice": 0.9516223497715826,
+      "canonical_candidate_index": 146,
+      "oracle_candidate_index": 104
+    },
+    {
+      "case_id": "TCGA_DU_7018_19911220_22",
+      "candidate_count": 380,
+      "canonical_dice": 0.8499581889857842,
+      "oracle_dice": 0.8583222046861722,
+      "canonical_candidate_index": 177,
+      "oracle_candidate_index": 176
+    },
+    {
+      "case_id": "TCGA_DU_7019_19940908_15",
+      "candidate_count": 472,
+      "canonical_dice": 0.6632298554297882,
+      "oracle_dice": 0.8897827835880934,
+      "canonical_candidate_index": 116,
+      "oracle_candidate_index": 154
+    },
+    {
+      "case_id": "TCGA_DU_7294_19890104_25",
+      "candidate_count": 504,
+      "canonical_dice": 0.5155688622754491,
+      "oracle_dice": 0.8839336763865066,
+      "canonical_candidate_index": 82,
+      "oracle_candidate_index": 68
+    },
+    {
+      "case_id": "TCGA_DU_7298_19910324_14",
+      "candidate_count": 514,
+      "canonical_dice": 0.9521404521404522,
+      "oracle_dice": 0.9524158125915081,
+      "canonical_candidate_index": 117,
+      "oracle_candidate_index": 254
+    },
+    {
+      "case_id": "TCGA_DU_7299_19910417_25",
+      "candidate_count": 462,
+      "canonical_dice": 0.2950688226647067,
+      "oracle_dice": 0.8024401689347724,
+      "canonical_candidate_index": 136,
+      "oracle_candidate_index": 159
+    },
+    {
+      "case_id": "TCGA_DU_7300_19910814_16",
+      "candidate_count": 383,
+      "canonical_dice": 0.899537825346631,
+      "oracle_dice": 0.9116901083698409,
+      "canonical_candidate_index": 127,
+      "oracle_candidate_index": 55
+    },
+    {
+      "case_id": "TCGA_DU_7301_19911112_22",
+      "candidate_count": 495,
+      "canonical_dice": 0.3366235098064351,
+      "oracle_dice": 0.45878136200716846,
+      "canonical_candidate_index": 193,
+      "oracle_candidate_index": 127
+    },
+    {
+      "case_id": "TCGA_DU_7302_19911203_24",
+      "candidate_count": 431,
+      "canonical_dice": 0.9063573883161512,
+      "oracle_dice": 0.9241727941176471,
+      "canonical_candidate_index": 80,
+      "oracle_candidate_index": 78
+    },
+    {
+      "case_id": "TCGA_DU_7304_19930325_24",
+      "candidate_count": 478,
+      "canonical_dice": 0.8687772681507999,
+      "oracle_dice": 0.8747099767981439,
+      "canonical_candidate_index": 122,
+      "oracle_candidate_index": 121
+    },
+    {
+      "case_id": "TCGA_DU_7306_19930512_22",
+      "candidate_count": 484,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.5221548078690936,
+      "canonical_candidate_index": 263,
+      "oracle_candidate_index": 108
+    },
+    {
+      "case_id": "TCGA_DU_7309_19960831_26",
+      "candidate_count": 390,
+      "canonical_dice": 0.2702630166398282,
+      "oracle_dice": 0.9098631429919773,
+      "canonical_candidate_index": 112,
+      "oracle_candidate_index": 93
+    },
+    {
+      "case_id": "TCGA_DU_8162_19961029_15",
+      "candidate_count": 324,
+      "canonical_dice": 0.9392298435619735,
+      "oracle_dice": 0.943104514533086,
+      "canonical_candidate_index": 106,
+      "oracle_candidate_index": 105
+    },
+    {
+      "case_id": "TCGA_DU_8163_19961119_16",
+      "candidate_count": 483,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.8614958448753463,
+      "canonical_candidate_index": 62,
+      "oracle_candidate_index": 201
+    },
+    {
+      "case_id": "TCGA_DU_8164_19970111_22",
+      "candidate_count": 341,
+      "canonical_dice": 0.9230158730158731,
+      "oracle_dice": 0.9264935064935065,
+      "canonical_candidate_index": 15,
+      "oracle_candidate_index": 72
+    },
+    {
+      "case_id": "TCGA_DU_8165_19970205_14",
+      "candidate_count": 496,
+      "canonical_dice": 0.5454545454545454,
+      "oracle_dice": 0.7451984635083226,
+      "canonical_candidate_index": 191,
+      "oracle_candidate_index": 144
+    },
+    {
+      "case_id": "TCGA_DU_8166_19970322_25",
+      "candidate_count": 436,
+      "canonical_dice": 0.6787904874636823,
+      "oracle_dice": 0.8701398493929614,
+      "canonical_candidate_index": 118,
+      "oracle_candidate_index": 79
+    },
+    {
+      "case_id": "TCGA_DU_8167_19970402_19",
+      "candidate_count": 464,
+      "canonical_dice": 0.10386288053210539,
+      "oracle_dice": 0.39036372224846483,
+      "canonical_candidate_index": 22,
+      "oracle_candidate_index": 159
+    },
+    {
+      "case_id": "TCGA_DU_8168_19970503_20",
+      "candidate_count": 395,
+      "canonical_dice": 0.9292165898617512,
+      "oracle_dice": 0.9292165898617512,
+      "canonical_candidate_index": 52,
+      "oracle_candidate_index": 52
+    },
+    {
+      "case_id": "TCGA_DU_A5TP_19970614_27",
+      "candidate_count": 504,
+      "canonical_dice": 0.9397003745318352,
+      "oracle_dice": 0.9401421623643846,
+      "canonical_candidate_index": 36,
+      "oracle_candidate_index": 94
+    },
+    {
+      "case_id": "TCGA_DU_A5TR_19970726_19",
+      "candidate_count": 331,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.8916261256598695,
+      "canonical_candidate_index": 31,
+      "oracle_candidate_index": 151
+    },
+    {
+      "case_id": "TCGA_DU_A5TS_19970726_16",
+      "candidate_count": 466,
+      "canonical_dice": 0.8601292807041673,
+      "oracle_dice": 0.9025667888947093,
+      "canonical_candidate_index": 187,
+      "oracle_candidate_index": 216
+    },
+    {
+      "case_id": "TCGA_DU_A5TT_19980318_49",
+      "candidate_count": 518,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.0,
+      "canonical_candidate_index": 499,
+      "oracle_candidate_index": 0
+    },
+    {
+      "case_id": "TCGA_DU_A5TU_19980312_16",
+      "candidate_count": 593,
+      "canonical_dice": 0.872237339881861,
+      "oracle_dice": 0.8730444045003661,
+      "canonical_candidate_index": 257,
+      "oracle_candidate_index": 227
+    },
+    {
+      "case_id": "TCGA_DU_A5TW_19980228_23",
+      "candidate_count": 586,
+      "canonical_dice": 0.9411097242709634,
+      "oracle_dice": 0.9523368810735771,
+      "canonical_candidate_index": 218,
+      "oracle_candidate_index": 497
+    },
+    {
+      "case_id": "TCGA_DU_A5TY_19970709_25",
+      "candidate_count": 521,
+      "canonical_dice": 0.34737009375496586,
+      "oracle_dice": 0.8958147818343722,
+      "canonical_candidate_index": 194,
+      "oracle_candidate_index": 510
+    },
+    {
+      "case_id": "TCGA_EZ_7264_20010816_19",
+      "candidate_count": 514,
+      "canonical_dice": 0.9511084117825691,
+      "oracle_dice": 0.9511084117825691,
+      "canonical_candidate_index": 55,
+      "oracle_candidate_index": 55
+    },
+    {
+      "case_id": "TCGA_FG_5962_20000626_28",
+      "candidate_count": 396,
+      "canonical_dice": 0.9584522676815731,
+      "oracle_dice": 0.9598335733717395,
+      "canonical_candidate_index": 160,
+      "oracle_candidate_index": 97
+    },
+    {
+      "case_id": "TCGA_FG_5964_20010511_14",
+      "candidate_count": 481,
+      "canonical_dice": 0.9596832253419726,
+      "oracle_dice": 0.9596832253419726,
+      "canonical_candidate_index": 118,
+      "oracle_candidate_index": 118
+    },
+    {
+      "case_id": "TCGA_FG_6688_20020215_27",
+      "candidate_count": 591,
+      "canonical_dice": 0.9141685882654369,
+      "oracle_dice": 0.9147524247064829,
+      "canonical_candidate_index": 105,
+      "oracle_candidate_index": 232
+    },
+    {
+      "case_id": "TCGA_FG_6689_20020326_30",
+      "candidate_count": 472,
+      "canonical_dice": 0.9591674925668979,
+      "oracle_dice": 0.9591674925668979,
+      "canonical_candidate_index": 69,
+      "oracle_candidate_index": 69
+    },
+    {
+      "case_id": "TCGA_FG_6690_20020226_32",
+      "candidate_count": 417,
+      "canonical_dice": 0.9536363636363636,
+      "oracle_dice": 0.9547511312217195,
+      "canonical_candidate_index": 137,
+      "oracle_candidate_index": 169
+    },
+    {
+      "case_id": "TCGA_FG_6691_20020405_26",
+      "candidate_count": 517,
+      "canonical_dice": 0.9126416739319965,
+      "oracle_dice": 0.968609865470852,
+      "canonical_candidate_index": 24,
+      "oracle_candidate_index": 72
+    },
+    {
+      "case_id": "TCGA_FG_6692_20020606_19",
+      "candidate_count": 445,
+      "canonical_dice": 0.9085853319429962,
+      "oracle_dice": 0.9176005273566249,
+      "canonical_candidate_index": 47,
+      "oracle_candidate_index": 49
+    },
+    {
+      "case_id": "TCGA_FG_7634_20000128_23",
+      "candidate_count": 567,
+      "canonical_dice": 0.9518404410572402,
+      "oracle_dice": 0.9518872509314757,
+      "canonical_candidate_index": 41,
+      "oracle_candidate_index": 86
+    },
+    {
+      "case_id": "TCGA_FG_7637_20000922_21",
+      "candidate_count": 505,
+      "canonical_dice": 0.8788826349801959,
+      "oracle_dice": 0.955824790307549,
+      "canonical_candidate_index": 210,
+      "oracle_candidate_index": 122
+    },
+    {
+      "case_id": "TCGA_FG_7643_20021104_26",
+      "candidate_count": 451,
+      "canonical_dice": 0.9360902255639098,
+      "oracle_dice": 0.9516380655226209,
+      "canonical_candidate_index": 44,
+      "oracle_candidate_index": 348
+    },
+    {
+      "case_id": "TCGA_FG_8189_20030516_25",
+      "candidate_count": 526,
+      "canonical_dice": 0.9315135866224026,
+      "oracle_dice": 0.9395161290322581,
+      "canonical_candidate_index": 97,
+      "oracle_candidate_index": 133
+    },
+    {
+      "case_id": "TCGA_FG_A4MT_20020212_16",
+      "candidate_count": 543,
+      "canonical_dice": 0.9563486798460926,
+      "oracle_dice": 0.9582893347412883,
+      "canonical_candidate_index": 87,
+      "oracle_candidate_index": 157
+    },
+    {
+      "case_id": "TCGA_FG_A4MU_20030903_16",
+      "candidate_count": 493,
+      "canonical_dice": 0.9535806512565346,
+      "oracle_dice": 0.9547758034511514,
+      "canonical_candidate_index": 36,
+      "oracle_candidate_index": 264
+    },
+    {
+      "case_id": "TCGA_FG_A60K_20040224_47",
+      "candidate_count": 409,
+      "canonical_dice": 0.7868852459016393,
+      "oracle_dice": 0.8160291438979964,
+      "canonical_candidate_index": 202,
+      "oracle_candidate_index": 204
+    },
+    {
+      "case_id": "TCGA_HT_7473_19970826_16",
+      "candidate_count": 528,
+      "canonical_dice": 0.8708150152181264,
+      "oracle_dice": 0.8711261642675698,
+      "canonical_candidate_index": 205,
+      "oracle_candidate_index": 78
+    },
+    {
+      "case_id": "TCGA_HT_7475_19970918_24",
+      "candidate_count": 528,
+      "canonical_dice": 0.9224515322076298,
+      "oracle_dice": 0.9504916920990166,
+      "canonical_candidate_index": 183,
+      "oracle_candidate_index": 180
+    },
+    {
+      "case_id": "TCGA_HT_7602_19951103_9",
+      "candidate_count": 392,
+      "canonical_dice": 0.8907249466950959,
+      "oracle_dice": 0.8908523908523909,
+      "canonical_candidate_index": 271,
+      "oracle_candidate_index": 231
+    },
+    {
+      "case_id": "TCGA_HT_7605_19950916_27",
+      "candidate_count": 552,
+      "canonical_dice": 0.9431113507684011,
+      "oracle_dice": 0.9509911894273128,
+      "canonical_candidate_index": 105,
+      "oracle_candidate_index": 49
+    },
+    {
+      "case_id": "TCGA_HT_7608_19940304_19",
+      "candidate_count": 526,
+      "canonical_dice": 0.8702629543696829,
+      "oracle_dice": 0.9112570983186727,
+      "canonical_candidate_index": 138,
+      "oracle_candidate_index": 134
+    },
+    {
+      "case_id": "TCGA_HT_7616_19940813_19",
+      "candidate_count": 510,
+      "canonical_dice": 0.7448831587429492,
+      "oracle_dice": 0.7448831587429492,
+      "canonical_candidate_index": 20,
+      "oracle_candidate_index": 20
+    },
+    {
+      "case_id": "TCGA_HT_7680_19970202_6",
+      "candidate_count": 592,
+      "canonical_dice": 0.2770425269101818,
+      "oracle_dice": 0.8092566619915849,
+      "canonical_candidate_index": 92,
+      "oracle_candidate_index": 76
+    },
+    {
+      "case_id": "TCGA_HT_7684_19950816_17",
+      "candidate_count": 509,
+      "canonical_dice": 0.9501471351912757,
+      "oracle_dice": 0.9704407022572554,
+      "canonical_candidate_index": 20,
+      "oracle_candidate_index": 138
+    },
+    {
+      "case_id": "TCGA_HT_7686_19950629_13",
+      "candidate_count": 429,
+      "canonical_dice": 0.9320158102766798,
+      "oracle_dice": 0.9560092612081666,
+      "canonical_candidate_index": 168,
+      "oracle_candidate_index": 197
+    },
+    {
+      "case_id": "TCGA_HT_7690_19960312_16",
+      "candidate_count": 500,
+      "canonical_dice": 0.9709397960302665,
+      "oracle_dice": 0.9798702751062403,
+      "canonical_candidate_index": 98,
+      "oracle_candidate_index": 77
+    },
+    {
+      "case_id": "TCGA_HT_7692_19960724_18",
+      "candidate_count": 486,
+      "canonical_dice": 0.8306010928961749,
+      "oracle_dice": 0.8788075178224238,
+      "canonical_candidate_index": 259,
+      "oracle_candidate_index": 288
+    },
+    {
+      "case_id": "TCGA_HT_7693_19950520_14",
+      "candidate_count": 510,
+      "canonical_dice": 0.9718032786885246,
+      "oracle_dice": 0.9723177723177723,
+      "canonical_candidate_index": 135,
+      "oracle_candidate_index": 80
+    },
+    {
+      "case_id": "TCGA_HT_7694_19950404_14",
+      "candidate_count": 603,
+      "canonical_dice": 0.974502487562189,
+      "oracle_dice": 0.9752529182879377,
+      "canonical_candidate_index": 296,
+      "oracle_candidate_index": 183
+    },
+    {
+      "case_id": "TCGA_HT_7855_19951020_11",
+      "candidate_count": 480,
+      "canonical_dice": 0.9477512640823206,
+      "oracle_dice": 0.9477512640823206,
+      "canonical_candidate_index": 203,
+      "oracle_candidate_index": 203
+    },
+    {
+      "case_id": "TCGA_HT_7856_19950831_20",
+      "candidate_count": 516,
+      "canonical_dice": 0.9592321915998944,
+      "oracle_dice": 0.9651517873181247,
+      "canonical_candidate_index": 220,
+      "oracle_candidate_index": 61
+    },
+    {
+      "case_id": "TCGA_HT_7860_19960513_15",
+      "candidate_count": 425,
+      "canonical_dice": 0.9250985545335085,
+      "oracle_dice": 0.928157072735386,
+      "canonical_candidate_index": 325,
+      "oracle_candidate_index": 324
+    },
+    {
+      "case_id": "TCGA_HT_7874_19950902_10",
+      "candidate_count": 520,
+      "canonical_dice": 0.929159802306425,
+      "oracle_dice": 0.9295302013422819,
+      "canonical_candidate_index": 44,
+      "oracle_candidate_index": 477
+    },
+    {
+      "case_id": "TCGA_HT_7877_19980917_23",
+      "candidate_count": 485,
+      "canonical_dice": 0.8997744118594908,
+      "oracle_dice": 0.8997744118594908,
+      "canonical_candidate_index": 42,
+      "oracle_candidate_index": 42
+    },
+    {
+      "case_id": "TCGA_HT_7879_19981009_13",
+      "candidate_count": 474,
+      "canonical_dice": 0.8764422068386826,
+      "oracle_dice": 0.9001965494649486,
+      "canonical_candidate_index": 212,
+      "oracle_candidate_index": 211
+    },
+    {
+      "case_id": "TCGA_HT_7881_19981015_31",
+      "candidate_count": 453,
+      "canonical_dice": 0.5279041916167665,
+      "oracle_dice": 0.9221772379667117,
+      "canonical_candidate_index": 166,
+      "oracle_candidate_index": 60
+    },
+    {
+      "case_id": "TCGA_HT_7882_19970125_19",
+      "candidate_count": 531,
+      "canonical_dice": 0.8078103207810321,
+      "oracle_dice": 0.8237770358542604,
+      "canonical_candidate_index": 126,
+      "oracle_candidate_index": 81
+    },
+    {
+      "case_id": "TCGA_HT_7884_19980913_9",
+      "candidate_count": 385,
+      "canonical_dice": 0.9474041398031897,
+      "oracle_dice": 0.9572829131652661,
+      "canonical_candidate_index": 107,
+      "oracle_candidate_index": 213
+    },
+    {
+      "case_id": "TCGA_HT_8018_19970411_9",
+      "candidate_count": 499,
+      "canonical_dice": 0.9196316450397656,
+      "oracle_dice": 0.9299363057324841,
+      "canonical_candidate_index": 135,
+      "oracle_candidate_index": 449
+    },
+    {
+      "case_id": "TCGA_HT_8105_19980826_21",
+      "candidate_count": 512,
+      "canonical_dice": 0.9619500594530321,
+      "oracle_dice": 0.969413186315233,
+      "canonical_candidate_index": 230,
+      "oracle_candidate_index": 23
+    },
+    {
+      "case_id": "TCGA_HT_8106_19970727_15",
+      "candidate_count": 494,
+      "canonical_dice": 0.8191674733785091,
+      "oracle_dice": 0.858236631175978,
+      "canonical_candidate_index": 78,
+      "oracle_candidate_index": 354
+    },
+    {
+      "case_id": "TCGA_HT_8107_19980708_11",
+      "candidate_count": 382,
+      "canonical_dice": 0.898533724340176,
+      "oracle_dice": 0.9379001280409731,
+      "canonical_candidate_index": 178,
+      "oracle_candidate_index": 65
+    },
+    {
+      "case_id": "TCGA_HT_8111_19980330_16",
+      "candidate_count": 455,
+      "canonical_dice": 0.8994565217391305,
+      "oracle_dice": 0.9227178423236515,
+      "canonical_candidate_index": 305,
+      "oracle_candidate_index": 327
+    },
+    {
+      "case_id": "TCGA_HT_8113_19930809_17",
+      "candidate_count": 601,
+      "canonical_dice": 0.7268947873361049,
+      "oracle_dice": 0.8900499772830531,
+      "canonical_candidate_index": 170,
+      "oracle_candidate_index": 341
+    },
+    {
+      "case_id": "TCGA_HT_8114_19981030_14",
+      "candidate_count": 426,
+      "canonical_dice": 0.9723414401525989,
+      "oracle_dice": 0.9733474228014559,
+      "canonical_candidate_index": 9,
+      "oracle_candidate_index": 246
+    },
+    {
+      "case_id": "TCGA_HT_8563_19981209_11",
+      "candidate_count": 407,
+      "canonical_dice": 0.9533876719307183,
+      "oracle_dice": 0.9548153885876581,
+      "canonical_candidate_index": 123,
+      "oracle_candidate_index": 20
+    },
+    {
+      "case_id": "TCGA_HT_A5RC_19990831_20",
+      "candidate_count": 444,
+      "canonical_dice": 0.7561450044208665,
+      "oracle_dice": 0.7992270531400966,
+      "canonical_candidate_index": 183,
+      "oracle_candidate_index": 181
+    },
+    {
+      "case_id": "TCGA_HT_A616_19991226_17",
+      "candidate_count": 313,
+      "canonical_dice": 0.7785402370555209,
+      "oracle_dice": 0.7889908256880734,
+      "canonical_candidate_index": 9,
+      "oracle_candidate_index": 22
+    },
+    {
+      "case_id": "TCGA_HT_A61A_20000127_35",
+      "candidate_count": 378,
+      "canonical_dice": 0.0,
+      "oracle_dice": 0.0,
+      "canonical_candidate_index": 133,
+      "oracle_candidate_index": 0
+    },
+    {
+      "case_id": "TCGA_HT_A61B_19991127_42",
+      "candidate_count": 320,
+      "canonical_dice": 0.9595738013162018,
+      "oracle_dice": 0.9595738013162018,
+      "canonical_candidate_index": 31,
+      "oracle_candidate_index": 18
+    }
+  ]
+}

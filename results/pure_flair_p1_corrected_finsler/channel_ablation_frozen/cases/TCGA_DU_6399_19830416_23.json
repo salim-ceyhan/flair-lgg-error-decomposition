@@ -1,0 +1,11 @@
+{
+  "case_id": "TCGA_DU_6399_19830416_23",
+  "traversal_candidates": 464,
+  "alpha_candidates": 216,
+  "traversal_selected": 0.9605295415543025,
+  "alpha_selected": 0.961509049197043,
+  "combined_selected": 0.9605295415543025,
+  "traversal_oracle": 0.9697885196374623,
+  "alpha_oracle": 0.961509049197043,
+  "combined_oracle": 0.9697885196374623
+}

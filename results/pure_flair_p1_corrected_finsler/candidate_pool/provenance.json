@@ -1,0 +1,18 @@
+{
+  "created_utc": "2026-08-09T02:59:11.544744+00:00",
+  "dataset_root": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\tcga_lgg_dataset",
+  "backend": "theory-aligned-local",
+  "newmetric_source": "C:\\Users\\USER\\brain_tumor_finsler_project\\src\\newmetric_corrected.py",
+  "newmetric_sha256": "0e1dfacddfe61fbdd280961831237da40cd106156c6ea9f544c265f0ccb4a539",
+  "windows": [
+    {
+      "window_high": 0.82,
+      "band_high_percentile": 88
+    },
+    {
+      "window_high": 0.97,
+      "band_high_percentile": 98
+    }
+  ],
+  "note": "Ground truth is attached retrospectively and is not used in candidate generation."
+}

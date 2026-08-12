@@ -1,0 +1,16 @@
+{
+  "created_utc": "2026-08-09T10:18:00+00:00",
+  "dataset_root": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\ucsf_pdgm_dataset\\processed",
+  "newmetric_backend": "theory-aligned-local",
+  "newmetric_source": "C:\\Users\\USER\\brain_tumor_finsler_project\\src\\newmetric_corrected.py",
+  "newmetric_sha256": "0e1dfacddfe61fbdd280961831237da40cd106156c6ea9f544c265f0ccb4a539",
+  "parameters": {
+    "newmetric_beta": 5.0,
+    "newmetric_dt": 0.15,
+    "newmetric_iterations": 3,
+    "persistence_beta": 1.0,
+    "roi_gate_fraction": 0.65,
+    "boundary_tolerance_px": 2.0,
+    "lesion_iou_threshold": 0.1
+  }
+}

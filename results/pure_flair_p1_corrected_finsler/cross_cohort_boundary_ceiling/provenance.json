@@ -1,0 +1,11 @@
+{
+  "data_roots": {
+    "tcga": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\tcga_lgg_dataset",
+    "ucsf": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\ucsf_pdgm_dataset\\processed",
+    "brats": "C:\\Users\\USER\\brain_tumor_finsler_project\\data\\brats2023_dataset"
+  },
+  "backend": "theory-aligned-local",
+  "newmetric_sha256": "0e1dfacddfe61fbdd280961831237da40cd106156c6ea9f544c265f0ccb4a539",
+  "script_sha256": "9a8aa69144d06c565205b5712a369d8a03147eb6ae2e57556857adf63b011735",
+  "seed": 20260723
+}
