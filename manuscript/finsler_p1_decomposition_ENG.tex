@@ -27,6 +27,12 @@
 \usepackage{tabularx}
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Error Decomposition in Training-Free Single-FLAIR Lower-Grade Glioma Segmentation: Generation versus Label-Free Selection},
+  pdfauthor={Salim Ceyhan and Haydar Kilic},
+  pdfsubject={Training-free single-FLAIR lower-grade glioma segmentation and error decomposition},
+  pdfkeywords={lower-grade glioma, FLAIR MRI, training-free segmentation, candidate generation, label-free selection, error decomposition}
+}
 \usepackage{xurl}
 \usepackage{authblk}
 \usepackage[most]{tcolorbox}
@@ -68,47 +74,41 @@
   boxrule=0.6pt,arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt]
 \section*{Highlights}
 \begin{itemize}[leftmargin=1.5em,itemsep=0.35em,topsep=0.25em]
-  \item Error decomposition separates localization, boundary representation, and selection.
-  \item Expanded candidates raised oracle Dice from $0.872$ to $0.906$, not delivered Dice.
-  \item The canonical pool covered $103/110$ at Dice$\geq0.70$; $16/103$ retained gaps $\geq0.10$.
-  \item Weak tumour boundaries correlated with lower candidate ceilings across three cohorts.
-  \item Frozen single-FLAIR fixed-slice segmentation achieved $0.712$ Dice on external UCSF-PDGM.
+  \item Errors were separated into localization, representation, and selection.
+  \item Expanded candidates raised oracle Dice from $0.872$ to $0.906$.
+  \item The canonical pool covered $103/110$ cases at Dice$\geq0.70$.
+  \item Weak boundaries predicted lower candidate ceilings across three cohorts.
+  \item Frozen single-FLAIR segmentation achieved $0.712$ Dice on UCSF-PDGM.
 \end{itemize}
 \end{tcolorbox}
 
 \clearpage
 
 \begin{abstract}
-Training-free single-FLAIR glioma segmentation can fail because the tumour is
-not localized, because its boundary is not represented by the generated
-candidates, or because an adequate candidate is available but not selected.
-We separated these error sources using a primary method with no learned weights
-that combines edge-preserving direction-dependent diffusion, score-topology
-threshold sweeping, and a closed-form label-free selection criterion; fuzzy
-$\alpha$-cut candidates were added only in a retrospective capacity analysis.
-The whole-tumour target was evaluated on the
-ground-truth-selected largest-tumour axial slice from the TCGA-LGG development
-cohort ($N{=}110$), an independent UCSF-PDGM WHO grade 2--3 cohort
-($N{=}99$), and BraTS~2023 ($N{=}150$) as a cross-grade stress test. Ground
-truth was used for slice selection, fixed-parameter development on TCGA-LGG,
-and retrospective evaluation, including candidate-pool ceilings and error
-decomposition; it did not enter case-level candidate generation or selection
-after the method was fixed. In TCGA-LGG, the label-free method achieved a mean
-Dice of $0.789$, whereas the corresponding candidate-pool ceiling was $0.872$.
-The tumour was localized in $106/110$ cases, a candidate with Dice$\geq0.70$
-was available in $103/110$, and $16/103$ representable cases retained a
-selection gap of at least $0.10$. Expanding the candidate family under nested
-seed and $\alpha$-cut budgets increased the ceiling to $0.906$, with the final
-marginal gains satisfying a prespecified $0.005$ practical-saturation margin;
-however, delivered Dice remained $0.789$ under the existing label-free selector.
-The weak-boundary fraction was negatively associated with the pool ceiling in
-TCGA-LGG ($\rho=-0.537$), UCSF-PDGM ($\rho=-0.438$), and BraTS~2023
-($\rho=-0.467$), with the direction preserved after covariate adjustment. The
-frozen method achieved a mean Dice of $0.712$ on UCSF-PDGM without retuning.
-These findings show that boundary-dependent candidate generation and
-ground-truth-free candidate selection are distinct bottlenecks. Reporting only
-the delivered mask obscures whether failure arises from localization,
-candidate-family capacity, or label-free decision-making.
+Training-free single-FLAIR glioma segmentation may fail through unsuccessful
+localization, inadequate boundary representation, or selection of an inferior
+candidate. We separated these error sources using a fixed method without learned
+weights that combines edge-preserving direction-dependent diffusion,
+score-topology threshold sweeping, and closed-form label-free selection. Fuzzy
+$\alpha$-cut candidates were added only for retrospective capacity analysis.
+The whole-tumour target was evaluated on the ground-truth-selected
+largest-tumour axial slice from TCGA-LGG development data ($N{=}110$), an
+independent UCSF-PDGM WHO grade 2--3 cohort ($N{=}99$), and BraTS~2023
+($N{=}150$) as a cross-grade stress test. Ground truth supported slice selection,
+fixed-parameter development on TCGA-LGG, and retrospective evaluation, but not
+case-level candidate generation or selection after fixation. On TCGA-LGG, mean
+delivered Dice was $0.789$ and the candidate-pool ceiling was $0.872$.
+Localization succeeded in $106/110$ cases; $103/110$ contained a candidate with
+Dice$\geq0.70$, while $16/103$ representable cases retained a selection gap of
+at least $0.10$. Nested seed and $\alpha$-cut expansion raised the retrospective
+ceiling to $0.906$ and satisfied the prespecified $0.005$ practical-saturation
+margin, without changing delivered Dice. Weak-boundary fraction was negatively
+associated with the pool ceiling in TCGA-LGG ($\rho=-0.537$), UCSF-PDGM
+($\rho=-0.438$), and BraTS~2023 ($\rho=-0.467$), with direction preserved after
+covariate adjustment. The frozen method achieved $0.712$ mean Dice on UCSF-PDGM
+without retuning. Thus, boundary-dependent candidate generation and label-free
+selection constitute distinct bottlenecks that cannot be identified from the
+delivered mask alone.
 
 \medskip
 \noindent\textbf{Keywords:} lower-grade glioma; FLAIR MRI; training-free
