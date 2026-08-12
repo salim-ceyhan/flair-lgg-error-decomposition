@@ -70,7 +70,7 @@
 \begin{itemize}[leftmargin=1.5em,itemsep=0.35em,topsep=0.25em]
   \item Error decomposition separates localization, boundary representation, and selection.
   \item Expanded candidates raised oracle Dice from $0.872$ to $0.906$, not delivered Dice.
-  \item The canonical pool covered $103/110$ at Dice$\geq0.70$; $16$ retained gaps $\geq0.10$.
+  \item The canonical pool covered $103/110$ at Dice$\geq0.70$; $16/103$ retained gaps $\geq0.10$.
   \item Weak tumour boundaries correlated with lower candidate ceilings across three cohorts.
   \item Frozen single-FLAIR inference achieved $0.712$ Dice on external UCSF-PDGM.
 \end{itemize}
@@ -82,10 +82,11 @@
 Training-free single-FLAIR glioma segmentation can fail because the tumour is
 not localized, because its boundary is not represented by the generated
 candidates, or because an adequate candidate is available but not selected.
-We separated these error sources using a method with no learned weights that
-combines edge-preserving direction-dependent diffusion, score-topology
-threshold sweeping, fuzzy $\alpha$-cut candidates, and a closed-form label-free
-selection criterion. The whole-tumour target was evaluated on the
+We separated these error sources using a primary method with no learned weights
+that combines edge-preserving direction-dependent diffusion, score-topology
+threshold sweeping, and a closed-form label-free selection criterion; fuzzy
+$\alpha$-cut candidates were added only in a retrospective capacity analysis.
+The whole-tumour target was evaluated on the
 ground-truth-selected largest-tumour axial slice from the TCGA-LGG development
 cohort ($N{=}110$), an independent UCSF-PDGM WHO grade 2--3 cohort
 ($N{=}99$), and BraTS~2023 ($N{=}150$) as a cross-grade stress test. Ground
@@ -522,6 +523,13 @@ otherwise $M_0$ was retained. The condition is inactive for already
 skull-stripped images and was therefore not independently validated by the two
 external cohorts.
 
+The two adoption thresholds were developmental choices. Their sensitivity was
+audited by varying the first-mask threshold over $0.55$--$0.75$ and the
+ROI-candidate threshold over $0.40$--$0.60$. Tumour size and peripheral location
+were examined retrospectively using the upper quartiles of reference-mask area
+and normalized reference-centroid eccentricity; these quantities were not inputs
+to the gate.
+
 \subsection{Expanded Candidate-Capacity Analysis}\label{sec:saturation-method}
 
 The expanded analysis tested whether a suitable boundary was absent from the
@@ -545,6 +553,14 @@ candidate-family ceiling. Practical saturation required the upper bounds of the
 paired bootstrap $95\%$ confidence intervals for both final budget increments to
 be smaller than the prespecified margin $\varepsilon=0.005$ Dice.
 
+Computational cost was measured over all 110 TCGA slices on an Intel Core
+Ultra~7 265K CPU (20 physical cores). The full canonical timing included
+NewMetric preprocessing, candidate generation and label-free selection. The
+expanded-budget timing was recorded separately and measures preprocessing plus
+the additional candidates through 30 seeds per window and 39 nested $\alpha$
+levels; it loads the frozen canonical pool and is therefore not a second
+end-to-end inference time.
+
 \subsection{Error Decomposition and Evaluation Measures}\label{sec:eval}
 
 For each case, candidate localization was summarized by
@@ -555,6 +571,10 @@ $R_{\max}\ge0.50$ and $D_{\max}<0.70$ indicated boundary-representation failure;
 $D_{\max}\ge0.70$ with $D_{\max}-D(\widehat M,G)\ge0.10$ indicated selection
 failure; all remaining cases were classified as near-ceiling/successful. These
 thresholds are operational diagnostic definitions, not clinical decision limits.
+Descriptive sensitivity was assessed over the complete $3\times3\times3$ grid
+$R_{\max}\in\{0.40,0.50,0.60\}$, $D_{\max}\in\{0.60,0.70,0.80\}$, and
+selection-gap threshold $\in\{0.05,0.10,0.15\}$. This audit changed only the
+retrospective class labels, not the predicted masks.
 
 The primary performance measure was Dice, calculated over all cases including
 complete misses. Jaccard overlap, sensitivity, precision, the number of zero-Dice
@@ -1457,6 +1477,15 @@ failures. Among the 103 boundary-representable cases, 16 retained an
 oracle--selected difference of at least $0.10$ and were therefore classified as
 selection failures. The remaining 87 cases were near-ceiling/successful.
 
+The 27-setting threshold audit yielded 3--5 localization failures, 2--11
+boundary-representation failures, 12--19 selection failures, and 81--87
+near-ceiling cases. Canonical counts were unchanged when the oracle threshold
+was varied from $0.60$ to $0.70$ and when the selection-gap threshold was varied
+from $0.10$ to $0.15$; the largest redistribution occurred at the stricter
+oracle threshold of $0.80$. Selection failures outnumbered localization and
+boundary failures throughout the grid, although the exact counts remained
+definition-dependent.
+
 \begin{table}[htbp]\centering
 \caption{Hierarchical error decomposition on TCGA-LGG. Reference masks were used
 only retrospectively for attribution.}\label{tab:lbs}
@@ -1564,6 +1593,13 @@ margin. The examined family therefore reached practical saturation near $0.906$.
 This finite experiment does not establish a universal single-FLAIR limit or
 preclude a different candidate generator from attaining a higher ceiling.
 
+The full canonical method required a mean of $1.659$~s per slice (median
+$1.688$~s; IQR $1.508$--$1.821$~s). The separately timed expanded-budget
+workload required a mean of $3.984$~s per slice (median $4.059$~s; IQR
+$3.339$--$4.474$~s). The latter is an additional research-analysis cost with a
+different scope and should not be added to or compared directly with the
+end-to-end canonical time.
+
 \begin{table}[htbp]\centering
 \caption{Nested candidate-capacity analysis on TCGA-LGG.}\label{tab:saturation}
 \begin{tabular}{lccc}
@@ -1607,7 +1643,7 @@ Cohort & $N$ & Spearman $\rho$ & Bootstrap 95\% CI \\
 \midrule
 TCGA-LGG & $110$ & $-0.537$ & $[-0.668,-0.379]$ \\
 UCSF-PDGM grade 2--3 & $99$ & $-0.438$ & $[-0.586,-0.259]$ \\
-BraTS~2023 GLI & $150$ & $-0.467$ & $[-0.593,-0.314]$ \\
+BraTS~2023 GLI & $150$ & $-0.467$ & $[-0.593,-0.321]$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1672,6 +1708,17 @@ deteriorated and 105 were unchanged. Because both the correction and its adoptio
 condition were developed on TCGA, this value is not the primary result and is not
 independent validation. The condition was never activated in UCSF-PDGM or
 BraTS~2023, both of which are skull-stripped.
+
+In the threshold audit, changing the ROI-candidate requirement from $0.40$ to
+$0.60$ did not alter adoption because every eligible $M_1$ had
+$f_{\mathrm{in}}(M_1)=1$. Raising the first-mask threshold from $0.55$--$0.60$
+to $0.65$, $0.70$, and $0.75$ increased adoptions from 4 to 5, 7, and 9, while
+deteriorations increased from 0 to 1, 3, and 4. The frozen $0.65$ value is thus a
+developmental operating point rather than a theoretically unique constant. No
+upper-quartile large tumour triggered the frozen gate; one upper-quartile
+peripheral tumour triggered it and improved. These counts are too small to
+establish anatomical safety, and the single deterioration among the five frozen
+adoptions was substantial (Dice change $-0.312$).
 
 \subsection{Matched Training-Free Comparisons}\label{sec:baselines}
 
@@ -2567,12 +2614,14 @@ This research received no external funding.
 The authors declare no competing interests.
 
 \section*{Ethics Statement}
-This study used only publicly available, de-identified retrospective imaging
-datasets and involved no new participant recruitment, intervention, or collection
+This study used only de-identified retrospective imaging datasets obtained
+through their applicable distribution channels and involved no new participant
+recruitment, intervention, or collection
 of identifiable information. Ethical approval and informed-consent procedures
 for the source cohorts were governed by the institutions that originally
-collected and released those datasets. No additional institutional review was
-required for the present secondary computational analysis.
+collected and released those datasets. The present analysis introduced no new
+contact with participants and used the datasets under their applicable access
+and data-use conditions.
 
 \section*{Data Availability}
 TCGA-LGG, BraTS~2023 GLI, and UCSF-PDGM are available through their respective
@@ -2584,7 +2633,7 @@ specification are archived with the accompanying research materials.
 \section*{Code Availability}
 The fixed method, data-preparation procedures, evaluation routines,
 hyperparameters, and manuscript sources are archived in a private GitHub
-repository at \url{https://github.com/salim-ceyhan/flair-lgg-error-decomposition/tree/manuscript-release}
+repository at \url{https://github.com/salim-ceyhan/flair-lgg-error-decomposition/tree/manuscript-release}.
 Repository access can be provided confidentially to editors and reviewers on
 request. The repository will be made publicly accessible upon acceptance of the
 article; source imaging data are not included.
