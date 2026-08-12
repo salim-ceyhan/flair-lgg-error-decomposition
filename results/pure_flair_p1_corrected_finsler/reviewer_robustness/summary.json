@@ -1,0 +1,79 @@
+{
+  "lbs": {
+    "canonical": {
+      "recall_threshold": 0.5,
+      "oracle_threshold": 0.7,
+      "gap_threshold": 0.1,
+      "n_L": 4,
+      "n_B": 3,
+      "n_S": 16,
+      "n_C": 87
+    }
+  },
+  "roi": {
+    "canonical": {
+      "old_mask_inside_threshold": 0.65,
+      "new_mask_inside_threshold": 0.5,
+      "opened": 5,
+      "mean_dice": 0.8180439807430702,
+      "mean_change": 0.028778083140706845,
+      "improved": 4,
+      "worsened": 1,
+      "worst_opened_change": -0.31170359944279147,
+      "large_opened": 0,
+      "large_worsened": 0,
+      "peripheral_opened": 1,
+      "peripheral_worsened": 0,
+      "opened_cases": [
+        {
+          "case_id": "TCGA_DU_6404_19850629_35",
+          "base": 0.9474229474229474,
+          "roi": 0.635719347980156,
+          "fi0": 0.6204228984012378,
+          "fi1": 1.0,
+          "area": 1922,
+          "eccentricity": 0.27349777811339065
+        },
+        {
+          "case_id": "TCGA_DU_6405_19851005_46",
+          "base": 0.0,
+          "roi": 0.7663190421011974,
+          "fi0": 0.24713064713064714,
+          "fi1": 1.0,
+          "area": 1024,
+          "eccentricity": 0.1181286199814177
+        },
+        {
+          "case_id": "TCGA_DU_8163_19961119_16",
+          "base": 0.0,
+          "roi": 0.8566359119943222,
+          "fi0": 0.23024830699774265,
+          "fi1": 1.0,
+          "area": 1331,
+          "eccentricity": 0.3800545991932971
+        },
+        {
+          "case_id": "TCGA_DU_A5TT_19980318_49",
+          "base": 0.0,
+          "roi": 0.9217900460058553,
+          "fi0": 0.4920080837773287,
+          "fi1": 1.0,
+          "area": 1211,
+          "eccentricity": 0.19483656194167878
+        },
+        {
+          "case_id": "TCGA_HT_A61A_20000127_35",
+          "base": 0.0,
+          "roi": 0.9325477448191792,
+          "fi0": 0.0,
+          "fi1": 1.0,
+          "area": 2572,
+          "eccentricity": 0.15085719865097563
+        }
+      ]
+    },
+    "large_area_q75_pixels": 4211.25,
+    "peripheral_eccentricity_q75": 0.2807649617620887,
+    "safety_definition": "Large and peripheral denote the upper quartile of GT area and normalized GT-centroid eccentricity, respectively; these are retrospective stress strata, not gate inputs."
+  }
+}

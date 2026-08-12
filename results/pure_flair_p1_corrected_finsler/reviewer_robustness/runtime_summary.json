@@ -1,0 +1,23 @@
+{
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) Ultra 7 265K",
+    "physical_cores": 20,
+    "logical_processors": 20,
+    "gpu_present_but_not_used_for_reported_cpu_timings": "NVIDIA GeForce RTX 4070 Ti SUPER"
+  },
+  "canonical_full_method_seconds_per_slice": {
+    "case_count": 110,
+    "mean": 1.6591520500000032,
+    "median": 1.6884500999999545,
+    "iqr": [1.5080161500004579, 1.820573999999624],
+    "scope": "NewMetric preprocessing, canonical candidate generation, label-free selection, and retrospective oracle evaluation"
+  },
+  "expanded_budget_additional_seconds_per_slice": {
+    "case_count": 110,
+    "mean": 3.984047636363638,
+    "median": 4.059427000001051,
+    "iqr": [3.3386512000000003, 4.473526075000001],
+    "scope": "Preprocessing plus additional standard-seed and fuzzy alpha-cut candidates through 30 seeds per window and 39 nested alpha levels; frozen canonical pool loading is excluded"
+  },
+  "interpretation": "The two measurements have different scopes and must not be added as if obtained in one end-to-end timing pass."
+}

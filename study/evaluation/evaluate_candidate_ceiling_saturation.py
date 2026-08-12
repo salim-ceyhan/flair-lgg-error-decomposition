@@ -18,7 +18,9 @@ for _bootstrap_path in (_PROJECT_ROOT, _STUDY_ROOT, _EVALUATION_DIR):
 import argparse
 import csv
 import json
+import platform
 import sys
+import time
 from collections import defaultdict
 from pathlib import Path
 
@@ -110,6 +112,7 @@ def alpha_candidates(intensity, brain, gt):
 
 
 def evaluate_case(case, rows):
+    started = time.perf_counter()
     flair = np.load(DATA / case / "flair.npy").astype(float)
     gt = np.load(DATA / case / "mask.npy").astype(bool)
     intensity, brain, filtered, edge = PP.prep_case(flair)
@@ -151,6 +154,7 @@ def evaluate_case(case, rows):
         "grid": grid,
         "new_standard_candidate_counts": {str(k): len(v) for k, v in standard.items()},
         "new_alpha_candidate_counts": {str(k): len(v) for k, v in alpha.items()},
+        "expanded_budget_seconds": time.perf_counter() - started,
     }
 
 
@@ -179,6 +183,8 @@ def main():
         "ground_truth_policy": "Retrospective oracle evaluation only",
         "gaussian_filtering": False,
         "median_filtering": False,
+        "runtime_scope": "Per-case preprocessing plus all additional standard-seed and fuzzy alpha-cut candidates through s30/a39; canonical pool generation is excluded because it is loaded from the frozen baseline.",
+        "python": platform.python_version(),
     }
     (OUT / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n", encoding="utf-8")
 
