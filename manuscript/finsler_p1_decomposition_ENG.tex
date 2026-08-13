@@ -523,7 +523,16 @@ on this seed-specific interval. The operator $\operatorname{CC}_s(A)$ returns
 the 4-connected component of binary set $A$ containing $s$, and $C_j(s)$ is its
 mask at level $t_j$. Four-connectivity matches the extremal-region convention
 used by the implementation~\cite{matas2004}; eight-connectivity is not evaluated
-as a separate experimental arm. Because superlevel sets are nested,
+as a separate experimental arm. In the two-dimensional grid, this choice admits
+horizontal and vertical adjacency but does not merge regions that meet only at
+a corner. It therefore provides a conservative branch topology: isolated
+diagonal contacts do not cause an early component merger, do not create a
+one-pixel diagonal leakage route, and do not introduce the associated jump into
+the seed-component area trajectory. The trade-off is that a genuinely thin or
+oblique structure connected only through diagonal pixels can be split. Thus,
+four-connectivity contributes a deterministic and comparatively conservative
+topological convention, not a demonstrated accuracy advantage; the latter
+would require a prespecified four-versus-eight-connectivity ablation. Because superlevel sets are nested,
 $C_j(s)\subseteq C_{j+1}(s)$ until the traversal terminates.
 
 \paragraph{Leakage-control stops.}
