@@ -253,16 +253,21 @@ intensity-membership boundaries, but do not encode the plateau structure of the
 score field. Their union broadens representational capacity; it does not, by
 itself, solve candidate selection.
 
-Beyond candidate construction, persistence supplies a principled language for stability across a filtration
-~\cite{edelsbrunner2002,cohensteiner2007}. In topological segmentation it may act
-as a shape prior through higher-dimensional holes or cavities
-~\cite{francois2026}. Its role here is narrower: the connected component
-containing a seed is followed through score superlevel sets, and the width of a
-stable area plateau is recorded as a candidate attribute. This is a
-zero-dimensional, seed-conditioned stability measure, not a prior that specifies
-the expected topology of a glioma. Long persistence can indicate a well-separated
-region, but cannot establish that the region is tumour. Tumour specificity must
-therefore come from selection evidence and be tested empirically.
+The connected components of all superlevel sets of a scalar image form a
+max-tree under set inclusion, a standard morphological hierarchy for connected
+filtering~\cite{salembier2009,passat2023}. Components containing one fixed point
+form a totally ordered chain within that tree~\cite{passat2011}; following this
+chain is therefore a well-defined seed-conditioned traversal rather than an
+arbitrary choice at component merges. Stability under threshold change is also
+the organizing principle of maximally stable extremal regions~\cite{matas2004}.
+The present method uses these ideas in a restricted form: it samples the
+seed-containing superlevel component at 200 prescribed thresholds and records
+runs with limited area growth. The resulting $\pi$ is a sampled plateau length,
+not classical birth--death persistence~\cite{edelsbrunner2002}, a complete
+max-tree attribute, or a higher-dimensional topological prior
+~\cite{francois2026}. A long plateau indicates threshold stability but cannot
+establish that the component is tumour; tumour specificity must come from the
+remaining image evidence and be tested empirically.
 
 The literature commonly emphasizes candidate construction or final overlap,
 whereas fewer studies quantify whether a good candidate existed before it was
@@ -489,18 +494,41 @@ window-independent evidence field $E(x)=g(x)F_n(x)\mathbf 1_B(x)$.
 Seed localization and region evolution deliberately rely on different
 evidence. Seed locations are local maxima of $S$ restricted to
 $P_{30}(I_n;B)\le I_n(x)\le P_{p_h}(I_n;B)$. At most ten seeds are retained per window,
-with a minimum separation of 12 pixels. For each seed $s$, the threshold is
-decreased in 200 equally spaced levels from $S(s)$ to $0.20S(s)$, and the
-connected component containing that seed is followed:
+with a minimum separation of 12 pixels.
+
+\paragraph{Seed-conditioned superlevel traversal.}
+For a threshold $t$, define the score superlevel set
+$X_t=\{x\in B:S(x)\ge t\}$. If $t_1>t_2$, then
+$X_{t_1}\subseteq X_{t_2}$; hence the 4-connected components across decreasing
+thresholds form an inclusion hierarchy, or max-tree
+~\cite{salembier2009,passat2023}. For a fixed seed $s$, the components that
+contain $s$ constitute a nested chain~\cite{passat2011}. The traversal used here
+materializes only this seed-conditioned chain; it neither constructs the full
+max-tree nor propagates a front by Euclidean or geodesic distance.
+
+For each seed, the method samples
 \begin{equation}
- C_t(s)=\operatorname{CC}_{s}\big(\{S\ge t\}\cap B\big).
+ t_j=S(s)\left[1-0.8\frac{j-1}{199}\right],
+ \qquad j=1,\ldots,200,
+ \label{eq:traversal-thresholds}
+\end{equation}
+and follows the component
+\begin{equation}
+ C_j(s)=\operatorname{CC}_{s}(X_{t_j})
+       =\operatorname{CC}_{s}\big(\{x\in B:S(x)\ge t_j\}\big).
 \label{eq:seeded-components}
 \end{equation}
-Here $t$ is the descending score threshold,
-$\operatorname{CC}_s(A)$ is the 4-connected component of binary set $A$ that
-contains $s$, and $C_t(s)$ is its mask at threshold $t$. Let
-$a_j=|C_{t_j}(s)|$ and $\Delta_j=a_j-a_{j-1}$ at successive thresholds
-$t_1>\cdots>t_{200}$, and let
+Thus, $t_1=S(s)$ and $t_{200}=0.20S(s)$; the 200 thresholds are equally spaced
+on this seed-specific interval. The operator $\operatorname{CC}_s(A)$ returns
+the 4-connected component of binary set $A$ containing $s$, and $C_j(s)$ is its
+mask at level $t_j$. Four-connectivity matches the extremal-region convention
+used by the implementation~\cite{matas2004}; eight-connectivity is not evaluated
+as a separate experimental arm. Because superlevel sets are nested,
+$C_j(s)\subseteq C_{j+1}(s)$ until the traversal terminates.
+
+\paragraph{Leakage-control stops.}
+Let $a_j=|C_j(s)|$ and $\Delta_j=a_j-a_{j-1}$ denote component area and its
+increment at successive levels, and let
 $n_{\min}=\max(40,0.02|B|)$ pixels denote the area at which the jump and
 acceleration stops become active.
 Evolution terminates when either $a_j>0.25|B|$ (the area-cap stop) or the mean
@@ -509,20 +537,34 @@ stop). Once $a_{j-1}\ge n_{\min}$, two additional growth-instability stops are
 enabled: $a_j>4a_{j-1}$ (the jump stop), or
 $\Delta_j>2.5\Delta_{j-1}$ and
 $\Delta_{j-1}>2.5\Delta_{j-2}+1$, with all three increments positive (the
-acceleration stop).
+acceleration stop). These are readout safeguards applied to the sampled branch:
+they do not alter the superlevel connectivity or decide which components merge.
+The area cap limits gross support capture, the jump and acceleration criteria
+detect abrupt merging or leakage after a stable-size component has formed, and
+the edge-wall condition stops a branch whose current boundary lies predominantly
+on low-permeability pixels.
 
+\paragraph{Plateau extraction.}
 A stable plateau is a maximal run of sampled thresholds
 $t_r,t_{r+1},\ldots,t_{r+m-1}$ for which
 $a_j\le1.06a_r$; here $a_r$ is the component area at the first, highest-threshold
 sample of the run and $m\ge1$ is its number of sampled threshold levels.
-Plateau tracking begins once $a_j\ge30$ pixels. Its representative mask $M$ is
-the largest component reached within the run, with holes filled only when hole
-filling does not increase its area beyond $2|M|$. The persistence attribute is
+This relative-area criterion follows the extremal-region principle that a useful
+component changes little over a threshold neighborhood~\cite{matas2004}, while
+using the one-sided growth trajectory of the fixed seed. Plateau tracking begins
+once $a_j\ge30$ pixels. Let $M_{\mathrm{raw}}=C_{r+m-1}(s)$ be the largest
+component reached within the run. Its holes are filled to obtain $M$ only when
+the filled area is no greater than $2|M_{\mathrm{raw}}|$; otherwise
+$M=M_{\mathrm{raw}}$. The persistence attribute is
 the dimensionless run length
 $\pi(M)=m\in\{1,\ldots,200\}$, not the numerical width of the score-threshold
-interval. Thus, seeds are determined from a FLAIR-restricted
-score maximum, whereas candidate boundaries are determined by the topology of
-score superlevel sets.
+interval and not the classical lifetime between a component's birth and death.
+The seed need not coincide with the local maximum at which its max-tree branch
+is born, and the sweep begins at $S(s)$ rather than at that birth level; classical
+zero-dimensional persistence terminology would therefore overstate what is
+measured~\cite{edelsbrunner2002}. Seeds are determined from a FLAIR-restricted
+score maximum, whereas candidate boundaries are determined by this sampled
+superlevel-component traversal.
 
 For every nonempty candidate mask $M\subseteq B$, let $p(M)$ be the sum of the
 piecewise-Euclidean lengths of its external OpenCV contours, and let $h(M)$ be
@@ -3541,6 +3583,10 @@ Slice selection is fixed by the ground-truth largest-tumour rule in both cohorts
 \bibitem{edelsbrunner2002} H.~Edelsbrunner, D.~Letscher, and A.~Zomorodian, ``Topological persistence and simplification,'' \emph{Discrete Comput. Geom.}, vol.~28, no.~4, pp.~511--533, 2002. doi: \url{https://doi.org/10.1007/s00454-002-2885-2}.
 \bibitem{cohensteiner2007} D.~Cohen-Steiner, H.~Edelsbrunner, and J.~Harer, ``Stability of persistence diagrams,'' \emph{Discrete Comput. Geom.}, vol.~37, no.~1, pp.~103--120, 2007. doi: \url{https://doi.org/10.1007/s00454-006-1276-5}.
 \bibitem{francois2026} A.~Fran\c{c}ois and R.~Tinarrage, ``Train-free segmentation in MRI with cubical persistent homology,'' \emph{J. Math. Imaging Vis.}, vol.~68, art.~20, 2026. doi: \url{https://doi.org/10.1007/s10851-026-01300-1}.
+\bibitem{salembier2009} P.~Salembier and M.~H.~F.~Wilkinson, ``Connected operators: A review of region-based morphological image processing techniques,'' \emph{IEEE Signal Process. Mag.}, vol.~26, no.~6, pp.~136--157, 2009. doi: \url{https://doi.org/10.1109/MSP.2009.934154}.
+\bibitem{passat2023} N.~Passat, J.~Mendes Forte, and Y.~Kenmochi, ``Morphological hierarchies: A unifying framework with new trees,'' \emph{J. Math. Imaging Vis.}, vol.~65, pp.~718--753, 2023. doi: \url{https://doi.org/10.1007/s10851-023-01154-x}.
+\bibitem{passat2011} N.~Passat, B.~Naegel, F.~Rousseau, M.~Koob, and J.-L.~Dietemann, ``Interactive segmentation based on component-trees,'' \emph{Pattern Recognit.}, vol.~44, nos.~10--11, pp.~2539--2554, 2011. doi: \url{https://doi.org/10.1016/j.patcog.2011.03.025}.
+\bibitem{matas2004} J.~Matas, O.~Chum, M.~Urban, and T.~Pajdla, ``Robust wide-baseline stereo from maximally stable extremal regions,'' \emph{Image Vis. Comput.}, vol.~22, no.~10, pp.~761--767, 2004. doi: \url{https://doi.org/10.1016/j.imavis.2004.02.006}.
 \bibitem{louis2021} D.~N.~Louis \emph{et al.}, ``The 2021 WHO classification of tumors of the central nervous system: a summary,'' \emph{Neuro-Oncology}, vol.~23, no.~8, pp.~1231--1251, 2021. doi: \url{https://doi.org/10.1093/neuonc/noab106}.
 \bibitem{menze2015} B.~H.~Menze \emph{et al.}, ``The multimodal brain tumor image segmentation benchmark (BRATS),'' \emph{IEEE Trans. Med. Imaging}, vol.~34, no.~10, pp.~1993--2024, 2015. doi: \url{https://doi.org/10.1109/TMI.2014.2377694}.
 \bibitem{baid2021} U.~Baid \emph{et al.}, ``The RSNA-ASNR-MICCAI BraTS 2021 benchmark,'' \emph{arXiv:2107.02314}, 2021. doi: \url{https://doi.org/10.48550/arXiv.2107.02314}.
