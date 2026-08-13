@@ -817,23 +817,40 @@ attribution.
 
 \subsection{Statistical Analysis}\label{sec:statistics}
 
-The observational unit is one prespecified axial slice per imaging study.
-TCGA-LGG and UCSF-PDGM contribute one study per patient. The 150 BraTS studies
-represent 143 unique patients; repeated studies remain in the same
-resampling cluster. Means include zero-Dice cases. Percentile bootstrap $95\%$
-confidence intervals use 20,000 resamples. Case-level differences are resampled
-for paired comparisons, whereas boundary analyses use patient-clustered
-resampling. The corresponding fixed random seeds are 20260715 for primary paired
-analyses and 20260723 for cross-cohort boundary analyses.
+The analysis record is one prespecified axial slice per imaging study. TCGA-LGG
+and UCSF-PDGM contribute one study per patient. The 150 BraTS studies represent
+143 unique patients; consequently, the patient, rather than the study, is the
+independent resampling unit whenever BraTS contributes to an analysis, and
+repeated studies from the same patient remain in the same resampling cluster.
+Arithmetic means retain zero-Dice cases. Unless stated otherwise, uncertainty is
+reported by two-sided percentile-bootstrap $95\%$ confidence intervals (CIs)
+from 20,000 resamples. A single case is resampled for an unpaired cohort summary,
+whereas the within-case difference is resampled for a paired comparison.
 
-Spearman correlations quantify the association between boundary descriptors
-and candidate ceilings; partial
-Spearman analyses controlling for area, compactness and the normalized
-three-pixel ring intensity separation defined above use 5,000
-clustered resamples. The UCSF grade comparison is exploratory and uses a
-two-sided Mann--Whitney $U$ test, Cliff's $\delta$~\cite{cliff1993} and an independent bootstrap
-interval for the mean difference. Parameter sweeps and all TCGA-based parameter
-comparisons are treated as developmental rather than confirmatory.
+For paired mean-Dice comparisons, a two-sided Monte Carlo sign-flip test
+independently reverses the sign of each within-case difference under the null
+hypothesis; 20,000 sign configurations are sampled, and one is added to both the
+exceedance count and its denominator. The three pairwise smoothing-ablation
+tests constitute one family and their $p$-values are adjusted by the Holm
+procedure. Parameter sweeps, candidate-budget analyses and all comparisons used
+to choose TCGA parameters are developmental; their CIs quantify uncertainty
+within the development set and are not interpreted as independent confirmatory
+tests.
+
+Spearman's $\rho$ quantifies the association between each boundary descriptor and
+the candidate ceiling. Boundary-analysis CIs use patient-clustered resampling
+(20,000 replicates; fixed seed 20260724). For the adjusted analysis, the boundary
+descriptor, candidate ceiling, log-transformed tumour area, compactness and
+normalized three-pixel ring intensity separation are first converted to ranks.
+The ranked descriptor and ranked ceiling are separately regressed on the three
+ranked covariates, and the Pearson correlation between the two residual vectors
+defines the partial Spearman coefficient. Its CI uses 5,000 patient-clustered
+resamples. The candidate-saturation CIs use paired case resampling with fixed seed
+20260726. Other primary case-level bootstrap and sign-flip analyses use fixed seed
+20260715. The UCSF grade comparison is exploratory and uses a two-sided
+Mann--Whitney $U$ test, Cliff's $\delta$~\cite{cliff1993}, and an independent
+20,000-resample bootstrap CI for the grade-3 minus grade-2 mean difference; no
+multiplicity adjustment is applied to this single exploratory comparison.
 
 \begin{table}[htbp]\centering
 \caption{Fixed parameters of the primary label-free method and the retrospective
