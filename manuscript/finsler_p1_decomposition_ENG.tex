@@ -169,7 +169,7 @@ attributed to the direction-dependent front end.
 The evaluation deliberately separates inference from measurement. No labels or
 learned parameters enter candidate generation or selection. Ground truth is used
 to choose the largest-tumour axial slice and, retrospectively, to compute
-performance, pool ceilings, and error classes. The experiment consequently
+performance, pool ceilings, and operational diagnostic states. The experiment consequently
 evaluates fixed-slice segmentation rather than automatic slice detection or 3D
 tumour localization. TCGA-LGG ($N=110$) is the development and decomposition
 cohort; UCSF-PDGM WHO grade 2--3 ($N=99$) provides frozen-parameter external
@@ -281,8 +281,8 @@ an undersampled family or a practical saturation of that family.
 Taken together, the closest methodological comparators are not defined by their reported
 Dice alone, but by whether they are training-free, single-modality, prompt-free,
 and candidate-based. Within this space, the contribution is an error-accounting
-framework: localization failure, boundary-representation failure, and selection
-failure are assigned operational definitions and measured separately. The
+framework: candidate-reach limitation, boundary-representation limitation, and
+selection loss are assigned study-specific operational definitions and measured separately. The
 NewMetric front end provides a geometrically derived edge-preserving field, but
 the principal claim does not require Finsler-specific accuracy superiority. The
 novel empirical question is instead whether a candidate family can represent the
@@ -723,25 +723,66 @@ batch run is not stored in its provenance, whereas the expanded-budget audit
 runs serially; the reported values are therefore descriptive computational
 costs rather than standardized serial-latency benchmarks.
 
-\subsection{Error Decomposition and Evaluation Measures}\label{sec:eval}
+\subsection{Operational Error Decomposition and Evaluation Measures}\label{sec:eval}
+
+Aggregate overlap does not uniquely identify why a segmentation system fails:
+region-, boundary-, and distance-based measures respond to different error
+properties, and no single measure captures all of them
+~\cite{taha2015,yeghiazaryan2018}. More generally, error-analysis frameworks for
+detection and instance segmentation separate localization and missed-target
+errors and use oracle interventions to expose performance hidden by an aggregate
+score~\cite{bolya2020}. Candidate-based segmentation creates an additional
+distinction: a suitable mask may be absent from the generated pool or present
+but ranked below another candidate. The decomposition below adapts these
+principles to the generate--select structure of this study; it is not adopted
+from an established clinical taxonomy.
 
 For a given case, let $Y\subseteq\Omega$ denote its nonempty whole-tumour
 reference mask, let $M_j$ be candidate $j$, and let $\widehat M$ be the delivered
 mask from Eq.~\eqref{eq:selection-primary}. Candidate localization is summarized by
 $R_{\max}=\max_j|M_j\cap Y|/|Y|\in[0,1]$, the greatest fraction of the reference
-tumour reached by any single candidate. Boundary availability is summarized by
+tumour reached by any single candidate. Here ``localization'' means candidate
+reach or target coverage within the generated pool; it does not mean automatic
+slice detection, centroid localization, or clinical lesion detection. Boundary
+availability is summarized by
 the pool-oracle Dice $D_{\max}=\max_jD(M_j,Y)\in[0,1]$, using the Dice definition
 given above. The selection gap is
-$\Delta_{\mathrm{sel}}=D_{\max}-D(\widehat M,Y)\ge0$. Errors are assigned hierarchically:
-$R_{\max}<0.50$ indicates localization failure;
-$R_{\max}\ge0.50$ and $D_{\max}<0.70$ indicates boundary-representation failure;
-$D_{\max}\ge0.70$ with $\Delta_{\mathrm{sel}}\ge0.10$ indicates selection
-failure; all remaining cases are classified as near-ceiling/successful. These
-thresholds are operational diagnostic definitions, not clinical decision limits.
+$\Delta_{\mathrm{sel}}=D_{\max}-D(\widehat M,Y)\ge0$; it measures the Dice loss
+associated with label-free ranking relative to the best mask already available
+in the same pool.
+
+Cases are assigned to mutually exclusive diagnostic states in the order in
+which a generate--select system can first become limiting:
+\begin{enumerate}[label=(\roman*),leftmargin=2.3em,itemsep=0.15em,topsep=0.3em]
+ \item $R_{\max}<0.50$: \emph{candidate-reach limitation} (localization failure),
+ because no generated candidate covers a majority of the reference target;
+ \item $R_{\max}\ge0.50$ and $D_{\max}<0.70$:
+ \emph{boundary-representation limitation}, because the pool reaches most of
+ the target but contains no candidate meeting the operational overlap level;
+ \item $D_{\max}\ge0.70$ and $\Delta_{\mathrm{sel}}\ge0.10$:
+ \emph{selection loss}, because a representable mask exists but the delivered
+ mask loses at least $0.10$ Dice relative to it;
+ \item all remaining cases: \emph{no classified major bottleneck} (reported
+ compactly as near-ceiling/successful).
+\end{enumerate}
+The hierarchy identifies the earliest \emph{observable} limitation in the
+candidate-generation--selection sequence. It does not prove a unique causal or
+biological failure mechanism: a case assigned to an earlier state may also
+contain later-stage weaknesses. Nor are the cut-offs validated clinical
+acceptability limits. The $0.50$ target-coverage cut-off operationalizes majority
+reach, $0.70$ Dice operationalizes a usable candidate for this decomposition,
+and a $0.10$ Dice gap operationalizes a material within-pool selection loss.
+They are study-specific analysis conventions and are not used to generate or
+select a mask.
+
 Descriptive sensitivity is assessed over the complete $3\times3\times3$ grid
 $R_{\max}\in\{0.40,0.50,0.60\}$, $D_{\max}\in\{0.60,0.70,0.80\}$, and
 selection-gap threshold $\in\{0.05,0.10,0.15\}$. This audit changes only the
-retrospective class labels, not the predicted masks.
+retrospective class labels, not the predicted masks. Its purpose is to distinguish
+a conclusion that persists over reasonable operational definitions from a case
+count that depends on one selected threshold triplet. As an independent check on
+the interpretation of $R_{\max}$, the analysis also reports whether at least one
+automatic seed lies inside $Y$; seed hit is not part of the class definition.
 
 The primary performance measure is Dice, calculated over all cases including
 complete misses. For prediction $A$ and reference $Y$, Jaccard overlap is
@@ -1701,11 +1742,13 @@ shows agreement between the available oracle boundary and the delivered mask.
 
 \begin{figure}[!tbp]\centering
 \includegraphics[width=0.96\linewidth,trim=0 25bp 0 0,clip]{fig_lbs_representative_cases.png}
-\caption{\textbf{Representative cases from the localization--boundary--selection
-decomposition.} This is a retrospective diagnostic audit, not the inference
-workflow: the pool-oracle column uses the reference mask only to identify the
-best available candidate. Rows show localization failure (L), boundary-representation
-failure (B), selection failure (S), and a near-ceiling/successful case (C).
+\caption{\textbf{Representative cases from the operational
+localization--boundary--selection decomposition.} This is a retrospective
+diagnostic audit, not the inference workflow: the pool-oracle column uses the
+reference mask only to identify the best available candidate. Rows show a
+candidate-reach limitation (L, retained as localization shorthand), a
+boundary-representation limitation (B), a selection-loss state (S), and a case
+with no classified major bottleneck (C).
 Columns show the FLAIR slice with the reference contour, the union of generated
 candidates and seed locations, the retrospective pool-oracle boundary, and the
 boundary selected without reference labels. Yellow denotes the reference mask,
@@ -2171,33 +2214,49 @@ pool oracle is $0.8722$, leaving a mean selection gap of $0.0829$. The LBS
 decomposition below supplies the inference-side evidence without importing
 selector analyses previously computed from a different TCGA image derivative.
 
-\subsection{Localization--Boundary--Selection Error Decomposition}\label{sec:lbs}
+\subsection{Operational Localization--Boundary--Selection Decomposition}\label{sec:lbs}
 
-To determine at which stage the oracle gap arises, the hierarchical LBS analysis defined in Section~\ref{sec:eval} was applied to the frozen TCGA-LGG candidate pool (Table~\ref{tab:lbs}). At least one seed fell inside the ground truth in $106/110$ cases ($96.4\%$), localization success with $R_{\max}\ge0.50$ was likewise attained in $106/110$ ($96.4\%$), and boundary-representation success with oracle Dice$\ge0.70$ in $103/110$ ($93.6\%$). Thus, in only $3$ of the $106$ cases where localization succeeded did the candidate family fail to produce a boundary with Dice$\ge0.70$. In $16$ of the $103$ representable cases ($15.5\%$) the oracle-minus-selected difference is at least $0.10$, indicating a separate selection failure.
+To identify the earliest observable stage at which the oracle gap arises, the
+study-specific hierarchical LBS analysis defined in Section~\ref{sec:eval} was
+applied retrospectively to the frozen TCGA-LGG candidate pool
+(Table~\ref{tab:lbs}). At least one seed fell inside the ground truth in $106/110$
+cases ($96.4\%$), and the independently defined majority-reach state
+$R_{\max}\ge0.50$ occurred in the same $106/110$ cases. This concordance supports
+the intended candidate-reach interpretation in this cohort, although seed hit is
+not a component of the classification. The operational representation level
+$D_{\max}\ge0.70$ was reached in $103/110$ cases ($93.6\%$). Thus, only $3$ of
+the $106$ majority-reach cases lacked a candidate at that overlap level. In
+$16$ of the $103$ representable cases ($15.5\%$), the oracle-minus-selected
+difference was at least $0.10$, meeting the study definition of a material
+selection loss.
 
-Across the prespecified 27-combination diagnostic grid, localization failures
-ranged from 3 to 5, boundary-representation failures from 2 to 11, selection
-failures from 12 to 19, and near-ceiling cases from 81 to 87. The canonical counts
+Across the prespecified 27-combination diagnostic grid, candidate-reach
+limitations ranged from 3 to 5, boundary-representation limitations from 2 to
+11, selection-loss states from 12 to 19, and cases with no classified major
+bottleneck from 81 to 87. The canonical counts
 were unchanged when the oracle threshold was varied from $0.60$ to $0.70$ and when
 the selection-gap threshold was varied from $0.10$ to $0.15$; the largest shift
 occurred at the stricter oracle threshold of $0.80$. The qualitative conclusion
-that selection failures outnumber localization and boundary failures therefore
-holds throughout the grid, although the exact class counts remain definition-dependent.
+that selection-loss states outnumber candidate-reach and boundary-representation
+limitations therefore holds throughout the grid, although the exact class counts
+remain definition-dependent. This is a robustness statement about the ordering
+of observed bottlenecks, not evidence that the chosen cut-offs are universal.
 
 \begin{table}[h]\centering
-\caption{Retrospective localization--boundary--selection error decomposition on the TCGA-LGG development set. The classes are hierarchical and mutually
-exclusive. The selected and oracle columns are within-class mean Dice. Ground
-truth was used only for retrospective error attribution and the oracle
-computation.}
+\caption{Retrospective operational localization--boundary--selection
+decomposition on the TCGA-LGG development set. The diagnostic states are
+study-specific, hierarchical and mutually exclusive; they are not clinical
+failure classes. The selected and oracle columns are within-state mean Dice.
+Ground truth was used only for retrospective attribution and oracle computation.}
 \label{tab:lbs}
 \begin{tabular}{lccc}
 \toprule
-Error class & Cases & Selected Dice & Oracle Dice \\
+Diagnostic state & Cases & Selected Dice & Oracle Dice \\
 \midrule
-Localization failure & $4$ & $0.084$ & $0.115$ \\
-Boundary-representation failure & $3$ & $0.166$ & $0.437$ \\
-Selection failure & $16$ & $0.394$ & $0.844$ \\
-Near-ceiling / successful & $87$ & $0.916$ & $0.927$ \\
+Candidate-reach limitation & $4$ & $0.084$ & $0.115$ \\
+Boundary-representation limitation & $3$ & $0.166$ & $0.437$ \\
+Selection loss & $16$ & $0.394$ & $0.844$ \\
+No classified major bottleneck & $87$ & $0.916$ & $0.927$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2511,7 +2570,7 @@ Several limitations define the scope in which these findings should be
 interpreted. First, TCGA-LGG serves simultaneously as the development and
 internal evaluation cohort. Reference masks are used to select the
 largest-tumour slice, determine fixed parameters, quantify performance, assign
-error classes, and calculate candidate-pool ceilings. Although candidate
+operational diagnostic states, and calculate candidate-pool ceilings. Although candidate
 generation and final selection are label-free for each fixed slice, the reported
 TCGA performance is not an unbiased estimate from a held-out test cohort. The
 UCSF-PDGM grade 2--3 analysis provides independent institutional validation of
@@ -2562,15 +2621,17 @@ and spatial resolution may also affect overlap and boundary measures. Surface
 distances reported in pixels are not interchangeable with physical millimetres
 unless image spacing is harmonized.
 
-Finally, the error decomposition, boundary analyses and qualitative case panels
+Finally, the operational error decomposition, boundary analyses and qualitative case panels
 are retrospective. The successful examples are selected using reference-tumour
 area strata and retrospective Dice proximity to the class median; they illustrate
 typical within-class behaviour rather than prospective case selection or an
 independent performance estimate. The
-thresholds defining localization, boundary representation and selection failure
-are operational research definitions rather than clinical acceptance criteria.
-Although the 27-setting sensitivity grid preserves the qualitative dominance of
-selection failures, the exact class counts change with these definitions,
+thresholds defining candidate-reach limitation, boundary-representation
+limitation and selection loss are study-specific research conventions rather
+than established or clinical acceptance criteria. The hierarchy identifies the
+earliest observable bottleneck and does not prove that later weaknesses or other
+causal mechanisms are absent. Although the 27-setting sensitivity grid preserves
+the qualitative predominance of selection loss, the exact state counts change with these definitions,
 especially when the oracle threshold is raised to $0.80$.
 The negative weak-boundary association replicated in direction across all three
 cohorts, and none of the pairwise confidence intervals for differences in
@@ -3605,6 +3666,8 @@ Slice selection is fixed by the ground-truth largest-tumour rule in both cohorts
 \bibitem{peronamalik1990} P.~Perona and J.~Malik, ``Scale-space and edge detection using anisotropic diffusion,'' \emph{IEEE Trans. Pattern Anal. Mach. Intell.}, vol.~12, no.~7, pp.~629--639, 1990. doi: \url{https://doi.org/10.1109/34.56205}.
 \bibitem{weickert1998} J.~Weickert, \emph{Anisotropic Diffusion in Image Processing}. Stuttgart, Germany: Teubner, 1998, ISBN 3-519-02606-6.
 \bibitem{taha2015} A.~A.~Taha and A.~Hanbury, ``Metrics for evaluating 3D medical image segmentation: analysis, selection, and tool,'' \emph{BMC Med. Imaging}, vol.~15, art.~29, 2015. doi: \url{https://doi.org/10.1186/s12880-015-0068-x}.
+\bibitem{yeghiazaryan2018} V.~Yeghiazaryan and I.~Voiculescu, ``Family of boundary overlap metrics for the evaluation of medical image segmentation,'' \emph{J. Med. Imaging}, vol.~5, no.~1, art.~015006, 2018. doi: \url{https://doi.org/10.1117/1.JMI.5.1.015006}.
+\bibitem{bolya2020} D.~Bolya, S.~Foley, J.~Hays, and J.~Hoffman, ``TIDE: A general toolbox for identifying object detection errors,'' in \emph{Computer Vision--ECCV 2020}, 2020, pp.~558--573. doi: \url{https://doi.org/10.1007/978-3-030-58580-8_33}.
 \bibitem{cliff1993} N.~Cliff, ``Dominance statistics: ordinal analyses to answer ordinal questions,'' \emph{Psychol. Bull.}, vol.~114, no.~3, pp.~494--509, 1993. doi: \url{https://doi.org/10.1037/0033-2909.114.3.494}.
 \bibitem{sochen1998} N.~Sochen, R.~Kimmel, and R.~Malladi, ``A general framework for low level vision,'' \emph{IEEE Trans. Image Process.}, vol.~7, no.~3, pp.~310--318, 1998. doi: \url{https://doi.org/10.1109/83.661181}.
 \end{thebibliography}
