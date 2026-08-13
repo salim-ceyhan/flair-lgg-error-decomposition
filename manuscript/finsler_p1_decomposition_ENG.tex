@@ -300,6 +300,14 @@ decomposition, and computation of candidate-family ceilings. Consequently, the
 experiment addresses segmentation conditional on a tumour-bearing slice; it does
 not constitute end-to-end tumour detection or volumetric segmentation.
 
+Throughout the study, a binary prediction is denoted by $A$, its nonempty binary
+whole-tumour reference mask by $Y$, and their Dice coefficient by
+\begin{equation}
+ D(A,Y)=\frac{2|A\cap Y|}{|A|+|Y|}\in[0,1],
+ \label{eq:dice-definition}
+\end{equation}
+where $|\cdot|$ denotes pixel cardinality; $D(A,Y)=0$ when $A$ is empty.
+
 The cohorts have distinct and predefined roles. TCGA-LGG serves as the development and
 internal evaluation cohort. All fixed parameters are selected on this cohort
 with reference-mask performance available and are frozen before external
@@ -311,7 +319,8 @@ parameter is re-estimated on either external cohort.
 Two analyses must be distinguished. The \emph{primary label-free method} denotes
 the fixed candidate-generation and selection procedure that reports delivered
 segmentation performance. The \emph{expanded candidate-capacity analysis}
-enlarges the seed and fuzzy $\alpha$-cut budgets in nested fashion and uses ground
+enlarges the seed and fuzzy $\alpha$-cut budgets in nested fashion, where
+$\alpha\in[0,1]$ is a fuzzy-membership threshold, and uses ground
 truth only to measure the best attainable candidate in each set. Its pool-oracle
 Dice is a retrospective upper bound on boundary availability, not a segmentation
 result available during label-free application. This distinction is maintained
@@ -333,7 +342,8 @@ largest ground-truth tumour area --- was retained, yielding an experimental set
 of $110$ slices. These images are therefore described as a \emph{skull-intact,
 preprocessed 2D derivative}, not as unprocessed DICOM. No additional
 skull-stripping or modality fusion was applied; a head-support mask was obtained
-by the threshold $I>0.05$. All parameters were determined on this set alone.
+at a normalized-intensity threshold of $0.05$, as formally defined in
+Section~\ref{sec:overview}. All parameters were determined on this set alone.
 Table~\ref{tab:tcga-stats} summarizes the basic properties of the dataset.
 
 \begin{table}[H]\centering
@@ -351,7 +361,7 @@ Preprocessing & Skull-intact preprocessed 2D derivative; study-specific scaling 
 Number of patients & $110$ \\
 Tumour-bearing 2D slices per volume (all) & $1\,360$ (min~$3$, max~$36$, mean~$12.4$) \\
 Slice resolution & $256\times 256$~pixels \\
-Head-mask ($I>0.05$) area & $\sim$$46$--$65\%$ of the image area \\
+Head-mask area (normalized-intensity threshold $0.05$) & $\sim$$46$--$65\%$ of the image area \\
 \midrule
 \multicolumn{2}{l}{\emph{Ground-truth (GT) tumour area --- all $1360$ slices}} \\
 \quad Minimum & $50$~pixels \\
@@ -379,8 +389,8 @@ preprocessing regime.
 \textbf{UCSF-PDGM}~\cite{calabrese2022,ucsfpdgmV5} --- \emph{independent
 lower-grade external validation (no tuning)}. UCSF-PDGM contains WHO grade 2--4
 diffuse gliomas imaged with standardized 3T preoperative MRI together with
-expert-corrected multi-compartment tumour masks. Only the FLAIR channel of the
-The evaluated subset comprises WHO grade 2 ($n{=}56$) and grade 3 ($n{=}43$)
+expert-corrected multi-compartment tumour masks. The evaluated subset comprises
+WHO grade 2 ($n{=}56$) and grade 3 ($n{=}43$)
 cases ($N{=}99$), using only their FLAIR channel.
 Known follow-up/recurrence identifiers are grade 4 and do not enter this subset;
 the grade 2--3 identifiers are unique and none of them carries a BraTS21
@@ -410,54 +420,72 @@ detection.
 
 \subsection{Image Preparation and Score-Field Construction}\label{sec:overview}
 
-Let $I_{\mathrm{raw}}$ denote the prespecified FLAIR slice. Intensities are
+Let $\Omega\subset\mathbb Z^2$ denote the $256\times256$ pixel grid,
+$I_{\mathrm{raw}}:\Omega\rightarrow\mathbb R_{\ge0}$ the prespecified FLAIR
+slice, $|A|$ the number of pixels in a set $A\subseteq\Omega$, and
+$\epsilon=10^{-8}$ a numerical safeguard against division by zero. Intensities are
 scaled to the unit interval, a non-background support is defined, and values
 within that support are renormalized:
 \begin{equation}
  I=\frac{I_{\mathrm{raw}}}{\max I_{\mathrm{raw}}+\epsilon},\qquad
- B=\{I>0.05\},\qquad
+ B=\{x\in\Omega:I(x)>0.05\},\qquad
  I_n=\frac{I}{\max_B I+\epsilon}.
 \label{eq:norm-primary}
 \end{equation}
+Here $I:\Omega\to[0,1]$ is the globally normalized image, $B\subseteq\Omega$
+is the non-background head support, $I_n:\Omega\to[0,1]$ is the image
+renormalized by the maximum within $B$, and $\max_B$ and $\min_B$ denote extrema
+over pixels in $B$.
 The NewMetric edge-preserving diffusion~\cite{kilic2022}, which belongs to the
 broader family of edge-preserving anisotropic diffusion methods
 ~\cite{peronamalik1990,weickert1998}, is applied with
-$\beta_{\mathrm{NM}}=5.0$, $\Delta t=0.15$, and three iterations. Its result is
+$\beta_{\mathrm{NM}}=5.0$, $\Delta t=0.15$, and three iterations, where
+$\beta_{\mathrm{NM}}$ controls the strength of the direction-dependent metric
+deformation and $\Delta t$ is the explicit diffusion time step. Its result is
 rescaled within $B$ to obtain
 \begin{equation}
 F_n=\frac{\operatorname{NewMetric}(I)-\min_B\operatorname{NewMetric}(I)}
 {\max_B\operatorname{NewMetric}(I)-\min_B\operatorname{NewMetric}(I)+\epsilon}.
 \label{eq:fn}
 \end{equation}
+$F_n:\Omega\to[0,1]$ is therefore the normalized edge-preserving NewMetric
+field used by all subsequent score calculations.
 Gaussian filtering is not used in the
 segmentation signal path.
 
-The Sobel gradient magnitude $G=\lVert\nabla F_n\rVert$ is converted to an edge
+The Sobel gradient magnitude $H=\lVert\nabla F_n\rVert_2$ is converted to an edge
 permeability field using the intra-support 95th percentile
-$K=P_{95}(G;B)$:
+$K=P_{95}(H;B)$, where $P_q(Z;A)$ denotes the $q$th percentile of field $Z$
+over pixels in $A$:
 \begin{equation}
- g=\frac{1}{1+(G/K)^2}.
+ g(x)=\frac{1}{1+[H(x)/K]^2},\qquad x\in\Omega.
 \label{eq:gnm}
 \end{equation}
+Thus $g:\Omega\to(0,1]$ approaches one in locally homogeneous regions and
+decreases as the edge magnitude increases relative to $K$.
 For each of two complementary intensity windows, a soft band-pass weight and a
 score field are defined as
 \begin{align}
  w(I_n;\tau_h)&=
  \frac{1}{1+\exp[-(I_n-0.28)/0.05]}
  \frac{1}{1+\exp[(I_n-\tau_h)/0.05]},\\
- S&=gF_n\mathbf 1_Bw,
+ S(x;\tau_h)&=g(x)F_n(x)\mathbf 1_B(x)w(I_n(x);\tau_h),
 \label{eq:score-primary}
 \end{align}
-where $(\tau_h,p_h)\in\{(0.82,88),(0.97,98)\}$. Here $p_h$ is the upper
-FLAIR percentile used for seed eligibility. To avoid favouring the window from
+where $\mathbf 1_B$ is the indicator of $B$; $0.28$ is the lower intensity
+transition; $0.05$ is the sigmoid softness; and
+$(\tau_h,p_h)\in\{(0.82,88),(0.97,98)\}$. Here $\tau_h$ is the upper soft-window
+transition and $p_h$ is the corresponding upper FLAIR percentile used for seed
+eligibility. Hence $w\in(0,1)$ is the intensity-band weight and $S$ is the
+window-specific score field. To avoid favouring the window from
 which a candidate originates, final candidate assessment uses the
-window-independent field $E=gF_n\mathbf 1_B$.
+window-independent evidence field $E(x)=g(x)F_n(x)\mathbf 1_B(x)$.
 
 \subsection{Primary Candidate Generation and Label-Free Selection}\label{sec:candidates}
 
 Seed localization and region evolution deliberately rely on different
 evidence. Seed locations are local maxima of $S$ restricted to
-$p_{30}(I_n)\le I_n\le p_h(I_n)$. At most ten seeds are retained per window,
+$P_{30}(I_n;B)\le I_n(x)\le P_{p_h}(I_n;B)$. At most ten seeds are retained per window,
 with a minimum separation of 12 pixels. For each seed $s$, the threshold is
 decreased in 200 equally spaced levels from $S(s)$ to $0.20S(s)$, and the
 connected component containing that seed is followed:
@@ -465,23 +493,42 @@ connected component containing that seed is followed:
  C_t(s)=\operatorname{CC}_{s}\big(\{S\ge t\}\cap B\big).
 \label{eq:seeded-components}
 \end{equation}
-Evolution terminates when the component exceeds $25\%$ of $B$, exhibits a
-fourfold area jump, satisfies the predefined acceleration condition, or meets the
-edge-wall condition. Successive components whose relative area change does not
-exceed $0.06$ form one stable interval. Candidate recording begins after the
-component reaches $\max(40,0.02|B|)$ pixels; the duration of its stable interval
-defines persistence $\pi(M)$. Thus, seeds are determined from a FLAIR-restricted
+Here $t$ is the descending score threshold,
+$\operatorname{CC}_s(A)$ is the 8-connected component of binary set $A$ that
+contains $s$, and $C_t(s)$ is its mask at threshold $t$. Let
+$a_j=|C_{t_j}(s)|$ and $\Delta_j=a_j-a_{j-1}$ at successive thresholds
+$t_1>\cdots>t_{200}$, and let
+$n_{\min}=\max(40,0.02|B|)$ pixels denote the minimum candidate area.
+Evolution terminates when either $a_j>0.25|B|$ (the area-cap stop) or the mean
+of $g$ over the current component boundary is below $0.08$ (the edge-wall
+stop). Once $a_{j-1}\ge n_{\min}$, two additional growth-instability stops are
+enabled: $a_j>4a_{j-1}$ (the jump stop), or
+$\Delta_j>2.5\Delta_{j-1}$ and
+$\Delta_{j-1}>2.5\Delta_{j-2}+1$, with all three increments positive (the
+acceleration stop).
+
+A stable interval is a maximal consecutive threshold interval $[t_-,t_+]$
+over which $a_j\le1.06a_{j_+}$, where $a_{j_+}$ is the component area at the
+high-threshold end. Its mask $M$ is recorded only after reaching $n_{\min}$, and
+its persistence is the score-threshold width
+$\pi(M)=t_+-t_-\ge0$. Thus, seeds are determined from a FLAIR-restricted
 score maximum, whereas candidate boundaries are determined by the topology of
 score superlevel sets.
 
-For every candidate $M$, label-free quality combined area, mean evidence,
+For every nonempty candidate mask $M\subseteq B$, label-free quality combines area, mean evidence,
 compactness and solidity:
 \begin{equation}
  Q(M)=|M|\,\overline E_M\,
- \frac{4\pi|M|}{P(M)^2}\,
+ \frac{4\pi|M|}{\operatorname{per}(M)^2}\,
  \frac{|M|}{|\operatorname{hull}(M)|}.
 \label{eq:quality-primary}
 \end{equation}
+Here $\overline E_M=|M|^{-1}\sum_{x\in M}E(x)$ is mean evidence,
+$\operatorname{per}(M)$ is the 8-connected digital perimeter in pixels, and
+$\operatorname{hull}(M)$ is the binary convex hull of $M$. Consequently,
+$4\pi|M|/\operatorname{per}(M)^2$ is compactness,
+$|M|/|\operatorname{hull}(M)|$ is solidity,
+and $Q(M)\ge0$ is the resulting label-free quality score.
 Candidates from both intensity windows are considered jointly, and the delivered
 segmentation is
 \begin{equation}
@@ -489,6 +536,9 @@ segmentation is
  Q(M)\pi(M)^\gamma,\qquad \gamma=1.
 \label{eq:selection-primary}
 \end{equation}
+In Eq.~\eqref{eq:selection-primary}, $\mathcal C_{\mathrm{primary}}$ is the union
+of all recorded candidates from both windows, $\widehat M$ is the delivered mask,
+and $\gamma$ is the dimensionless persistence exponent.
 Persistence rewards components that remain stable over a wider threshold
 interval; it does not, by itself, establish tumour specificity. The exponent is
 selected on TCGA-LGG and fixed before external evaluation.
@@ -520,13 +570,29 @@ detailed in Section~\ref{sec:study-design}.}
 \subsection{Conditional Brain-ROI Renormalization}\label{sec:selection}
 
 In skull-intact TCGA images, bright extracranial structures can determine the
-normalization maximum and compress intra-brain tumour contrast. A morphological
-brain ROI is therefore estimated from the image, with peripheral bright tissue
-removed and orbital regions excluded when their dark-centred, approximately
-circular and lateral configuration satisfies the predefined anatomical rules.
+normalization maximum and compress intra-brain tumour contrast. Let
+$R\subseteq\Omega$ denote the final morphological brain ROI. To construct it,
+let $T_{\mathrm{O}}(Z)$ denote Otsu's threshold computed from the values in a
+finite set $Z$. The threshold $0.5T_{\mathrm{O}}(\{I(x):I(x)>0\})$ first defines a head
+foreground; its largest 8-connected component is hole-filled. A 14-pixel disk
+erosion defines an inner core and hence a peripheral band. Pixels in this band
+above $T_{\mathrm{O}}$ of the head-foreground intensities are removed as bright shell.
+The remainder undergoes a one-pixel disk opening, removal of components smaller
+than 64 pixels, retention of the largest component, hole filling, and a two-pixel
+disk closing; call this preliminary brain set $R_0$. A component $C$ is treated
+as a dark orbital candidate only if it is an 8-connected component of
+$\{x\in R_0:I(x)<P_{25}(I;R_0)\}$, has area
+$60\le |C|\le0.05|R_0|$, has circularity
+$4\pi|C|/\operatorname{per}(C)^2>0.45$, and has its centroid
+within the anterior $42\%$ of the ROI height, and lateral displacement greater
+than $10\%$ of the $R_0$ width from the midline. The detected component, its
+midline reflection, and their 13-pixel disk dilations are removed. The resulting
+binary set is the final ROI $R$; if no component satisfies the orbital rules,
+$R=R_0$.
 The score fields and primary candidate family are then reconstructed within this
 ROI. Let $M_0$ and $M_1$ denote the masks selected before and after ROI
-renormalization, respectively, and let $f_{\mathrm{in}}(M)=|M\cap R|/|M|$. The
+renormalization, respectively, and define the ROI containment fraction of a
+nonempty mask $M$ as $f_{\mathrm{in}}(M)=|M\cap R|/|M|\in[0,1]$. The
 ROI-renormalized mask is adopted only if
 \begin{equation}
  f_{\mathrm{in}}(M_0)<0.65\quad\text{and}\quad
@@ -549,23 +615,34 @@ to the gate.
 The expanded analysis tests whether a suitable boundary is absent from the
 candidate family or present but not recoverable by label-free ranking. In
 addition to seeded superlevel-set candidates, four-centre one-dimensional fuzzy
-$c$-means~\cite{bezdek1981} is applied to intra-support intensities. The darkest class is
-excluded, and connected components of fixed membership $\alpha$-cuts are added
+$c$-means~\cite{bezdek1981} is applied to the values $\{I_n(x):x\in B\}$,
+producing memberships $\mu_k(x)\in[0,1]$ for intensity class
+$k\in\{1,2,3,4\}$. The darkest class is
+excluded, and 8-connected components of the binary membership sets
+$\{x\in B:\mu_k(x)\ge\alpha\}$ for the remaining classes are added
 as seed-independent boundary hypotheses. These candidates are used for capacity
 measurement, not for the primary delivered segmentation.
 
-Nested seed budgets $s\in\{10,15,20,25,30\}$ and nested $\alpha$-level counts
-$a\in\{0,6,11,15,23,39\}$ are evaluated without removing candidates admitted
-at smaller budgets. For case $i$,
+Let $N$ be the number of cases in the cohort, $i\in\{1,\ldots,N\}$ index a
+case, and $Y_i\subseteq\Omega$ be its binary whole-tumour reference mask. Nested
+seed budgets $s\in\{10,15,20,25,30\}$ per window and nested counts
+$a\in\{0,6,11,15,23,39\}$ of membership levels are evaluated without removing
+candidates admitted at smaller budgets. The six-level grid is
+$\{0.35,0.45,0.55,0.65,0.75,0.85\}$; successive grids are its union with
+$5$, $9$, $17$, and $33$ equally spaced levels on $[0.25,0.95]$, respectively.
+Let
+$\mathcal C_{i,s,a}$ denote the resulting nested candidate set for case $i$.
+Then
 \begin{equation}
- U_i(s,a)=\max_{M\in\mathcal C_{i,s,a}}D(M,G_i),\qquad
+ U_i(s,a)=\max_{M\in\mathcal C_{i,s,a}}D(M,Y_i),\qquad
  U(s,a)=\frac{1}{N}\sum_{i=1}^{N}U_i(s,a),
 \label{eq:saturation-ceiling}
 \end{equation}
-where $G_i$ is the reference mask. $U$ is therefore a retrospective
-candidate-family ceiling. Practical saturation required the upper bounds of the
+$U_i(s,a)\in[0,1]$ is the case-level pool oracle and $U(s,a)$ is its cohort
+mean; both are retrospective candidate-family ceilings. Practical saturation
+requires the upper bounds of the
 paired bootstrap $95\%$ confidence intervals for both final budget increments to
-be smaller than the prespecified margin $\varepsilon=0.005$ Dice.
+be smaller than the prespecified margin $\varepsilon_{\mathrm{sat}}=0.005$ Dice.
 
 Computational cost is measured over all 110 TCGA slices on an Intel Core
 Ultra~7 265K CPU (20 physical cores, 31.6~GiB RAM, Windows~11). The full canonical timing includes
@@ -580,12 +657,17 @@ costs rather than standardized serial-latency benchmarks.
 
 \subsection{Error Decomposition and Evaluation Measures}\label{sec:eval}
 
-For each case, candidate localization is summarized by
-$R_{\max}=\max_j|M_j\cap G|/|G|$, and boundary availability by the pool-oracle
-Dice $D_{\max}=\max_jD(M_j,G)$. Errors are assigned hierarchically:
+For a given case, let $Y\subseteq\Omega$ denote its nonempty whole-tumour
+reference mask, let $M_j$ be candidate $j$, and let $\widehat M$ be the delivered
+mask from Eq.~\eqref{eq:selection-primary}. Candidate localization is summarized by
+$R_{\max}=\max_j|M_j\cap Y|/|Y|\in[0,1]$, the greatest fraction of the reference
+tumour reached by any single candidate. Boundary availability is summarized by
+the pool-oracle Dice $D_{\max}=\max_jD(M_j,Y)\in[0,1]$, using the Dice definition
+given above. The selection gap is
+$\Delta_{\mathrm{sel}}=D_{\max}-D(\widehat M,Y)\ge0$. Errors are assigned hierarchically:
 $R_{\max}<0.50$ indicates localization failure;
 $R_{\max}\ge0.50$ and $D_{\max}<0.70$ indicates boundary-representation failure;
-$D_{\max}\ge0.70$ with $D_{\max}-D(\widehat M,G)\ge0.10$ indicates selection
+$D_{\max}\ge0.70$ with $\Delta_{\mathrm{sel}}\ge0.10$ indicates selection
 failure; all remaining cases are classified as near-ceiling/successful. These
 thresholds are operational diagnostic definitions, not clinical decision limits.
 Descriptive sensitivity is assessed over the complete $3\times3\times3$ grid
@@ -594,21 +676,34 @@ selection-gap threshold $\in\{0.05,0.10,0.15\}$. This audit changes only the
 retrospective class labels, not the predicted masks.
 
 The primary performance measure is Dice, calculated over all cases including
-complete misses. Jaccard overlap, sensitivity, precision, the number of zero-Dice
-cases, and the numbers exceeding Dice thresholds of 0.50 and 0.70 are secondary
-measures. Boundary agreement is characterized by average symmetric surface
-distance, 95th-percentile Hausdorff distance, and boundary F1 within two pixels;
-distance measures are summarized only when the two masks overlap
-~\cite{taha2015}. Lesion-level
-sensitivity, precision and F1 use connected-component matching at
-$\operatorname{IoU}\ge0.10$.
+complete misses. For prediction $A$ and reference $Y$, Jaccard overlap is
+$J(A,Y)=|A\cap Y|/|A\cup Y|$, sensitivity is $|A\cap Y|/|Y|$, and precision is
+$|A\cap Y|/|A|$ (defined as zero for an empty prediction). The number of
+zero-Dice cases and the numbers exceeding Dice thresholds of 0.50 and 0.70 are
+secondary measures. Boundary agreement is characterized by average symmetric
+surface distance (the mean of the bidirectional nearest-boundary-pixel
+distances), 95th-percentile Hausdorff distance (the 95th percentile of their
+pooled bidirectional distances), and boundary F1 within two pixels. Boundary
+precision and recall are the fractions of predicted and reference boundary
+pixels, respectively, lying within Euclidean distance two pixels of the opposite
+boundary; their harmonic mean is boundary F1. All distances are in pixels and
+are summarized only when the two masks overlap~\cite{taha2015}. Lesion-level
+sensitivity, precision and F1 use 8-connected predicted and reference components,
+with a pair counted as matched when its intersection over union,
+$\operatorname{IoU}=|A\cap Y|/|A\cup Y|$, is at least $0.10$.
 
-Boundary strength is measured in inner and outer bands of the reference contour.
-The primary descriptor is the fraction of boundary locations whose NewMetric
-gradient magnitude fell below the intra-support median. Additional descriptors
-include normal-direction gradient magnitude and sign consistency, inner--outer
-ring intensity separation, tumour area and compactness. These quantities use
-ground truth only for retrospective error attribution.
+Boundary strength is measured on the one-pixel inner boundary
+$Y\setminus\operatorname{erode}(Y)$ and one-pixel outer boundary
+$[\operatorname{dilate}(Y)\setminus Y]\cap B$; their union is denoted
+$\partial_1Y$. The primary descriptor, the weak-boundary fraction, is
+$|\{x\in\partial_1Y:H(x)\le\operatorname{median}_{B}H\}|/|\partial_1Y|$.
+Additional descriptors include the median absolute derivative of $F_n$ along
+the signed-distance normal to $Y$; the fraction of those directional derivatives
+with the same sign as their median; and the 1-Wasserstein distance between $F_n$
+values in three-pixel inner and outer rings, divided by the interquartile range
+of $F_n$ in $B$. Tumour area is $|Y|$, and reference compactness is
+$4\pi|Y|/\operatorname{per}(Y)^2$. These quantities use ground truth only for retrospective error
+attribution.
 
 \subsection{Statistical Analysis}\label{sec:statistics}
 
@@ -623,7 +718,8 @@ analyses and 20260723 for cross-cohort boundary analyses.
 
 Spearman correlations quantify the association between boundary descriptors
 and candidate ceilings; partial
-Spearman analyses controlling for area, compactness and ring contrast use 5,000
+Spearman analyses controlling for area, compactness and the normalized
+three-pixel ring intensity separation defined above use 5,000
 clustered resamples. The UCSF grade comparison is exploratory and uses a
 two-sided Mann--Whitney $U$ test, Cliff's $\delta$~\cite{cliff1993} and an independent bootstrap
 interval for the mean difference. Parameter sweeps and all TCGA-based parameter
@@ -646,13 +742,14 @@ Seed localization & FLAIR percentile bands & $[30,88]$ and $[30,98]$ \\
 Seed localization & Maximum per window; spacing & $10$; $12$ pixels \\
 Region evolution & Threshold range; levels & $S(s)$--$0.20S(s)$; $200$ \\
 Region evolution & Area cap; jump ratio & $0.25|B|$; $4$ \\
+Region evolution & Acceleration ratio; edge-wall mean & $2.5$; $0.08$ \\
 Stable interval & Relative area tolerance & $0.06$ \\
 Candidate eligibility & Minimum area & $\max(40,0.02|B|)$ pixels \\
 Selection & Persistence exponent $\gamma$ & $1$ \\
 ROI condition & Adoption thresholds & $f_{\mathrm{in}}(M_0)<0.65$, $f_{\mathrm{in}}(M_1)\ge0.50$ \\
 Capacity analysis & Seed budgets & $10,15,20,25,30$ per window \\
 Capacity analysis & Nested $\alpha$ counts & $0,6,11,15,23,39$ \\
-Saturation & Practical Dice margin & $0.005$ \\
+Saturation & Practical Dice margin $\varepsilon_{\mathrm{sat}}$ & $0.005$ \\
 \bottomrule
 \end{tabular}
 \end{table}
