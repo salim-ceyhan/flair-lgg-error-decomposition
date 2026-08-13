@@ -422,14 +422,13 @@ detection.
 
 Let $\Omega\subset\mathbb Z^2$ denote the $256\times256$ pixel grid,
 $I_{\mathrm{raw}}:\Omega\rightarrow\mathbb R_{\ge0}$ the prespecified FLAIR
-slice, $|A|$ the number of pixels in a set $A\subseteq\Omega$, and
-$\epsilon=10^{-8}$ a numerical safeguard against division by zero. Intensities are
+slice, and $|A|$ the number of pixels in a set $A\subseteq\Omega$. Intensities are
 scaled to the unit interval, a non-background support is defined, and values
 within that support are renormalized:
 \begin{equation}
- I=\frac{I_{\mathrm{raw}}}{\max I_{\mathrm{raw}}+\epsilon},\qquad
+ I=\frac{I_{\mathrm{raw}}}{\max I_{\mathrm{raw}}},\qquad
  B=\{x\in\Omega:I(x)>0.05\},\qquad
- I_n=\frac{I}{\max_B I+\epsilon}.
+ I_n=\frac{I}{\max_B I}.
 \label{eq:norm-primary}
 \end{equation}
 Here $I:\Omega\to[0,1]$ is the globally normalized image, $B\subseteq\Omega$
@@ -445,11 +444,15 @@ deformation and $\Delta t$ is the explicit diffusion time step. Its result is
 rescaled within $B$ to obtain
 \begin{equation}
 F_n=\frac{\operatorname{NewMetric}(I)-\min_B\operatorname{NewMetric}(I)}
-{\max_B\operatorname{NewMetric}(I)-\min_B\operatorname{NewMetric}(I)+\epsilon}.
+{\max_B\operatorname{NewMetric}(I)-\min_B\operatorname{NewMetric}(I)}.
 \label{eq:fn}
 \end{equation}
 $F_n:\Omega\to[0,1]$ is therefore the normalized edge-preserving NewMetric
 field used by all subsequent score calculations.
+All included tumour-bearing images have positive denominators in
+Eqs.~\eqref{eq:norm-primary}--\eqref{eq:fn}; the implementation nevertheless
+adds $10^{-8}$ as a floating-point safeguard, without changing the analytical
+definitions.
 Gaussian filtering is not used in the
 segmentation signal path.
 
@@ -494,11 +497,12 @@ connected component containing that seed is followed:
 \label{eq:seeded-components}
 \end{equation}
 Here $t$ is the descending score threshold,
-$\operatorname{CC}_s(A)$ is the 8-connected component of binary set $A$ that
+$\operatorname{CC}_s(A)$ is the 4-connected component of binary set $A$ that
 contains $s$, and $C_t(s)$ is its mask at threshold $t$. Let
 $a_j=|C_{t_j}(s)|$ and $\Delta_j=a_j-a_{j-1}$ at successive thresholds
 $t_1>\cdots>t_{200}$, and let
-$n_{\min}=\max(40,0.02|B|)$ pixels denote the minimum candidate area.
+$n_{\min}=\max(40,0.02|B|)$ pixels denote the area at which the jump and
+acceleration stops become active.
 Evolution terminates when either $a_j>0.25|B|$ (the area-cap stop) or the mean
 of $g$ over the current component boundary is below $0.08$ (the edge-wall
 stop). Once $a_{j-1}\ge n_{\min}$, two additional growth-instability stops are
@@ -507,28 +511,34 @@ $\Delta_j>2.5\Delta_{j-1}$ and
 $\Delta_{j-1}>2.5\Delta_{j-2}+1$, with all three increments positive (the
 acceleration stop).
 
-A stable interval is a maximal consecutive threshold interval $[t_-,t_+]$
-over which $a_j\le1.06a_{j_+}$, where $a_{j_+}$ is the component area at the
-high-threshold end. Its mask $M$ is recorded only after reaching $n_{\min}$, and
-its persistence is the score-threshold width
-$\pi(M)=t_+-t_-\ge0$. Thus, seeds are determined from a FLAIR-restricted
+A stable plateau is a maximal run of sampled thresholds
+$t_r,t_{r+1},\ldots,t_{r+m-1}$ for which
+$a_j\le1.06a_r$; here $a_r$ is the component area at the first, highest-threshold
+sample of the run and $m\ge1$ is its number of sampled threshold levels.
+Plateau tracking begins once $a_j\ge30$ pixels. Its representative mask $M$ is
+the largest component reached within the run, with holes filled only when hole
+filling does not increase its area beyond $2|M|$. The persistence attribute is
+the dimensionless run length
+$\pi(M)=m\in\{1,\ldots,200\}$, not the numerical width of the score-threshold
+interval. Thus, seeds are determined from a FLAIR-restricted
 score maximum, whereas candidate boundaries are determined by the topology of
 score superlevel sets.
 
-For every nonempty candidate mask $M\subseteq B$, label-free quality combines area, mean evidence,
-compactness and solidity:
+For every nonempty candidate mask $M\subseteq B$, let $p(M)$ be the sum of the
+piecewise-Euclidean lengths of its external OpenCV contours, and let $h(M)$ be
+the sum of the continuous areas of their convex hulls. Define compactness as
+$c(M)=\operatorname{clip}(4\pi|M|/p(M)^2,0.01,1)$ and solidity as
+$\sigma(M)=|M|/h(M)$ when $h(M)>0$ (and zero otherwise). Label-free quality
+then combines area, mean evidence, compactness and solidity:
 \begin{equation}
- Q(M)=|M|\,\overline E_M\,
- \frac{4\pi|M|}{\operatorname{per}(M)^2}\,
- \frac{|M|}{|\operatorname{hull}(M)|}.
+ Q(M)=|M|\,\overline E_M\,c(M)\sigma(M).
 \label{eq:quality-primary}
 \end{equation}
 Here $\overline E_M=|M|^{-1}\sum_{x\in M}E(x)$ is mean evidence,
-$\operatorname{per}(M)$ is the 8-connected digital perimeter in pixels, and
-$\operatorname{hull}(M)$ is the binary convex hull of $M$. Consequently,
-$4\pi|M|/\operatorname{per}(M)^2$ is compactness,
-$|M|/|\operatorname{hull}(M)|$ is solidity,
-and $Q(M)\ge0$ is the resulting label-free quality score.
+and $Q(M)\ge0$ is the resulting label-free quality score. The implementation
+uses safeguards of $10^{-6}$ in the squared-perimeter denominator and $10^{-8}$
+in the hull-area denominator; these do not alter the definitions for nondegenerate
+candidates.
 Candidates from both intensity windows are considered jointly, and the delivered
 segmentation is
 \begin{equation}
@@ -539,9 +549,16 @@ segmentation is
 In Eq.~\eqref{eq:selection-primary}, $\mathcal C_{\mathrm{primary}}$ is the union
 of all recorded candidates from both windows, $\widehat M$ is the delivered mask,
 and $\gamma$ is the dimensionless persistence exponent.
-Persistence rewards components that remain stable over a wider threshold
-interval; it does not, by itself, establish tumour specificity. The exponent is
-selected on TCGA-LGG and fixed before external evaluation.
+The factor $\pi(M)^\gamma$ controls how strongly threshold stability modifies
+the region-quality ranking: $\gamma=0$ ignores persistence, whereas increasing
+$\gamma$ increasingly favours components that survive more sampled threshold
+levels without exceeding the $6\%$ plateau-growth tolerance. Its intended role
+is to down-rank transient high-$Q$ components produced by a narrow threshold
+range while retaining candidates supported across the sweep. The tested values
+$\gamma\in\{0,0.5,1,2\}$ are compared on TCGA-LGG; $\gamma=1$ gives a linear
+persistence weight and is then frozen for external evaluation. Persistence is
+therefore a stability modifier, not evidence of tumour identity, and cannot by
+itself establish tumour specificity.
 
 \begin{figure}[htbp]\centering
 \begin{tikzpicture}[x=0.95mm,y=1mm]
@@ -618,7 +635,7 @@ addition to seeded superlevel-set candidates, four-centre one-dimensional fuzzy
 $c$-means~\cite{bezdek1981} is applied to the values $\{I_n(x):x\in B\}$,
 producing memberships $\mu_k(x)\in[0,1]$ for intensity class
 $k\in\{1,2,3,4\}$. The darkest class is
-excluded, and 8-connected components of the binary membership sets
+excluded, and 4-connected components of the binary membership sets
 $\{x\in B:\mu_k(x)\ge\alpha\}$ for the remaining classes are added
 as seed-independent boundary hypotheses. These candidates are used for capacity
 measurement, not for the primary delivered segmentation.
@@ -688,7 +705,7 @@ precision and recall are the fractions of predicted and reference boundary
 pixels, respectively, lying within Euclidean distance two pixels of the opposite
 boundary; their harmonic mean is boundary F1. All distances are in pixels and
 are summarized only when the two masks overlap~\cite{taha2015}. Lesion-level
-sensitivity, precision and F1 use 8-connected predicted and reference components,
+sensitivity, precision and F1 use 4-connected predicted and reference components,
 with a pair counted as matched when its intersection over union,
 $\operatorname{IoU}=|A\cap Y|/|A\cup Y|$, is at least $0.10$.
 
@@ -702,7 +719,8 @@ the signed-distance normal to $Y$; the fraction of those directional derivatives
 with the same sign as their median; and the 1-Wasserstein distance between $F_n$
 values in three-pixel inner and outer rings, divided by the interquartile range
 of $F_n$ in $B$. Tumour area is $|Y|$, and reference compactness is
-$4\pi|Y|/\operatorname{per}(Y)^2$. These quantities use ground truth only for retrospective error
+$4\pi|Y|/p(Y)^2$, using the external-contour perimeter $p(\cdot)$ defined above.
+These quantities use ground truth only for retrospective error
 attribution.
 
 \subsection{Statistical Analysis}\label{sec:statistics}
@@ -743,8 +761,9 @@ Seed localization & Maximum per window; spacing & $10$; $12$ pixels \\
 Region evolution & Threshold range; levels & $S(s)$--$0.20S(s)$; $200$ \\
 Region evolution & Area cap; jump ratio & $0.25|B|$; $4$ \\
 Region evolution & Acceleration ratio; edge-wall mean & $2.5$; $0.08$ \\
-Stable interval & Relative area tolerance & $0.06$ \\
-Candidate eligibility & Minimum area & $\max(40,0.02|B|)$ pixels \\
+Stable plateau & Relative area tolerance; minimum area & $0.06$; $30$ pixels \\
+Instability stops & Activation area $n_{\min}$ & $\max(40,0.02|B|)$ pixels \\
+Persistence & $\pi(M)$ & Number of sampled levels in plateau \\
 Selection & Persistence exponent $\gamma$ & $1$ \\
 ROI condition & Adoption thresholds & $f_{\mathrm{in}}(M_0)<0.65$, $f_{\mathrm{in}}(M_1)\ge0.50$ \\
 Capacity analysis & Seed budgets & $10,15,20,25,30$ per window \\
@@ -2788,19 +2807,17 @@ $X_t=\{x\in\Omega:S(x)\ge t\}$. As the threshold decreases, these sets form a
 nested filtration. Given a seed $s$, the method follows the connected component
 $C_t(s)\subseteq X_t$ containing that seed. A candidate is recorded when the
 component area remains within the relative tolerance specified in
-Section~\ref{sec:candidates}; the corresponding threshold duration is its
-persistence $\pi(M)$.
+Section~\ref{sec:candidates}; the number of consecutive sampled threshold
+levels in that plateau is its persistence $\pi(M)$.
 
 This quantity is a seed-conditioned, zero-dimensional stability descriptor. It
-measures how long a connected region remains approximately unchanged before
-growth or merging, but it does not identify that region as tumour. A strictly
-increasing transformation of $S$ preserves the ordering and connectivity of the
-superlevel sets, although a nonlinear transformation need not preserve the raw
-numerical width of a threshold interval. Persistence is therefore used as a
-within-image relative weight rather than as an absolute quantity comparable
-across images or cohorts. Its empirical contribution is evaluated rather than
-assumed: nearby exponents perform similarly, whereas excessive persistence
-weighting degrades accuracy.
+measures how many of the 200 prespecified sweep levels a connected region remains
+approximately unchanged before growth or merging, but it does not identify that
+region as tumour. Because it is a discrete run length on an image-specific
+score sweep, it is used as a within-image ranking attribute rather than as a
+physical duration or an absolute quantity comparable across images. Its
+empirical contribution is evaluated rather than assumed: nearby exponents
+perform similarly, whereas excessive persistence weighting degrades accuracy.
 
 \section{Supplementary Verified Analyses}\label{sec:appendix-extra}
 
