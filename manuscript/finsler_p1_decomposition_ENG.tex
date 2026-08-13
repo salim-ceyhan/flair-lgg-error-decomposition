@@ -74,11 +74,16 @@
   boxrule=0.6pt,arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt]
 \section*{Highlights}
 \begin{itemize}[leftmargin=1.5em,itemsep=0.35em,topsep=0.25em]
-  \item Error decomposition separates localization, representation, and selection.
-  \item Expanded candidates raise oracle Dice from $0.872$ to $0.906$.
-  \item The canonical pool covers $103/110$ cases at Dice$\geq0.70$.
-  \item Weak boundaries predict lower candidate ceilings across three cohorts.
-  \item Frozen single-FLAIR segmentation achieves $0.712$ Dice on UCSF-PDGM.
+  \item A generate--select audit isolates candidate-reach, boundary-representation,
+  and selection bottlenecks.
+  \item The canonical pool contains Dice$\geq0.70$ candidates in $103/110$
+  TCGA-LGG cases.
+  \item Nested pool expansion establishes a practical candidate-capacity plateau
+  at $0.906$ Dice.
+  \item Weak-boundary effects replicate across TCGA-LGG, UCSF-PDGM, and BraTS
+  after adjustment.
+  \item Frozen single-FLAIR inference achieves $0.712$ mean Dice on UCSF-PDGM
+  without retuning.
 \end{itemize}
 \end{tcolorbox}
 
