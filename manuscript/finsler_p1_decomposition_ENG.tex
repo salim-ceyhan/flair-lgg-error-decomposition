@@ -90,35 +90,39 @@
 \clearpage
 
 \begin{abstract}
-Training-free single-FLAIR glioma segmentation may fail through unsuccessful
-localization, inadequate boundary representation, or selection of an inferior
-candidate. We separate these error sources using a fixed method without learned
-weights that combines edge-preserving direction-dependent diffusion,
-score-topology threshold sweeping, and closed-form label-free selection. Fuzzy
-$\alpha$-cut candidates are added only for retrospective capacity analysis.
-The whole-tumour target is evaluated on the ground-truth-selected
-largest-tumour axial slice from TCGA-LGG development data ($N{=}110$), an
-independent UCSF-PDGM WHO grade 2--3 cohort ($N{=}99$), and BraTS~2023
-($N{=}150$) as a cross-grade stress test. Ground truth supported slice selection,
-fixed-parameter development on TCGA-LGG, and retrospective evaluation, but not
-case-level candidate generation or selection after fixation. On TCGA-LGG, mean
-delivered Dice is $0.789$ and the candidate-pool ceiling is $0.872$.
-Localization succeeds in $106/110$ cases; $103/110$ contain a candidate with
-Dice$\geq0.70$, while $16/103$ representable cases retain a selection gap of
-at least $0.10$. Nested seed and $\alpha$-cut expansion raises the retrospective
-ceiling to $0.906$ and satisfies the prespecified $0.005$ practical-saturation
-margin, without changing delivered Dice. Weak-boundary fraction is negatively
-associated with the pool ceiling in TCGA-LGG ($\rho=-0.537$), UCSF-PDGM
-($\rho=-0.438$), and BraTS~2023 ($\rho=-0.467$), with direction preserved after
-covariate adjustment. The frozen method achieves $0.712$ mean Dice on UCSF-PDGM
-without retuning. Thus, boundary-dependent candidate generation and label-free
-selection constitute distinct bottlenecks that cannot be identified from the
-delivered mask alone.
+Training-free single-FLAIR glioma segmentation can fail because candidate masks
+do not reach the lesion, fail to represent its boundary, or are ranked below a
+distractor. We investigate these bottlenecks using a fixed, non-learned
+generate--select method that combines direction-dependent edge-preserving
+diffusion, seeded superlevel-set traversal of a score field,
+threshold-persistence weighting, and closed-form label-free ranking. Fuzzy
+$\alpha$-cut masks and enlarged seed budgets are evaluated separately to audit
+candidate capacity. Evaluation uses the ground-truth-selected largest-tumour
+axial slice from TCGA-LGG development data (110 patients), independent UCSF-PDGM
+WHO grade 2--3 validation data (99 patients), and BraTS~2023 as a cross-grade
+stress test (150 studies from 143 patients). Reference masks support slice
+selection, TCGA development, and retrospective measurement, but not candidate
+generation or selection under fixed inference.
+
+On TCGA-LGG, the delivered mean Dice is $0.789$ and the canonical pool-oracle
+Dice is $0.872$. The candidate-reach criterion is met in $106/110$ cases;
+$103/110$ contain a candidate with Dice$\geq0.70$, yet 16 of these cases incur
+at least $0.10$ Dice selection loss. Adding six $\alpha$-cut levels raises oracle
+Dice from $0.872$ to $0.900$ while delivered Dice remains $0.789$. Larger nested
+seed and $\alpha$-cut budgets produce a practical oracle plateau of $0.906$,
+corresponding to a paired gain of $0.033$ (95\% CI $0.008$--$0.066$).
+Weak-boundary fraction is negatively associated with candidate ceilings in all
+three cohorts, with the direction retained after covariate adjustment. Without
+retuning, the frozen method achieves $0.712$ mean Dice on UCSF-PDGM.
+
+These findings establish candidate generation and label-free selection as
+empirically separable bottlenecks. Increasing candidate diversity can improve
+attainable accuracy without improving delivered segmentation, motivating both
+boundary-aware candidate design and stronger label-free selection.
 
 \medskip
 \noindent\textbf{Keywords:} lower-grade glioma; FLAIR MRI; training-free
-segmentation; candidate generation; label-free selection; error decomposition;
-candidate-pool ceiling
+segmentation; candidate generation; label-free selection; error decomposition
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
