@@ -838,19 +838,21 @@ within the development set and are not interpreted as independent confirmatory
 tests.
 
 Spearman's $\rho$ quantifies the association between each boundary descriptor and
-the candidate ceiling. Boundary-analysis CIs use patient-clustered resampling
-(20,000 replicates; fixed seed 20260724). For the adjusted analysis, the boundary
-descriptor, candidate ceiling, log-transformed tumour area, compactness and
+the candidate ceiling. Boundary-analysis CIs use 20,000 patient-clustered
+resamples. For the adjusted analysis, the boundary descriptor, candidate ceiling,
+log-transformed tumour area, compactness and
 normalized three-pixel ring intensity separation are first converted to ranks.
 The ranked descriptor and ranked ceiling are separately regressed on the three
 ranked covariates, and the Pearson correlation between the two residual vectors
 defines the partial Spearman coefficient. Its CI uses 5,000 patient-clustered
-resamples. The candidate-saturation CIs use paired case resampling with fixed seed
-20260726. Other primary case-level bootstrap and sign-flip analyses use fixed seed
-20260715. The UCSF grade comparison is exploratory and uses a two-sided
-Mann--Whitney $U$ test, Cliff's $\delta$~\cite{cliff1993}, and an independent
-20,000-resample bootstrap CI for the grade-3 minus grade-2 mean difference; no
-multiplicity adjustment is applied to this single exploratory comparison.
+resamples. The candidate-saturation CIs use paired case resampling. All bootstrap
+and Monte Carlo procedures use fixed, analysis-specific random seeds to permit
+exact computational reproduction; their values are recorded in the analysis
+scripts and provenance files. The UCSF grade comparison is exploratory and uses
+a two-sided Mann--Whitney $U$ test, Cliff's $\delta$~\cite{cliff1993}, and an
+independent 20,000-resample bootstrap CI for the grade-3 minus grade-2 mean
+difference; no multiplicity adjustment is applied to this single exploratory
+comparison.
 
 \begin{table}[htbp]\centering
 \caption{Fixed parameters of the primary label-free method and the retrospective
@@ -1577,8 +1579,8 @@ falling below the intra-brain median gradient; the normal-directional gradient
 magnitude and sign consistency; the intensity separation of three-pixel
 inner/outer rings; and the ground-truth compactness. The primary feature and the
 thresholds were frozen after the TCGA analysis and applied unchanged to UCSF-PDGM
-and BraTS~2023. The primary Spearman association in each cohort is reported with a
-fixed seed of $20260723$ and $20\,000$ patient-clustered bootstrap resamples; the
+and BraTS~2023. The primary Spearman association in each cohort is reported with
+$20\,000$ patient-clustered bootstrap resamples; the
 partial-Spearman sensitivity analysis controlling for area, compactness and ring
 contrast is reported with $5\,000$ resamples. The resampling unit is the patient;
 the $150$ studies in BraTS~2023 belong to $143$ unique patients, and repeated
@@ -1597,7 +1599,8 @@ $150$ studies represented $143$ unique patients; repeated studies from the same
 patient were therefore kept together in all resampling procedures.
 Dice means are arithmetic means including zero-Dice cases. Uncertainty is reported
 with percentile bootstrap $95\%$ confidence intervals (CIs) obtained from
-$20\,000$ case-level resamples with a fixed random seed of $20260715$. For the
+$20\,000$ case-level resamples. Fixed, analysis-specific random seeds are recorded
+in the analysis scripts and provenance files. For the
 mean of a single method the cases were resampled; for a paired method difference
 the case-level differences were resampled.
 
