@@ -626,12 +626,11 @@ itself establish tumour specificity.
 \draw[farrow] (s.south)--(a.north); \draw[farrow] (a)--(u);
 \node[flabel,below=1mm of u] {reference masks for retrospective analysis};
 \end{tikzpicture}
-\caption{\textbf{Study method and analytical separation.} The upper sequence
-produces the label-free segmentation. Expanded seed and fuzzy $\alpha$-cut
-families are evaluated only to measure candidate capacity and attribute errors;
-they do not replace the primary delivered mask. Reference masks are also used
-earlier for TCGA parameter development and prespecified slice selection, as
-detailed in Section~\ref{sec:study-design}.}
+\caption{\textbf{Method and analytical roles.} The upper path produces the
+label-free mask. Expanded seed and fuzzy $\alpha$-cut families quantify candidate
+capacity and support retrospective error attribution; they do not alter the
+primary output. Reference masks are used only in the explicitly marked
+development and retrospective analyses.}
 \label{fig:flow-pipeline}
 \end{figure}
 
@@ -1762,19 +1761,12 @@ shows agreement between the available oracle boundary and the delivered mask.
 
 \begin{figure}[!tbp]\centering
 \includegraphics[width=0.96\linewidth,trim=0 25bp 0 0,clip]{fig_lbs_representative_cases.png}
-\caption{\textbf{Representative cases from the operational
-localization--boundary--selection decomposition.} This is a retrospective
-diagnostic audit, not the inference workflow: the pool-oracle column uses the
-reference mask only to identify the best available candidate. Rows show a
-candidate-reach limitation (L, retained as localization shorthand), a
-boundary-representation limitation (B), a selection-loss state (S), and a case
-with no classified major bottleneck (C).
-Columns show the FLAIR slice with the reference contour, the union of generated
-candidates and seed locations, the retrospective pool-oracle boundary, and the
-boundary selected without reference labels. Yellow denotes the reference mask,
-cyan denotes the indicated candidate boundary, and magenta crosses denote seed
-locations. Reference information and oracle selection are displayed only for
-retrospective interpretation.}
+\caption{\textbf{Operational error-decomposition examples.} Rows represent
+candidate-reach limitation (L), boundary-representation limitation (B),
+selection loss (S), and no classified major bottleneck (C). Columns show the
+FLAIR reference, candidate coverage and seeds, retrospective pool oracle, and
+label-free output. Yellow is the reference, cyan the indicated boundary, and
+magenta the seeds; reference-based oracle information is diagnostic only.}
 \label{fig:lbs-representative-cases}
 \end{figure}
 
@@ -1789,14 +1781,11 @@ reference; no pool-oracle mask enters the displayed method output.
 
 \begin{figure}[!tbp]\centering
 \includegraphics[width=0.94\linewidth]{fig_representative_successful_segmentations.pdf}
-\caption{\textbf{Representative successful label-free segmentations across
-lesion-size strata.} Columns show one TCGA-LGG case from each quartile of
-reference-tumour area within the near-ceiling/successful class. The top row shows
-FLAIR with the reference boundary; the bottom row overlays the boundary selected
-without reference labels. Cases 1--4 are TCGA\_FG\_7643\_20021104\_26,
-TCGA\_HT\_7686\_19950629\_13, TCGA\_FG\_8189\_20030516\_25, and
-TCGA\_CS\_5396\_20010302\_15, respectively. Yellow denotes the retrospective
-reference and cyan the label-free selected boundary.}
+\caption{\textbf{Successful segmentations across lesion-size strata.} Columns
+represent successive quartiles of reference-tumour area within the
+near-ceiling/successful class. The top row shows FLAIR with the reference
+boundary; the bottom row adds the label-free selected boundary. Yellow denotes
+the reference and cyan the selected contour.}
 \label{fig:representative-successes}
 \end{figure}
 
@@ -1864,10 +1853,10 @@ $30$ seeds, 39 $\alpha$ levels & $\mathbf{0.9055}$ & $\mathbf{+0.0333}$ & $\math
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.96\linewidth]{fig_candidate_ceiling_saturation.png}
-\caption{\textbf{Practical saturation of candidate capacity.} Seed and fuzzy
-$\alpha$-cut budgets were enlarged in nested fashion. Every value is a
-retrospective pool-oracle mean Dice and is unavailable to the label-free
-selector.}\label{fig:candidate-saturation}
+\caption{\textbf{Practical saturation of candidate capacity.} Nested increases
+in seed and fuzzy $\alpha$-cut budgets approach a stable retrospective
+pool-oracle mean Dice. Oracle values are not label-free performance.}
+\label{fig:candidate-saturation}
 \end{figure}
 
 \subsection{Boundary Strength and Attainable Accuracy}\label{sec:boundary-results}
