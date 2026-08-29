@@ -1,5 +1,7 @@
 # FLAIR LGG Candidate-Selection Error Decomposition
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22162583.svg)](https://doi.org/10.5281/zenodo.22162583)
+
 This public research-software repository accompanies the manuscript **“Candidate Generation and Selection Bottlenecks in Training-Free Single-Slice FLAIR Lower-Grade Glioma Segmentation”**. It contains the frozen candidate-construction implementation, evaluation programs, and numerical result records needed to audit the reported analysis.
 
 ## Authors
@@ -106,7 +108,7 @@ on the corresponding GitHub release or Zenodo record.
 
 ## Citation
 
-Release metadata are provided in `CITATION.cff`. The first public archival
-software release is version 1.0.0. The repository citation metadata will be
-updated with the Zenodo DOI after the first deposition; no placeholder DOI is
-used.
+Release metadata are provided in `CITATION.cff`. Cite version 1.0.0 using
+[doi:10.5281/zenodo.22162583](https://doi.org/10.5281/zenodo.22162583).
+The all-versions DOI, which resolves to the latest archived release, is
+[doi:10.5281/zenodo.22162582](https://doi.org/10.5281/zenodo.22162582).
