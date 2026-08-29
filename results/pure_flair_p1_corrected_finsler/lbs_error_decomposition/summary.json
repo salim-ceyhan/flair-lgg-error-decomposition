@@ -1,0 +1,180 @@
+{
+  "study": "Localization-Boundary-Selection error decomposition",
+  "case_count": 110,
+  "prespecified_thresholds": {
+    "localization_max_candidate_recall": 0.5,
+    "boundary_pool_oracle_dice": 0.7,
+    "selection_regret": 0.1
+  },
+  "class_definitions": {
+    "L": "Localization failure",
+    "B": "Boundary representation failure",
+    "S": "Selection failure",
+    "C": "Near-ceiling / successful"
+  },
+  "class_counts": {
+    "C": 87,
+    "S": 16,
+    "L": 4,
+    "B": 3
+  },
+  "aggregate": {
+    "selected_mean_dice": 0.7892658976023633,
+    "oracle_mean_dice": 0.8722055352837654,
+    "mean_selection_regret": 0.08293963768140215,
+    "seed_hit_rate": 0.9636363636363636,
+    "localization_success_rate": 0.9636363636363636,
+    "boundary_representable_rate": 0.9363636363636364,
+    "selection_failure_rate_among_representable": 0.1553398058252427
+  },
+  "boundary_correlations": {
+    "boundary_gradient_median": {
+      "oracle_dice": {
+        "rho": 0.505926163049784,
+        "ci95_low": 0.3503488661931085,
+        "ci95_high": 0.6326464500604513
+      },
+      "selection_regret": {
+        "rho": -0.09185909528079546,
+        "ci95_low": -0.2717037639473473,
+        "ci95_high": 0.09444071310862064
+      }
+    },
+    "boundary_gradient_p25": {
+      "oracle_dice": {
+        "rho": 0.5148435844817126,
+        "ci95_low": 0.36693805385363143,
+        "ci95_high": 0.639652055479461
+      },
+      "selection_regret": {
+        "rho": -0.1519945646998456,
+        "ci95_low": -0.32657442775531864,
+        "ci95_high": 0.038755468791246424
+      }
+    },
+    "weak_boundary_fraction": {
+      "oracle_dice": {
+        "rho": -0.5372342344021559,
+        "ci95_low": -0.669521333872805,
+        "ci95_high": -0.3753516692670213
+      },
+      "selection_regret": {
+        "rho": 0.2549497312796365,
+        "ci95_low": 0.06756515387292965,
+        "ci95_high": 0.4360878562128325
+      }
+    },
+    "normal_gradient_abs_median": {
+      "oracle_dice": {
+        "rho": 0.5269528837568191,
+        "ci95_low": 0.3755245797317869,
+        "ci95_high": 0.6544259388681476
+      },
+      "selection_regret": {
+        "rho": -0.11681026168890976,
+        "ci95_low": -0.2941073193596603,
+        "ci95_high": 0.07582630667655045
+      }
+    },
+    "normal_gradient_sign_consistency": {
+      "oracle_dice": {
+        "rho": 0.2920128955500504,
+        "ci95_low": 0.09544623132253872,
+        "ci95_high": 0.46157253266580617
+      },
+      "selection_regret": {
+        "rho": -0.11523591360117828,
+        "ci95_low": -0.3058590265140952,
+        "ci95_high": 0.0804069396425382
+      }
+    },
+    "ring_intensity_distance_iqr": {
+      "oracle_dice": {
+        "rho": 0.40750992955180426,
+        "ci95_low": 0.22380329456644027,
+        "ci95_high": 0.5662623866175578
+      },
+      "selection_regret": {
+        "rho": -0.25657288929428923,
+        "ci95_low": -0.43069398420342175,
+        "ci95_high": -0.07268597068943529
+      }
+    },
+    "gt_compactness": {
+      "oracle_dice": {
+        "rho": 0.3086699156622162,
+        "ci95_low": 0.12148990258924022,
+        "ci95_high": 0.49020962058886547
+      },
+      "selection_regret": {
+        "rho": -0.11489718853212125,
+        "ci95_low": -0.3049369969521661,
+        "ci95_high": 0.09034491714178317
+      }
+    }
+  },
+  "figures": {
+    "localization": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage1_localization.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage1_localization.pdf",
+      "pixel_dimensions": [
+        2194,
+        994
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "boundary": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage2_boundary_representation.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage2_boundary_representation.pdf",
+      "pixel_dimensions": [
+        3094,
+        994
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "selection": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage3_selection_regret.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage3_selection_regret.pdf",
+      "pixel_dimensions": [
+        2194,
+        994
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "decomposition": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage4_lbs_decomposition.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage4_lbs_decomposition.pdf",
+      "pixel_dimensions": [
+        2554,
+        1084
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "case_audit": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage5_representative_case_audit.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\lbs_error_decomposition\\stage5_representative_case_audit.pdf",
+      "pixel_dimensions": [
+        2791,
+        2734
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    }
+  },
+  "interpretation_policy": "GT is retrospective only.",
+  "gaussian_filtering": false
+}

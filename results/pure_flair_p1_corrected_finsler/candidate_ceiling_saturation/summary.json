@@ -1,0 +1,198 @@
+{
+  "study": "TCGA candidate-ceiling saturation",
+  "case_count": 110,
+  "seed_budgets": [
+    10,
+    15,
+    20,
+    25,
+    30
+  ],
+  "alpha_level_counts": [
+    0,
+    6,
+    11,
+    15,
+    23,
+    39
+  ],
+  "mean_oracle_surface": [
+    [
+      0.8722055352837654,
+      0.8997141093732332,
+      0.9034923217773756,
+      0.9035948385993827,
+      0.9036852867467329,
+      0.9036852867467329
+    ],
+    [
+      0.901021008643221,
+      0.9047762672432401,
+      0.9052073140981919,
+      0.9052179942886853,
+      0.9053084424360354,
+      0.9053084424360354
+    ],
+    [
+      0.9012765983870745,
+      0.9050069786005973,
+      0.9053789808719247,
+      0.905389661062418,
+      0.9054801092097682,
+      0.9054801092097682
+    ],
+    [
+      0.901297666624519,
+      0.9050280468380418,
+      0.9054000491093691,
+      0.9054107292998625,
+      0.9055011774472127,
+      0.9055011774472127
+    ],
+    [
+      0.9013227019508089,
+      0.9050530821643317,
+      0.905425084435659,
+      0.9054357646261524,
+      0.9055262127735025,
+      0.9055262127735025
+    ]
+  ],
+  "canonical_mean": 0.8722055352837654,
+  "maximum_budget_mean": 0.9055262127735026,
+  "maximum_budget_gain": 0.033320677489737216,
+  "maximum_budget_gain_ci95": [
+    0.008001350069045858,
+    0.06606158829569496
+  ],
+  "coverage_ge_0_7": 108,
+  "seed_steps_at_max_alpha": [
+    {
+      "from": 10,
+      "to": 15,
+      "mean_gain": 0.001623155689302487,
+      "ci95": [
+        7.400105916328771e-05,
+        0.004109606458777674
+      ],
+      "improved_cases": 8
+    },
+    {
+      "from": 15,
+      "to": 20,
+      "mean_gain": 0.0001716667737327593,
+      "ci95": [
+        2.9632795030918012e-05,
+        0.0003780142655657719
+      ],
+      "improved_cases": 13
+    },
+    {
+      "from": 20,
+      "to": 25,
+      "mean_gain": 2.1068237444590603e-05,
+      "ci95": [
+        4.436429316536448e-06,
+        4.275117821874941e-05
+      ],
+      "improved_cases": 7
+    },
+    {
+      "from": 25,
+      "to": 30,
+      "mean_gain": 2.5035326289741204e-05,
+      "ci95": [
+        0.0,
+        7.510597886922361e-05
+      ],
+      "improved_cases": 1
+    }
+  ],
+  "alpha_steps_at_max_seed": [
+    {
+      "from": 0,
+      "to": 6,
+      "mean_gain": 0.003730380213522884,
+      "ci95": [
+        0.0005409429417103067,
+        0.009762311122434982
+      ],
+      "improved_cases": 23
+    },
+    {
+      "from": 6,
+      "to": 11,
+      "mean_gain": 0.0003720022713275075,
+      "ci95": [
+        0.0001211524955136751,
+        0.0006909800687901785
+      ],
+      "improved_cases": 12
+    },
+    {
+      "from": 11,
+      "to": 15,
+      "mean_gain": 1.06801904933537e-05,
+      "ci95": [
+        0.0,
+        3.20405714800611e-05
+      ],
+      "improved_cases": 1
+    },
+    {
+      "from": 15,
+      "to": 23,
+      "mean_gain": 9.044814735026285e-05,
+      "ci95": [
+        1.2848861232160992e-05,
+        0.00021361243760199106
+      ],
+      "improved_cases": 7
+    },
+    {
+      "from": 23,
+      "to": 39,
+      "mean_gain": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "improved_cases": 0
+    }
+  ],
+  "practical_equivalence_epsilon": 0.005,
+  "practical_saturation_supported": true,
+  "decision_rule": "Upper 95% CI bounds of both final marginal gains must be below epsilon.",
+  "monotonicity_violations": 0,
+  "conditional_tail_bounds": {
+    "seed_axis": {
+      "condition_satisfied": false,
+      "recent_increment_ratios": [
+        0.12272752022072973,
+        1.1882971395096553
+      ],
+      "reason": "Recent increments do not satisfy geometric contraction"
+    },
+    "alpha_axis": {
+      "condition_satisfied": false,
+      "recent_increment_ratios": [
+        0.028710014203228832,
+        8.468776601476568
+      ],
+      "reason": "Recent increments do not satisfy geometric contraction"
+    }
+  },
+  "interpretation_scope": "Empirical ceiling of the prespecified Finsler plus direct alpha-cut family, not a universal segmentation limit.",
+  "figure": {
+    "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\candidate_ceiling_saturation\\candidate_ceiling_saturation.png",
+    "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\candidate_ceiling_saturation\\candidate_ceiling_saturation.pdf",
+    "pixel_dimensions": [
+      3813,
+      1144
+    ],
+    "dpi": [
+      299.9994,
+      299.9994
+    ]
+  }
+}

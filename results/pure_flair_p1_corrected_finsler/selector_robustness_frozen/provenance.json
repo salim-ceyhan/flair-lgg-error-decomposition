@@ -1,0 +1,7 @@
+{
+  "script_sha256": "3c122e74ab4e7797e22fccfe143367ba7afb3d0f4dcb81dd55a96d4a534110d6",
+  "pool_sha256": "fda16203af35c6d9a2f0e4fdeec0cad2b4635e59ba3df9429dbc986dc986e6d2",
+  "bootstrap_replicates": 20000,
+  "bootstrap_seed": 20260811,
+  "canonical_selector": "canonical_quality * persistence"
+}

@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-08-09T02:36:53.861520+00:00",
+  "experiment": "frozen_persistence_selector_reproduction",
+  "case_count": 110,
+  "dataset_root": "data/tcga_lgg_dataset (external; not distributed)",
+  "newmetric": {
+    "backend": "theory-aligned-local",
+    "source": "src/newmetric_corrected.py",
+    "sha256": "0e1dfacddfe61fbdd280961831237da40cd106156c6ea9f544c265f0ccb4a539"
+  },
+  "parameters": {
+    "newmetric_beta": 5.0,
+    "newmetric_dt": 0.15,
+    "newmetric_iterations": 3,
+    "selection_beta": [
+      0.0,
+      1.0
+    ]
+  }
+}

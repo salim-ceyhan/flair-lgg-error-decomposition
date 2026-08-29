@@ -1,0 +1,102 @@
+{
+  "dataset": "BraTS-2023 GLI",
+  "scientific_role": "Frozen-parameter cross-grade stress test",
+  "case_count": 150,
+  "gate_opened": 0,
+  "zero_dice": 1,
+  "dice_above_0_5": 140,
+  "dice_above_0_7": 124,
+  "dice_above_0_9": 67,
+  "metrics": {
+    "dice": {
+      "n": 150,
+      "mean": 0.8227410742656524,
+      "median": 0.8927040353830621,
+      "standard_deviation": 0.1878976799421431,
+      "q1": 0.8032059050005846,
+      "q3": 0.9301851716074934
+    },
+    "jaccard": {
+      "n": 150,
+      "mean": 0.7312645830434059,
+      "median": 0.8062021000620506,
+      "standard_deviation": 0.2082979565882307,
+      "q1": 0.6711910844877624,
+      "q3": 0.8694825819036953
+    },
+    "sensitivity": {
+      "n": 150,
+      "mean": 0.7648874503639916,
+      "median": 0.838507256614818,
+      "standard_deviation": 0.21583912459940474,
+      "q1": 0.6922257392226191,
+      "q3": 0.9153074698143417
+    },
+    "precision": {
+      "n": 150,
+      "mean": 0.9245033509792203,
+      "median": 0.9734717034871498,
+      "standard_deviation": 0.16207540880797103,
+      "q1": 0.929708883894607,
+      "q3": 0.9906730742975726
+    },
+    "specificity": {
+      "n": 150,
+      "mean": 0.9950574728680476,
+      "median": 0.9981759108365562,
+      "standard_deviation": 0.009912299208510632,
+      "q1": 0.9947759014234726,
+      "q3": 0.9994251531994209
+    },
+    "boundary_f1_at_2_px": {
+      "n": 149,
+      "mean": 0.6142860165778357,
+      "median": 0.6589832213676046,
+      "standard_deviation": 0.2209179978435971,
+      "q1": 0.463900166513873,
+      "q3": 0.777948569726908
+    },
+    "assd_px": {
+      "n": 149,
+      "mean": 4.864743145042385,
+      "median": 2.5378822020423595,
+      "standard_deviation": 6.058275343907473,
+      "q1": 1.7668947485139597,
+      "q3": 5.105114220191301
+    },
+    "hd95_px": {
+      "n": 149,
+      "mean": 18.154255893022906,
+      "median": 12.0,
+      "standard_deviation": 17.83044964732779,
+      "q1": 6.363839778884804,
+      "q3": 19.406159846635635
+    },
+    "lesion_recall_at_iou_0_10": {
+      "n": 150,
+      "mean": 0.6703043068043067,
+      "median": 0.75,
+      "standard_deviation": 0.35235232113023984,
+      "q1": 0.3333333333333333,
+      "q3": 1.0
+    },
+    "lesion_precision_at_iou_0_10": {
+      "n": 150,
+      "mean": 0.9733333333333334,
+      "median": 1.0,
+      "standard_deviation": 0.16164700403963206,
+      "q1": 1.0,
+      "q3": 1.0
+    },
+    "lesion_f1_at_iou_0_10": {
+      "n": 150,
+      "mean": 0.7407329522329523,
+      "median": 0.8333333333333333,
+      "standard_deviation": 0.29990531945917703,
+      "q1": 0.5,
+      "q3": 1.0
+    }
+  },
+  "surface_metric_scope": "Cases with non-zero Dice only.",
+  "lesion_metric_scope": "All cases containing at least one reference lesion."
+}

@@ -1,0 +1,147 @@
+{
+  "study": "Frozen cross-cohort boundary conspicuity versus candidate ceiling",
+  "cohort_summaries": {
+    "TCGA-LGG": {
+      "n": 110,
+      "selected_mean_dice": 0.7892658976023633,
+      "oracle_mean_dice": 0.8722055352837654,
+      "weak_boundary_median": 0.10332106636382586,
+      "weak_boundary_iqr": [
+        0.04419909458678482,
+        0.18588840658866818
+      ]
+    },
+    "UCSF-PDGM G2-3": {
+      "n": 99,
+      "selected_mean_dice": 0.7124392349835468,
+      "oracle_mean_dice": 0.8286806072720128,
+      "weak_boundary_median": 0.08376963350785341,
+      "weak_boundary_iqr": [
+        0.03757148617933866,
+        0.1715918895599655
+      ]
+    },
+    "BraTS 2023 GLI": {
+      "n": 150,
+      "selected_mean_dice": 0.8227410742656524,
+      "oracle_mean_dice": 0.8819986105695556,
+      "weak_boundary_median": 0.08696249988541886,
+      "weak_boundary_iqr": [
+        0.048275389339767494,
+        0.13189390985078142
+      ]
+    }
+  },
+  "primary_weak_boundary_correlations": {
+    "TCGA-LGG": {
+      "rho": -0.5372342344021559,
+      "ci95_low": -0.6678321623265677,
+      "ci95_high": -0.3792494355946198
+    },
+    "UCSF-PDGM G2-3": {
+      "rho": -0.4376588599889506,
+      "ci95_low": -0.5860632989135658,
+      "ci95_high": -0.2594888172237089
+    },
+    "BraTS 2023 GLI": {
+      "rho": -0.4670740336449599,
+      "ci95_low": -0.592889796374044,
+      "ci95_high": -0.32148579306488684
+    }
+  },
+  "ucsf_grade_subgroups": {
+    "UCSF grade 2": {
+      "rho": -0.4678480494198021,
+      "ci95_low": -0.6561846531581065,
+      "ci95_high": -0.22492884638961327
+    },
+    "UCSF grade 3": {
+      "rho": -0.4075807913017216,
+      "ci95_low": -0.6254370034052212,
+      "ci95_high": -0.14220591535527932
+    }
+  },
+  "covariate_adjusted_partial_spearman": {
+    "TCGA-LGG": {
+      "partial_rho": -0.3247448806429954,
+      "ci95_low": -0.5053952894155367,
+      "ci95_high": -0.10925633688435178
+    },
+    "UCSF-PDGM G2-3": {
+      "partial_rho": -0.3207542871972621,
+      "ci95_low": -0.49299226104305405,
+      "ci95_high": -0.1201767048422704
+    },
+    "BraTS 2023 GLI": {
+      "partial_rho": -0.3185343172489,
+      "ci95_low": -0.45583886943809443,
+      "ci95_high": -0.16441858916104657
+    }
+  },
+  "pairwise_rho_heterogeneity": {
+    "TCGA-LGG minus UCSF-PDGM G2-3": {
+      "observed_difference": -0.0995753744132053,
+      "ci95_low": -0.3176527884444629,
+      "ci95_high": 0.11460094218164787
+    },
+    "TCGA-LGG minus BraTS 2023 GLI": {
+      "observed_difference": -0.07016020075719598,
+      "ci95_low": -0.26740056975959686,
+      "ci95_high": 0.1334008415710543
+    },
+    "UCSF-PDGM G2-3 minus BraTS 2023 GLI": {
+      "observed_difference": 0.02941517365600932,
+      "ci95_low": -0.17975982461573095,
+      "ci95_high": 0.24838622241070463
+    }
+  },
+  "prespecified_decision": {
+    "all_primary_negative": true,
+    "tcga_and_ucsf_ci_below_zero": true,
+    "no_pairwise_heterogeneity_ci_excludes_zero": true,
+    "all_adjusted_directions_negative": true,
+    "replication_rule_passed": true
+  },
+  "figures": {
+    "scatter": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\cross_cohort_scatter.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\cross_cohort_scatter.pdf",
+      "pixel_dimensions": [
+        3094,
+        994
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "correlation_forest": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\cohort_correlation_forest.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\cohort_correlation_forest.pdf",
+      "pixel_dimensions": [
+        1924,
+        1054
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    },
+    "adjusted_forest": {
+      "png": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\adjusted_correlation_forest.png",
+      "pdf": "finsler_tcga_lgg_candidate_selection_study\\results\\pure_flair_p1_corrected_finsler\\figures\\cross_cohort_boundary_ceiling\\adjusted_correlation_forest.pdf",
+      "pixel_dimensions": [
+        1924,
+        874
+      ],
+      "dpi": [
+        299.9994,
+        299.9994
+      ]
+    }
+  },
+  "bootstrap_replicates_primary": 20000,
+  "ground_truth_policy": "GT is used only for retrospective boundary characterization and pool-oracle calculation.",
+  "interpretation_constraint": "Association and cross-cohort replication do not establish causality.",
+  "gaussian_filtering": false
+}

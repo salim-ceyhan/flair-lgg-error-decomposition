@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "release_scope": "BMC Medical Imaging candidate-selection manuscript",
+  "canonical_pipeline": "pure_flair_p1_corrected_finsler",
+  "hash_algorithm": "sha256-bytes",
+  "policy": "Historical per-analysis provenance is preserved. This manifest is the authoritative integrity record for the distributed release snapshot.",
+  "canonical_code": {
+    "src/candidate_selection.py": "893816e5edc2fecb10d78d7d8ad42450d0a808f3ad9d1dcbd4b560cd92d501f8",
+    "src/newmetric_corrected.py": "b073fee015777af31ad6d0a865cd0e40d87c0b57e0288679a73c02936378d151",
+    "stage1_finsler_test/probe_persistence.py": "eb4f85cf4df1270b2a0bbd003c831e54741786d855159e04e6c812498c9c2e48",
+    "stage1_finsler_test/probe_realmask_seed.py": "7fb4fdc39d600dd697f7ee1efbacf103335db4d791c6e3f150f6cb49a1730390",
+    "study/core/build_frozen_candidate_pool.py": "b19813d363fde41fa79b741ea9346db36a694e886b05507fbfb3e3bda0ec5f2f",
+    "study/evaluation/evaluate_lbs_error_decomposition.py": "4a53e6608e10131ef0bb30ad433153a540f9ec891ae1ff423f1c176c101221e3",
+    "study/evaluation/evaluate_candidate_ceiling_saturation.py": "ee95d96320170cf84cb655b518290c0d01a3b99d10a833a77c6616773742f55f",
+    "study/analysis/analyze_candidate_ceiling_saturation.py": "f9b0bcfb29b0dd40600411fa25d4a45b23d227d3f082bd8ce0cee6e6d5697132",
+    "study/evaluation/evaluate_cross_cohort_boundary_ceiling.py": "53d3d03d1bfefed0c2318ec4db043e375b95cca0430a2c8ce3430a7b35d3038a",
+    "study/analysis/cluster_bootstrap_cross_cohort_boundary.py": "fdde4d501faf58cf99820cd90fa2a0b9adf6d8459d691435dfc22ef001bb246c",
+    "study/analysis/compute_primary_performance_intervals.py": "8eed9a0b653bb04767b0f48c4731b1f552c76b03cbf38e1fc1fd2663dde9ae2f"
+  },
+  "manuscript_evidence": {
+    "results/pure_flair_p1_corrected_finsler/candidate_pool/summary.json": "98ecad7c5798a0fb4b140b130eb5b20ab08798ace719200cc8b726d51f1d5f44",
+    "results/pure_flair_p1_corrected_finsler/candidate_pool/provenance.json": "8aeeb1568932c57a91ef7b7aa6dbdc73daa670bc28842481d9145272fc8beb99",
+    "results/pure_flair_p1_corrected_finsler/lbs_error_decomposition/summary.json": "8469499550f399749635ebefb1d542626f07f5a15d30210d885a39cc4ec357e9",
+    "results/pure_flair_p1_corrected_finsler/lbs_error_decomposition/provenance.json": "b965659a851ec11905942ed5c24bd328ec3113639b54ee5344ccdfa3d6578411",
+    "results/pure_flair_p1_corrected_finsler/candidate_ceiling_saturation/summary.json": "a66fd94bc966d3bc3091bf6a2b4eb9e0d3d76895e432aecce9a7474003b7d364",
+    "results/pure_flair_p1_corrected_finsler/candidate_ceiling_saturation/provenance.json": "fa009f66e9af5c68f606c9e58ab59d9358969fc9967646852c53af3ffb8c8ed8",
+    "results/pure_flair_p1_corrected_finsler/cross_cohort_boundary_ceiling/summary.json": "7c7275a1117fcf45cd12b556e7d6343935fa8c53c53b30e89b0c5403e326bd76",
+    "results/pure_flair_p1_corrected_finsler/cross_cohort_boundary_ceiling/provenance.json": "117ba45ffa2d1cb21d61707f89e7a7443557a6303baccf6995a49f04ca7cfc9f",
+    "results/pure_flair_p1_corrected_finsler/consolidated_audit.json": "2396c30314a2f8bf8761bd417a64db0707a62e5605bddeb371925f384d988f91",
+    "results/pure_flair_p1_corrected_finsler/claim_source_matrix_core.csv": "473f03aaf52ee0b059941a315b3f057e1c7de6003c285bb111a1ed359f870baf",
+    "results/pure_flair_p1_corrected_finsler/primary_performance_intervals.json": "fb4898d2c62869730383b0824a677873309840825cf8a8695903a8351adfba94"
+  },
+  "reproduction_environment": {
+    ".python-version": "bb90877c5ee8c4703cfd03421e92ef2a17a10b67ecc822524baeea4c8da3dc9f",
+    "requirements.txt": "15f9a4daa1df01811d27818010a4cc97731cda215e27e807ebba428645b5ea2a",
+    "requirements-lock.txt": "b6d138a7c9a5b2eafc153257677a5eb91d71a7b778908cfa3b5645eafc027480",
+    "tools/release_manifest.py": "8bc7bd6bcac80055a2eb80705fe859211f701c046b8c820a0125995383dc30d7",
+    "tools/verify_environment.py": "d05385c1b2ddb42b57bcbc7f7b709a1326ccc51d9e00a3c779d7e190c1efac43",
+    "tests/test_release_integrity.py": "85a1448da52bfc9579c92c2ba4442350890b0b09b43e7504c27d77ab4c4cc5df"
+  }
+}

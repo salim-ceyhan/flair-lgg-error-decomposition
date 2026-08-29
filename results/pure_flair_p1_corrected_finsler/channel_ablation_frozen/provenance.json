@@ -1,0 +1,24 @@
+{
+  "script_sha256": "9a8e7ecc1c35e086a601e4fa91a0fe1441a646c5ae9829b959485644f939c0ea",
+  "newmetric_sha256": "0e1dfacddfe61fbdd280961831237da40cd106156c6ea9f544c265f0ccb4a539",
+  "candidate_pool": "results/pure_flair_p1_corrected_finsler/candidate_pool",
+  "data_root": "data/tcga_lgg_dataset (external; not distributed)",
+  "python": "3.13.13",
+  "numpy": "2.5.0",
+  "scipy": "1.18.0",
+  "skimage": "0.26.0",
+  "opencv": "4.13.0",
+  "workers": 4,
+  "seed": 20260811,
+  "alpha_levels": [
+    0.35,
+    0.45,
+    0.55,
+    0.65,
+    0.75,
+    0.85
+  ],
+  "alpha_persistence_contract": 1.0,
+  "gaussian_filtering": false,
+  "ground_truth_policy": "Retrospective evaluation only"
+}

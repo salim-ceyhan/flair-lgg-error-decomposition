@@ -1,0 +1,7 @@
+{
+  "analysis_script_sha256": "ea3775359a516af028d65e926ae052b4e685e11db5eb6e3d43509d6467cb2210",
+  "generator_script_sha256": "9d62a059d9a1c8feb4fd8a4e95edd616fc926b65fb675fbb74b06f64d88238bc",
+  "data_root": "data/tcga_lgg_dataset (external; not distributed)",
+  "bootstrap_seed": 20260726,
+  "bootstrap_replicates": 20000
+}

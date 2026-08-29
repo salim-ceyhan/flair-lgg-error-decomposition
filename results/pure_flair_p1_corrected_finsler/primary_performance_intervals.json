@@ -1,0 +1,38 @@
+{
+  "seed": 20260816,
+  "bootstrap_replicates": 20000,
+  "interval": "two-sided percentile bootstrap 95% confidence interval",
+  "cohorts": {
+    "TCGA-LGG": {
+      "role": "development",
+      "records": 110,
+      "resampling_unit": "case/patient",
+      "mean_dice": 0.7892658976023633,
+      "mean_dice_ci95": [
+        0.7360257598198985,
+        0.8373450492315891
+      ]
+    },
+    "UCSF-PDGM grade 2--3": {
+      "role": "independent-data fixed-slice external validation",
+      "records": 99,
+      "resampling_unit": "case/patient",
+      "mean_dice": 0.7124392349835468,
+      "mean_dice_ci95": [
+        0.6487412806242339,
+        0.7712453560776855
+      ]
+    },
+    "BraTS 2023 GLI": {
+      "role": "cross-grade stress test",
+      "records": 150,
+      "patients": 143,
+      "resampling_unit": "patient cluster",
+      "mean_dice": 0.8227410742656524,
+      "mean_dice_ci95": [
+        0.7901392836208005,
+        0.8514794445367232
+      ]
+    }
+  }
+}

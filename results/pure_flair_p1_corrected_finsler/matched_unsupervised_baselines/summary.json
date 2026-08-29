@@ -1,0 +1,45 @@
+{
+  "protocol": "TCGA-LGG 110 fixed largest-tumour 2D slices; FLAIR only",
+  "postprocessing": "largest connected component plus hole filling",
+  "gaussian_filtering": false,
+  "methods": {
+    "aucseg_bt_reimplementation": {
+      "n": 110,
+      "mean_dice": 0.33147877650543384,
+      "mean_dice_bootstrap_95ci": [
+        0.2591581360573032,
+        0.40479280550839286
+      ],
+      "median_dice": 0.1550550953848599,
+      "zero_dice": 40,
+      "dice_ge_0p50": 34,
+      "dice_ge_0p70": 34,
+      "p1_minus_baseline_mean": 0.45778712109692943,
+      "p1_minus_baseline_bootstrap_95ci": [
+        0.38437419615168555,
+        0.5297086206999985
+      ],
+      "p1_better_cases": 89,
+      "ties": 5
+    },
+    "otsu": {
+      "n": 110,
+      "mean_dice": 0.24287124942396354,
+      "mean_dice_bootstrap_95ci": [
+        0.21895847402524724,
+        0.26787099010877274
+      ],
+      "median_dice": 0.23030821639264343,
+      "zero_dice": 3,
+      "dice_ge_0p50": 4,
+      "dice_ge_0p70": 0,
+      "p1_minus_baseline_mean": 0.5463946481783996,
+      "p1_minus_baseline_bootstrap_95ci": [
+        0.49362983512573155,
+        0.596350631700073
+      ],
+      "p1_better_cases": 103,
+      "ties": 0
+    }
+  }
+}
